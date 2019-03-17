@@ -1,21 +1,11 @@
 {
-  "extends": ["plugin:prettier/recommended", "eslint:recommended", "react-app"],
-  "plugins": ["prettier", "import", "flowtype", "jsx-a11y"],
+  "extends": ["@tomfischer/eslint-config", "react-app"],
+  "plugins": ["import", "flowtype", "jsx-a11y"],
   "parserOptions": {
     "sourceType": "module",
-    "ecmaVersion": 9,
     "ecmaFeatures": {
       "jsx": true
     }
-  },
-  "env": {
-    "es6": true
-  },
-  "rules": {
-    "no-unused-vars": ["error", { "ignoreRestSiblings": true }],
-    "quotes": ["error", "double"],
-    "no-console": "warn",
-    "prettier/prettier": "error"
   },
   "settings": {
     "react": {

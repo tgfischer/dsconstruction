@@ -1,6 +1,6 @@
 {
   "name": "@tomfischer/users",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "The user service for Tom Fischer's website",
   "main": "src/index.js",
   "scripts": {
@@ -19,6 +19,5 @@
     "serverless": "^1.37.0",
     "serverless-offline": "^4.2.2",
     "serverless-offline-dotenv": "^0.0.10"
-  },
-  "dependencies": {}
+  }
 }
