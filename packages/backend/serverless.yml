@@ -1,37 +1,28 @@
 service: tom-fischer-backend
 
 plugins:
+  - serverless-webpack
   - serverless-offline
 
 custom:
   serverless-offline:
     port: 3001
+  webpack:
+    includeModules: true
+    packager: "yarn"
+    individually: true
 
 provider:
   name: aws
   runtime: nodejs8.10
-  region: ca-central-1
+  region: ${opt:region, "ca-central-1"}
   stage: ${opt:stage, "prod"}
 
 functions:
-  transcript:
+  home:
     handler: src/index.handler
     events:
       - http:
-          path: /api/education/transcript
-          method: GET
-          cors: true
-  projects:
-    handler: src/index.handler
-    events:
-      - http:
-          path: /api/projects
-          method: GET
-          cors: true
-  jobs:
-    handler: src/index.handler
-    events:
-      - http:
-          path: /api/experience/jobs
+          path: /api/home
           method: GET
           cors: true
