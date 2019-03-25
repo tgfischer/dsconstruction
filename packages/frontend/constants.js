@@ -8,19 +8,15 @@ export const pages = [
     href: "/about"
   },
   {
+    label: "Services",
+    href: "/services"
+  },
+  {
     label: "Gallery",
     href: "/gallery"
   },
   {
-    label: "Testimonials",
-    href: "/testimonials"
-  },
-  {
     label: "Contact",
     href: "/contact"
-  },
-  {
-    label: "Login",
-    href: "/login"
   }
 ];

@@ -1,17 +1,13 @@
 import React, { Fragment } from "react";
 import PropTypes from "prop-types";
-import Grid from "@material-ui/core/Grid";
 
 import NavBar from "../NavBar";
+import CoreLayout from "../CoreLayout";
 
 const Page = ({ children }) => (
   <Fragment>
     <NavBar title="D's Construction" />
-    <Grid container>
-      <Grid item xs={12}>
-        {children}
-      </Grid>
-    </Grid>
+    <CoreLayout>{children}</CoreLayout>
   </Fragment>
 );
 

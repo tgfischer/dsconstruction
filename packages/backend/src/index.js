@@ -6,6 +6,7 @@ import cors from "cors";
 import middleware from "@tomfischer/middleware";
 
 import home from "./routes/home";
+import services from "./routes/services";
 
 const app = express();
 
@@ -15,6 +16,7 @@ app.use(cookieParser());
 app.use(cors());
 
 app.use("/api/home", home);
+app.use("/api/services", services);
 app.use(middleware.errorHandler);
 
 export const handler = serverless(app);

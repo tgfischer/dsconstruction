@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import Card from "@material-ui/core/Card";
 import CardActionArea from "@material-ui/core/CardActionArea";
@@ -6,7 +6,7 @@ import CardMedia from "@material-ui/core/CardMedia";
 
 import useModal from "../../hooks/useModal";
 
-const GalleryImage = ({ thumbnail, original }) => {
+const GalleryCard = ({ thumbnail, original }) => {
   const { showModal } = useModal({
     content: (
       <Card>
@@ -16,19 +16,17 @@ const GalleryImage = ({ thumbnail, original }) => {
     size: "xl"
   });
   return (
-    <Fragment>
-      <Card>
-        <CardActionArea onClick={showModal}>
-          <CardMedia component="img" src={thumbnail} />
-        </CardActionArea>
-      </Card>
-    </Fragment>
+    <Card>
+      <CardActionArea onClick={showModal}>
+        <CardMedia component="img" src={thumbnail} />
+      </CardActionArea>
+    </Card>
   );
 };
 
-GalleryImage.propTypes = {
+GalleryCard.propTypes = {
   thumbnail: PropTypes.string.isRequired,
   original: PropTypes.string.isRequired
 };
 
-export default GalleryImage;
+export default GalleryCard;

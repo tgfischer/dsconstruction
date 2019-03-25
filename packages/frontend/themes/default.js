@@ -22,6 +22,15 @@ export default createMuiTheme({
       h3: {
         textTransform: "uppercase"
       },
+      h2: {
+        textTransform: "uppercase"
+      },
+      h1: {
+        textTransform: "uppercase"
+      },
+      title: {
+        textTransform: "uppercase"
+      },
       body1: {
         textTransform: "uppercase"
       }

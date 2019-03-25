@@ -1,10 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
-import Link from "next/link";
+import classnames from "classnames";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
-import Button from "@material-ui/core/Button";
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
 import Grid from "@material-ui/core/Grid";
@@ -13,6 +12,7 @@ import { withStyles } from "@material-ui/core/styles";
 
 import { pages } from "../../constants";
 import Container from "../Container";
+import ButtonLink from "../ButtonLink";
 
 const styles = theme => ({
   flex: {
@@ -23,11 +23,19 @@ const styles = theme => ({
   },
   button: {
     color: theme.palette.common.white
+  },
+  transparent: {
+    background: "transparent",
+    boxShadow: "none"
   }
 });
 
-const NavBar = ({ title, classes }) => (
-  <AppBar position="static" color="secondary">
+const NavBar = ({ title, transparent, classes }) => (
+  <AppBar
+    className={classnames({ [classes.transparent]: transparent })}
+    position="static"
+    color="secondary"
+  >
     <Toolbar>
       <Container>
         <Grid container alignItems="center">
@@ -45,9 +53,9 @@ const NavBar = ({ title, classes }) => (
           </Typography>
           <Hidden smDown>
             {pages.map(({ label, href }) => (
-              <Link key={href} href={href}>
-                <Button className={classes.button}>{label}</Button>
-              </Link>
+              <ButtonLink key={href} to={href} className={classes.button}>
+                {label}
+              </ButtonLink>
             ))}
           </Hidden>
         </Grid>
@@ -58,10 +66,15 @@ const NavBar = ({ title, classes }) => (
 
 NavBar.propTypes = {
   title: PropTypes.string.isRequired,
+  transparent: PropTypes.bool,
   classes: PropTypes.shape({
     flex: PropTypes.string.isRequired,
     menuButton: PropTypes.string.isRequired
   }).isRequired
+};
+
+NavBar.defaultProps = {
+  transparent: false
 };
 
 export default withStyles(styles)(NavBar);

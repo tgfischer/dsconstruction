@@ -112,6 +112,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _tomfischer_middleware__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @tomfischer/middleware */ "@tomfischer/middleware");
 /* harmony import */ var _tomfischer_middleware__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_tomfischer_middleware__WEBPACK_IMPORTED_MODULE_6__);
 /* harmony import */ var _routes_home__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./routes/home */ "./src/routes/home.js");
+/* harmony import */ var _routes_services__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./routes/services */ "./src/routes/services.js");
+
 
 
 
@@ -128,6 +130,7 @@ app.use(body_parser__WEBPACK_IMPORTED_MODULE_3___default.a.json());
 app.use(cookie_parser__WEBPACK_IMPORTED_MODULE_4___default()());
 app.use(cors__WEBPACK_IMPORTED_MODULE_5___default()());
 app.use("/api/home", _routes_home__WEBPACK_IMPORTED_MODULE_7__["default"]);
+app.use("/api/services", _routes_services__WEBPACK_IMPORTED_MODULE_8__["default"]);
 app.use(_tomfischer_middleware__WEBPACK_IMPORTED_MODULE_6___default.a.errorHandler);
 const handler = serverless_http__WEBPACK_IMPORTED_MODULE_2___default()(app);
 
@@ -159,13 +162,64 @@ const home = (req, res) => {
   return res.status(http_status_codes__WEBPACK_IMPORTED_MODULE_2___default.a.OK).json({
     home: {
       masthead: {
-        background: "/static/images/placeholder.jpg"
+        background: "/static/images/IMG_2231.JPG"
       }
     }
   });
 };
 
 router.get("/", home);
+/* harmony default export */ __webpack_exports__["default"] = (router);
+
+/***/ }),
+
+/***/ "./src/routes/services.js":
+/*!********************************!*\
+  !*** ./src/routes/services.js ***!
+  \********************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var source_map_support_register__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! source-map-support/register */ "source-map-support/register");
+/* harmony import */ var source_map_support_register__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(source_map_support_register__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var express__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! express */ "express");
+/* harmony import */ var express__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(express__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var http_status_codes__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! http-status-codes */ "http-status-codes");
+/* harmony import */ var http_status_codes__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(http_status_codes__WEBPACK_IMPORTED_MODULE_2__);
+
+
+
+const router = express__WEBPACK_IMPORTED_MODULE_1___default.a.Router({
+  mergeParams: true
+});
+
+const services = (req, res) => {
+  return res.status(http_status_codes__WEBPACK_IMPORTED_MODULE_2___default.a.OK).json({
+    services: [{
+      name: "Service 1",
+      blurb: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed feugiat tellus vel neque ullamcorper, vel faucibus metus auctor.",
+      description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed feugiat tellus vel neque ullamcorper, vel faucibus metus auctor. Aenean ac laoreet mauris, vitae ornare nulla. Vivamus elementum tellus at hendrerit facilisis. Pellentesque eleifend ligula ut elit tempus ultrices. Proin id libero in justo dignissim rutrum sit amet non massa. Vivamus feugiat eros id nisl laoreet, non sagittis dui condimentum. Aenean elementum lacus sed nisl condimentum sodales. Donec ullamcorper turpis nec cursus finibus. Vivamus sed varius tortor. Fusce ultricies vel ante at vehicula. Morbi sit amet commodo leo. Duis ligula ante, auctor a pharetra a, mattis sed ligula. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Aenean mauris erat, tempor dignissim tristique tincidunt, maximus non sapien. Fusce hendrerit tortor vel felis consectetur lobortis.",
+      thumbnail: "/static/images/thumbnail.jpg",
+      to: "/services/service"
+    }, {
+      name: "Service 2",
+      blurb: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed feugiat tellus vel neque ullamcorper, vel faucibus metus auctor.",
+      description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed feugiat tellus vel neque ullamcorper, vel faucibus metus auctor. Aenean ac laoreet mauris, vitae ornare nulla. Vivamus elementum tellus at hendrerit facilisis. Pellentesque eleifend ligula ut elit tempus ultrices. Proin id libero in justo dignissim rutrum sit amet non massa. Vivamus feugiat eros id nisl laoreet, non sagittis dui condimentum. Aenean elementum lacus sed nisl condimentum sodales. Donec ullamcorper turpis nec cursus finibus. Vivamus sed varius tortor. Fusce ultricies vel ante at vehicula. Morbi sit amet commodo leo. Duis ligula ante, auctor a pharetra a, mattis sed ligula. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Aenean mauris erat, tempor dignissim tristique tincidunt, maximus non sapien. Fusce hendrerit tortor vel felis consectetur lobortis.",
+      thumbnail: "/static/images/thumbnail.jpg",
+      to: "/services/service"
+    }, {
+      name: "Service 3",
+      blurb: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed feugiat tellus vel neque ullamcorper, vel faucibus metus auctor.",
+      description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed feugiat tellus vel neque ullamcorper, vel faucibus metus auctor. Aenean ac laoreet mauris, vitae ornare nulla. Vivamus elementum tellus at hendrerit facilisis. Pellentesque eleifend ligula ut elit tempus ultrices. Proin id libero in justo dignissim rutrum sit amet non massa. Vivamus feugiat eros id nisl laoreet, non sagittis dui condimentum. Aenean elementum lacus sed nisl condimentum sodales. Donec ullamcorper turpis nec cursus finibus. Vivamus sed varius tortor. Fusce ultricies vel ante at vehicula. Morbi sit amet commodo leo. Duis ligula ante, auctor a pharetra a, mattis sed ligula. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Aenean mauris erat, tempor dignissim tristique tincidunt, maximus non sapien. Fusce hendrerit tortor vel felis consectetur lobortis.",
+      thumbnail: "/static/images/thumbnail.jpg",
+      to: "/services/service"
+    }]
+  });
+};
+
+router.get("/", services);
 /* harmony default export */ __webpack_exports__["default"] = (router);
 
 /***/ }),

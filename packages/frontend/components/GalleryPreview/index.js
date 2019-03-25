@@ -1,21 +1,27 @@
 import React from "react";
-import Typography from "@material-ui/core/Typography";
+import Grid from "@material-ui/core/Grid";
 
-import Container from "../Container";
+import Preview from "../Preview";
+import ButtonLink from "../ButtonLink";
+import GalleryCard from "../GalleryCard";
 import useGallery from "../../hooks/useGallery";
-import LoadingSpinner from "../LoadingSpinner";
-import GalleryImages from "./GalleryImages";
 
 const GalleryPreview = () => {
   const [images, isLoading] = useGallery({ size: 4 });
   return (
-    <Container spaced>
-      <Typography variant="h3" gutterBottom>
-        Photos
-      </Typography>
-      {isLoading && <LoadingSpinner />}
-      {!isLoading && <GalleryImages images={images} />}
-    </Container>
+    <Preview
+      title="Photo Gallery"
+      isLoading={isLoading}
+      Action={() => <ButtonLink to="/gallery">View More</ButtonLink>}
+    >
+      <Grid spacing={16} container>
+        {images.map(({ thumbnail, original }, i) => (
+          <Grid key={i} sm={3} xs={12} item>
+            <GalleryCard thumbnail={thumbnail} original={original} />
+          </Grid>
+        ))}
+      </Grid>
+    </Preview>
   );
 };
 
