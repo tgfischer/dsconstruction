@@ -1,23 +1,28 @@
-service: tom-fischer-users
+service: dsconstruction-users
 
 plugins:
-  - serverless-offline-dotenv
+  - serverless-webpack
+  - serverless-dotenv-plugin
   - serverless-offline
 
 custom:
   serverless-offline:
     port: 3002
+  webpack:
+    includeModules: true
+    packager: "yarn"
+    individually: true
   cognito:
     userPool:
-      name: tf-user-pool-${self:provider.stage}
+      name: dsc-user-pool-${self:provider.stage}
     client:
-      name: tf-fuser-pool-client-${self:provider.stage}
+      name: dsc-fuser-pool-client-${self:provider.stage}
 
 provider:
   name: aws
   runtime: nodejs8.10
   region: us-east-1
-  stage: ${opt:stage, "prod"}
+  stage: ${opt:stage, "dev"}
   environment:
     COGNITO_USER_POOL_ID:
       Ref: CognitoUserPool
@@ -37,7 +42,7 @@ functions:
     handler: src/index.handler
     events:
       - http:
-          path: /api/login/reset-temporary-password
+          path: /api/reset/temporary
           method: POST
           cors: true
 

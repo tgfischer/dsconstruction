@@ -16,7 +16,7 @@ const styles = () => ({
   }
 });
 
-const Container = ({ children, spaced, className, classes }) => (
+const Container = ({ children, width, spaced, className, classes }) => (
   <Grid
     container
     className={classes.container}
@@ -29,7 +29,7 @@ const Container = ({ children, spaced, className, classes }) => (
     <Grid
       item
       sm={12}
-      md={8}
+      md={width}
       className={classnames(className, { [classes.spaced]: spaced })}
     >
       {children}
@@ -42,6 +42,7 @@ const Container = ({ children, spaced, className, classes }) => (
 
 Container.propTypes = {
   children: PropTypes.node.isRequired,
+  width: PropTypes.oneOf([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]),
   spaced: PropTypes.bool,
   className: PropTypes.string,
   classes: PropTypes.shape({
@@ -52,6 +53,7 @@ Container.propTypes = {
 
 Container.defaultProps = {
   className: "",
+  width: 8,
   spaced: false
 };
 

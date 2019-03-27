@@ -4,7 +4,7 @@ import Link from "next/link";
 import Button from "@material-ui/core/Button";
 
 const NavBar = ({ to, children, ...props }) => (
-  <Link href={to}>
+  <Link href={to} prefetch>
     <Button {...props}>{children}</Button>
   </Link>
 );

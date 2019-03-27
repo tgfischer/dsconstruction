@@ -1,4 +1,4 @@
-service: tom-fischer-backend
+service: dsconstruction-backend
 
 plugins:
   - serverless-webpack

@@ -1,41 +1,23 @@
-const router = require("express").Router({ mergeParams: true });
-const HttpStatus = require("http-status-codes");
-const asyncHandler = require("express-async-handler");
-const middleware = require("@tomfischer/middleware");
-const joi = require("@tomfischer/joi");
+import express from "express";
+import HttpStatus from "http-status-codes";
+import asyncHandler from "express-async-handler";
+import validate, { types } from "../schemas/validate";
 
-const UserService = require("../services/UserService");
+import * as client from "../client";
+import * as schemas from "../schemas/login";
+
+const router = express.Router({ mergeParams: true });
 
 const login = async (req, res) => {
   const { email, password } = res.locals.body;
-  const userService = new UserService();
-
-  const result = await userService.initiateAuth({ email, password });
-  res.status(HttpStatus.OK).json(result);
-};
-
-const resetTemporaryPassword = async (req, res) => {
-  const { email, password, session } = res.locals.body;
-  const userService = new UserService();
-
-  const result = await userService.resetTemporaryPassword({
-    email,
-    password,
-    session
-  });
+  const result = await client.initiateAuth(email, password);
   res.status(HttpStatus.OK).json(result);
 };
 
 router.post(
   "/",
-  middleware.validate.body(joi.login.loginSchema),
+  validate(schemas.loginSchema, types.BODY),
   asyncHandler(login)
 );
 
-router.post(
-  "/reset-temporary-password",
-  middleware.validate.body(joi.login.resetTemporaryPasswordSchema),
-  asyncHandler(resetTemporaryPassword)
-);
-
-module.exports = router;
+export default router;

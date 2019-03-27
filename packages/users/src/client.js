@@ -1,19 +1,18 @@
-const AWS = require("aws-sdk");
+import AWS from "aws-sdk";
+
+const getUserPool = () =>
+  new AWS.CognitoIdentityServiceProvider({
+    region: process.env.COGNITO_USER_POOL_REGION
+  });
 
 const initiateAuthResponseHandler = result =>
   result.ChallengeName
     ? { session: result.Session }
     : { idToken: result.AuthenticationResult.IdToken };
 
-class UserService {
-  get _userPool() {
-    return new AWS.CognitoIdentityServiceProvider({
-      region: process.env.COGNITO_USER_POOL_REGION
-    });
-  }
-
-  async initiateAuth({ email, password }) {
-    const params = {
+export const initiateAuth = async (email, password) => {
+  const result = await getUserPool()
+    .adminInitiateAuth({
       AuthFlow: "ADMIN_NO_SRP_AUTH",
       UserPoolId: process.env.COGNITO_USER_POOL_ID,
       ClientId: process.env.COGNITO_USER_POOL_CLIENT_ID,
@@ -21,14 +20,14 @@ class UserService {
         USERNAME: email,
         PASSWORD: password
       }
-    };
+    })
+    .promise();
+  return initiateAuthResponseHandler(result);
+};
 
-    const result = await this._userPool.adminInitiateAuth(params).promise();
-    return initiateAuthResponseHandler(result);
-  }
-
-  async resetTemporaryPassword({ email, password, session }) {
-    const params = {
+export const resetTemporaryPassword = (email, password, session) =>
+  getUserPool()
+    .adminRespondToAuthChallenge({
       ChallengeName: "NEW_PASSWORD_REQUIRED",
       UserPoolId: process.env.COGNITO_USER_POOL_ID,
       ClientId: process.env.COGNITO_USER_POOL_CLIENT_ID,
@@ -37,13 +36,5 @@ class UserService {
         NEW_PASSWORD: password
       },
       Session: session
-    };
-
-    const result = await this._userPool
-      .adminRespondToAuthChallenge(params)
-      .promise();
-    return result;
-  }
-}
-
-module.exports = UserService;
+    })
+    .promise();
