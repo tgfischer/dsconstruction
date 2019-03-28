@@ -7,7 +7,7 @@ const home = (req, res) => {
   return res.status(HttpStatus.OK).json({
     home: {
       masthead: {
-        background: "/static/images/IMG_2231.JPG"
+        background: "/images/IMG_2231.JPG"
       }
     }
   });

@@ -2,6 +2,7 @@ service: dsconstruction-users
 
 plugins:
   - serverless-webpack
+  # - serverless-dynamodb-local
   - serverless-dotenv-plugin
   - serverless-offline
 
@@ -17,6 +18,17 @@ custom:
       name: dsc-user-pool-${self:provider.stage}
     client:
       name: dsc-fuser-pool-client-${self:provider.stage}
+  # dynamodb:
+  #   stages:
+  #     - dev
+  #   start:
+  #     port: 8000
+  #     inMemory: true
+  #     heapInitial: 200m
+  #     heapMax: 1g
+  #     migrate: true
+  #     seed: true
+  #     convertEmptyValues: true
 
 provider:
   name: aws
@@ -45,6 +57,13 @@ functions:
           path: /api/reset/temporary
           method: POST
           cors: true
+  create:
+    handler: src/index.handler
+    events:
+      - http:
+          path: /api/create
+          method: POST
+          cors: true
 
 resources:
   Resources:
@@ -56,6 +75,19 @@ resources:
           - email
         AutoVerifiedAttributes:
           - email
+        Schema:
+          - Name: email
+            AttributeDataType: String
+            Mutable: true
+            Required: true
+          - Name: name
+            AttributeDataType: String
+            Mutable: true
+            Required: true
+          - Name: family_name
+            AttributeDataType: String
+            Mutable: true
+            Required: true
     CognitoUserPoolClient:
       Type: AWS::Cognito::UserPoolClient
       Properties:

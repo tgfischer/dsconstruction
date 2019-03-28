@@ -12,5 +12,7 @@ export const resetTemporaryPasswordSchema = Joi.object().keys({
     .email()
     .required(),
   password: Joi.string().required(),
+  firstName: Joi.string().allow(""),
+  lastName: Joi.string().allow(""),
   session: Joi.string().required()
 });
