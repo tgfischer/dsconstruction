@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Fragment } from "react";
 import PropTypes from "prop-types";
 import classnames from "classnames";
 import AppBar from "@material-ui/core/AppBar";
@@ -8,11 +8,14 @@ import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
 import Grid from "@material-ui/core/Grid";
 import Hidden from "@material-ui/core/Hidden";
+import Button from "@material-ui/core/Button";
 import { withStyles } from "@material-ui/core/styles";
+import { withRouter } from "react-router";
 
 import { pages } from "../../constants";
 import Container from "../Container";
 import ButtonLink from "../ButtonLink";
+import useUser from "../../hooks/useUser";
 
 const styles = theme => ({
   flex: {
@@ -30,39 +33,59 @@ const styles = theme => ({
   }
 });
 
-const NavBar = ({ title, transparent, classes }) => (
-  <AppBar
-    className={classnames({ [classes.transparent]: transparent })}
-    position="static"
-    color="secondary"
-  >
-    <Toolbar>
-      <Container>
-        <Grid container alignItems="center">
-          <Hidden mdUp>
-            <IconButton
-              className={classes.menuButton}
-              color="inherit"
-              aria-label="Menu"
-            >
-              <MenuIcon />
-            </IconButton>
-          </Hidden>
-          <Typography className={classes.flex} variant="h6" color="inherit">
-            {title}
-          </Typography>
-          <Hidden smDown>
-            {pages.map(({ label, href }) => (
-              <ButtonLink key={href} to={href} className={classes.button}>
-                {label}
-              </ButtonLink>
-            ))}
-          </Hidden>
-        </Grid>
-      </Container>
-    </Toolbar>
-  </AppBar>
-);
+const NavBar = ({ title, transparent, classes, history }) => {
+  const [, isLoggedIn, , handleLogOut] = useUser();
+  return (
+    <AppBar
+      className={classnames({ [classes.transparent]: transparent })}
+      position="static"
+      color="secondary"
+    >
+      <Toolbar>
+        <Container>
+          <Grid container alignItems="center">
+            <Hidden mdUp>
+              <IconButton
+                className={classes.menuButton}
+                color="inherit"
+                aria-label="Menu"
+              >
+                <MenuIcon />
+              </IconButton>
+            </Hidden>
+            <Typography className={classes.flex} variant="h6" color="inherit">
+              {title}
+            </Typography>
+            <Hidden smDown>
+              {pages.map(({ label, href }) => (
+                <ButtonLink key={href} to={href} className={classes.button}>
+                  {label}
+                </ButtonLink>
+              ))}
+              {isLoggedIn && (
+                <Fragment>
+                  <ButtonLink to="/dashboard" className={classes.button}>
+                    Dashboard
+                  </ButtonLink>
+                  <Button
+                    onClick={() => {
+                      handleLogOut();
+                      history.push("/login");
+                    }}
+                    className={classes.button}
+                    variant="outlined"
+                  >
+                    Log out
+                  </Button>
+                </Fragment>
+              )}
+            </Hidden>
+          </Grid>
+        </Container>
+      </Toolbar>
+    </AppBar>
+  );
+};
 
 NavBar.propTypes = {
   title: PropTypes.string.isRequired,
@@ -70,6 +93,9 @@ NavBar.propTypes = {
   classes: PropTypes.shape({
     flex: PropTypes.string.isRequired,
     menuButton: PropTypes.string.isRequired
+  }).isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired
   }).isRequired
 };
 
@@ -77,4 +103,4 @@ NavBar.defaultProps = {
   transparent: false
 };
 
-export default withStyles(styles)(NavBar);
+export default withStyles(styles)(withRouter(NavBar));

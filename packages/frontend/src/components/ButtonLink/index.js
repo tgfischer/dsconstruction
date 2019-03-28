@@ -16,15 +16,15 @@ const StyledLink = styled(Link)`
   }
 `;
 
-const NavBar = ({ to, children, ...props }) => (
+const ButtonLink = ({ to, children, ...props }) => (
   <StyledLink to={to}>
     <Button {...props}>{children}</Button>
   </StyledLink>
 );
 
-NavBar.propTypes = {
+ButtonLink.propTypes = {
   to: PropTypes.string.isRequired,
   children: PropTypes.node.isRequired
 };
 
-export default NavBar;
+export default ButtonLink;

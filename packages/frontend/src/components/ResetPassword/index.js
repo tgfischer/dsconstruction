@@ -9,7 +9,6 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 import Button from "@material-ui/core/Button";
 import { withStyles } from "@material-ui/core/styles";
 import { withSnackbar } from "notistack";
-import { withRouter } from "react-router";
 
 import Page from "../Page";
 import Container from "../Container";
@@ -33,10 +32,9 @@ const styles = theme => ({
   }
 });
 
-const ResetPassword = ({ classes, enqueueSnackbar, history, match }) => {
+const ResetPassword = ({ classes, enqueueSnackbar, match }) => {
   const [onSubmit, { password }, isValid, isLoading] = useResetPassword(
     match.params.type,
-    history,
     message =>
       enqueueSnackbar(message, {
         variant: "error",
@@ -115,13 +113,10 @@ ResetPassword.propTypes = {
       type: PropTypes.oneOf(["temporary"]).isRequired
     }).isRequired
   }).isRequired,
-  history: PropTypes.shape({
-    replace: PropTypes.func.isRequired
-  }).isRequired,
   enqueueSnackbar: PropTypes.func.isRequired,
   classes: PropTypes.shape({
     textField: PropTypes.string.isRequired
   }).isRequired
 };
 
-export default withStyles(styles)(withSnackbar(withRouter(ResetPassword)));
+export default withStyles(styles)(withSnackbar(ResetPassword));

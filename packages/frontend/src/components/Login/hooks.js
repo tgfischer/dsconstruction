@@ -3,16 +3,15 @@ import { useResource } from "react-request-hook";
 import { useFormState } from "react-use-form-state";
 import get from "lodash/get";
 
-import { endpoints, defaultHeaders } from "../../constants";
+import { endpoints } from "../../constants";
 import useUser from "../../hooks/useUser";
 
 export const useLogin = (history, onError) => {
   const [{ values, validity }, input] = useFormState();
-  const [{ session, user, idToken }, setUser] = useUser();
+  const [, , setUser] = useUser();
   const [{ data, error, isLoading }, handleLogin] = useResource(data => ({
     method: "POST",
     url: `${endpoints.users}/login`,
-    headers: defaultHeaders,
     data
   }));
 
@@ -27,18 +26,10 @@ export const useLogin = (history, onError) => {
     }
   }, [data, error]);
 
-  useEffect(() => {
-    if (user && idToken) {
-      history.replace("/");
-    } else if (session && user) {
-      history.replace("/reset/temporary");
-    }
-  }, [session, user, idToken]);
-
   return [
     e => {
       e.preventDefault();
-      setUser({ email: values.email });
+      setUser({ user: { email: values.email } });
       handleLogin(values);
     },
     input,

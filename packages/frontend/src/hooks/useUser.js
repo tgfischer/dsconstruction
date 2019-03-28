@@ -1,17 +1,19 @@
-import React, { useState, useContext } from "react";
-import PropTypes from "prop-types";
+import { useCookies } from "react-cookie";
+import get from "lodash/get";
 
-export const UserContext = React.createContext();
-
-export const UserProvider = ({ children }) => (
-  <UserContext.Provider value={useState({})}>{children}</UserContext.Provider>
-);
-
-UserProvider.propTypes = {
-  children: PropTypes.node.isRequired
-};
+const cookieName = "ds_construction";
 
 export default () => {
-  const [state, setState] = useContext(UserContext);
-  return [state, user => setState({ ...user })];
+  const [cookies, setCookie, removeCookie] = useCookies([cookieName]);
+  const user = get(cookies, [cookieName]);
+  return [
+    user || {},
+    Boolean(user && user.user && user.idToken),
+    user => {
+      setCookie(cookieName, user);
+    },
+    () => {
+      removeCookie(cookieName);
+    }
+  ];
 };
