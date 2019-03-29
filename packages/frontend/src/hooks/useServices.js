@@ -4,7 +4,7 @@ import get from "lodash/get";
 
 import { endpoints } from "../constants";
 
-export const useServices = () => {
+export default () => {
   const [{ data, isLoading }, getServices] = useResource(() => ({
     method: "GET",
     url: `${endpoints.backend}/services`

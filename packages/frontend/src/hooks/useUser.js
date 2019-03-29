@@ -10,10 +10,10 @@ export default () => {
     user || {},
     Boolean(user && user.user && user.idToken),
     user => {
-      setCookie(cookieName, user);
+      setCookie(cookieName, user, { path: "/" });
     },
     () => {
-      removeCookie(cookieName);
+      removeCookie(cookieName, { path: "/" });
     }
   ];
 };
