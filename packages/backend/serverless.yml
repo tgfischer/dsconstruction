@@ -2,6 +2,7 @@ service: dsconstruction-backend
 
 plugins:
   - serverless-webpack
+  - serverless-dotenv-plugin
   - serverless-offline
 
 custom:
@@ -16,7 +17,20 @@ provider:
   name: aws
   runtime: nodejs8.10
   region: ${opt:region, "ca-central-1"}
-  stage: ${opt:stage, "prod"}
+  stage: ${opt:stage, "dev"}
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - dynamodb:Query
+        - dynamodb:Scan
+        - dynamodb:GetItem
+        - dynamodb:PutItem
+        - dynamodb:UpdateItem
+        - dynamodb:DeleteItem
+      Resource:
+        Fn::GetAtt:
+          - ServicesTable
+          - Arn
 
 functions:
   home:
@@ -26,10 +40,31 @@ functions:
           path: /api/home
           method: GET
           cors: true
-  services:
+  getServices:
     handler: src/index.handler
     events:
       - http:
           path: /api/services
           method: GET
+          cors: true
+  destroyServices:
+    handler: src/index.handler
+    events:
+      - http:
+          path: /api/services
+          method: DELETE
+          cors: true
+  addService:
+    handler: src/index.handler
+    events:
+      - http:
+          path: /api/services/add
+          method: POST
+          cors: true
+  editService:
+    handler: src/index.handler
+    events:
+      - http:
+          path: /api/services/edit
+          method: POST
           cors: true

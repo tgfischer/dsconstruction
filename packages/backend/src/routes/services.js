@@ -1,42 +1,39 @@
 import express from "express";
 import HttpStatus from "http-status-codes";
+import asyncHandler from "express-async-handler";
+import { validate } from "@tomfischer/middleware";
+
+import * as client from "../clients/services";
+import * as schemas from "../schemas/services";
 
 const router = express.Router({ mergeParams: true });
 
-const services = (req, res) => {
-  return res.status(HttpStatus.OK).json({
-    services: [
-      {
-        name: "Service 1",
-        blurb:
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed feugiat tellus vel neque ullamcorper, vel faucibus metus auctor.",
-        description:
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed feugiat tellus vel neque ullamcorper, vel faucibus metus auctor. Aenean ac laoreet mauris, vitae ornare nulla. Vivamus elementum tellus at hendrerit facilisis. Pellentesque eleifend ligula ut elit tempus ultrices. Proin id libero in justo dignissim rutrum sit amet non massa. Vivamus feugiat eros id nisl laoreet, non sagittis dui condimentum. Aenean elementum lacus sed nisl condimentum sodales. Donec ullamcorper turpis nec cursus finibus. Vivamus sed varius tortor. Fusce ultricies vel ante at vehicula. Morbi sit amet commodo leo. Duis ligula ante, auctor a pharetra a, mattis sed ligula. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Aenean mauris erat, tempor dignissim tristique tincidunt, maximus non sapien. Fusce hendrerit tortor vel felis consectetur lobortis.",
-        thumbnail: "/images/thumbnail.jpg",
-        to: "/services/service"
-      },
-      {
-        name: "Service 2",
-        blurb:
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed feugiat tellus vel neque ullamcorper, vel faucibus metus auctor.",
-        description:
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed feugiat tellus vel neque ullamcorper, vel faucibus metus auctor. Aenean ac laoreet mauris, vitae ornare nulla. Vivamus elementum tellus at hendrerit facilisis. Pellentesque eleifend ligula ut elit tempus ultrices. Proin id libero in justo dignissim rutrum sit amet non massa. Vivamus feugiat eros id nisl laoreet, non sagittis dui condimentum. Aenean elementum lacus sed nisl condimentum sodales. Donec ullamcorper turpis nec cursus finibus. Vivamus sed varius tortor. Fusce ultricies vel ante at vehicula. Morbi sit amet commodo leo. Duis ligula ante, auctor a pharetra a, mattis sed ligula. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Aenean mauris erat, tempor dignissim tristique tincidunt, maximus non sapien. Fusce hendrerit tortor vel felis consectetur lobortis.",
-        thumbnail: "/images/thumbnail.jpg",
-        to: "/services/service"
-      },
-      {
-        name: "Service 3",
-        blurb:
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed feugiat tellus vel neque ullamcorper, vel faucibus metus auctor.",
-        description:
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed feugiat tellus vel neque ullamcorper, vel faucibus metus auctor. Aenean ac laoreet mauris, vitae ornare nulla. Vivamus elementum tellus at hendrerit facilisis. Pellentesque eleifend ligula ut elit tempus ultrices. Proin id libero in justo dignissim rutrum sit amet non massa. Vivamus feugiat eros id nisl laoreet, non sagittis dui condimentum. Aenean elementum lacus sed nisl condimentum sodales. Donec ullamcorper turpis nec cursus finibus. Vivamus sed varius tortor. Fusce ultricies vel ante at vehicula. Morbi sit amet commodo leo. Duis ligula ante, auctor a pharetra a, mattis sed ligula. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Aenean mauris erat, tempor dignissim tristique tincidunt, maximus non sapien. Fusce hendrerit tortor vel felis consectetur lobortis.",
-        thumbnail: "/images/thumbnail.jpg",
-        to: "/services/service"
-      }
-    ]
-  });
+const getAll = async (req, res) => {
+  const services = await client.getAll();
+  return res.status(HttpStatus.OK).json({ services });
 };
 
-router.get("/", services);
+const add = async (req, res) => {
+  const services = await client.add(res.locals.body);
+  return res.status(HttpStatus.OK).json({ services });
+};
+
+const edit = async (req, res) => {
+  const services = await client.edit(res.locals.body);
+  return res.status(HttpStatus.OK).json({ services });
+};
+
+const destroy = async (req, res) => {
+  const services = await client.destroy(res.locals.body);
+  return res.status(HttpStatus.OK).json({ services });
+};
+
+router.get("/", asyncHandler(getAll));
+
+router.post("/add", validate(schemas.add, "body"), asyncHandler(add));
+
+router.post("/edit", validate(schemas.edit, "body"), asyncHandler(edit));
+
+router.delete("/", validate(schemas.destroy, "body"), asyncHandler(destroy));
 
 export default router;
