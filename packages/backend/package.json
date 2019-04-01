@@ -1,13 +1,13 @@
 {
-  "name": "@tomfischer/backend",
+  "name": "@dsconstruction/backend",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
     "start": "npx serverless offline start --stage local --env local",
     "deploy": "npx serverless deploy --verbose",
-    "destroy": "npx serverless remove --verbose",
-    "include": "npx lerna add --scope=@tomfischer/backend"
+    "destroy": "node ./scripts/destroy.js",
+    "include": "npx lerna add --scope=@dsconstruction/backend"
   },
   "author": "Tom Fischer",
   "license": "ISC",
@@ -21,11 +21,13 @@
     "eslint": "^5.15.3",
     "eslint-config-prettier": "^4.1.0",
     "eslint-plugin-prettier": "^3.0.1",
+    "minimist": "^1.2.0",
     "prettier": "^1.16.4",
     "serverless": "^1.39.1",
     "serverless-dotenv-plugin": "^2.0.1",
     "serverless-offline": "^4.9.2",
     "serverless-webpack": "^5.2.0",
+    "shelljs": "^0.8.3",
     "webpack": "^4.29.6",
     "webpack-node-externals": "^1.7.2"
   },

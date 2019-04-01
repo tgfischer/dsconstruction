@@ -4,9 +4,18 @@ const minimist = require("minimist");
 const { stage = "dev" } = minimist(process.argv.slice(2));
 
 shell.exec("npx lerna bootstrap");
-shell.exec(
-  `npx lerna --scope=@tomfischer/client exec "yarn destroy --stage ${stage}"`
+let result = shell.exec(
+  `npx lerna --scope=@dsconstruction/frontend exec "yarn destroy --stage ${stage}"`
 );
+if (result.code !== 0) {
+  return;
+}
+result = shell.exec(
+  `npx lerna --scope=@dsconstruction/backend exec "yarn destroy --stage ${stage}"`
+);
+if (result.code !== 0) {
+  return;
+}
 shell.exec(
-  `npx lerna --scope=@tomfischer/backend exec "yarn destroy --stage ${stage}"`
+  `npx lerna --scope=@dsconstruction/users exec "yarn destroy --stage ${stage}"`
 );

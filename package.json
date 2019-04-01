@@ -1,9 +1,9 @@
 {
-  "name": "tomfischer",
+  "name": "@dsconstruction/users",
   "author": "Tom Fischer",
   "license": "ISC",
   "version": "1.0.0",
-  "description": "My portfolio website",
+  "description": "D's Construction user service",
   "main": "index.js",
   "scripts": {
     "deploy": "node ./scripts/deploy",

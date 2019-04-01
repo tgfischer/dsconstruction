@@ -16,13 +16,23 @@ custom:
     userPool:
       name: dsc-user-pool-${self:provider.stage}
     client:
-      name: dsc-fuser-pool-client-${self:provider.stage}
+      name: dsc-user-pool-client-${self:provider.stage}
 
 provider:
   name: aws
   runtime: nodejs8.10
-  region: us-east-1
+  region: ca-central-1
   stage: ${opt:stage, "dev"}
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - cognito-idp:AdminInitiateAuth
+        - cognito-idp:AdminRespondToAuthChallenge
+        - cognito-idp:AdminGetUser
+      Resource:
+        Fn::GetAtt:
+          - CognitoUserPool
+          - Arn
   environment:
     COGNITO_USER_POOL_ID:
       Ref: CognitoUserPool

@@ -24,6 +24,6 @@ const schema = new dynamoose.Schema({
 });
 
 export default dynamoose.model(
-  `ServicesTable${startCase(process.env.NODE_ENV)}`,
+  `DSCServices${startCase(process.env.SERVERLESS_STAGE)}`,
   schema
 );

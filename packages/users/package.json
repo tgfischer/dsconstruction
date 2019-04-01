@@ -1,5 +1,5 @@
 {
-  "name": "@tomfischer/users",
+  "name": "@dsconstruction/users",
   "version": "1.0.1",
   "description": "The user service for Tom Fischer's website",
   "main": "src/index.js",
@@ -7,7 +7,7 @@
     "start": "npx serverless offline start --stage local --env local",
     "deploy": "npx serverless deploy --verbose",
     "destroy": "npx serverless remove --verbose",
-    "include": "npx lerna add --scope=@tomfischer/users"
+    "include": "npx lerna add --scope=@dsconstruction/users"
   },
   "author": "Tom Fischer",
   "license": "ISC",

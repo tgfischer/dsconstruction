@@ -1,0 +1,35 @@
+service: dsconstruction-frontend
+
+plugins:
+  - serverless-finch
+  - serverless-build-client
+
+custom:
+  client:
+    bucketName: dsconstruction-frontend-${self:provider.stage}
+    distributionFolder: build
+    indexDocument: index.html
+    errorDocument: index.html
+
+provider:
+  name: aws
+  runtime: nodejs8.10
+  region: ca-central-1
+  stage: ${opt:stage, "dev"}
+  environment:
+    REACT_APP_BACKEND_ENDPOINT: ${cf:dsconstruction-backend-${self:provider.stage}.ServiceEndpoint}
+    REACT_APP_USERS_ENDPOINT: ${cf:dsconstruction-users-${self:provider.stage}.ServiceEndpoint}
+
+resources:
+  Resources:
+    S3Bucket:
+      Type: AWS::S3::Bucket
+      Properties:
+        BucketName: ${self:custom.client.bucketName}
+        AccessControl: PublicRead
+        WebsiteConfiguration:
+          IndexDocument: ${self:custom.client.indexDocument}
+          ErrorDocument: ${self:custom.client.errorDocument}
+  Outputs:
+    S3BucketName:
+      Value: ${self:custom.client.bucketName}
