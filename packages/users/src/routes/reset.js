@@ -1,7 +1,7 @@
 import express from "express";
 import HttpStatus from "http-status-codes";
 import asyncHandler from "express-async-handler";
-import validate, { types } from "../schemas/validate";
+import { validate } from "@tomfischer/middleware";
 
 import * as client from "../client";
 import * as schemas from "../schemas/login";
@@ -22,7 +22,7 @@ const resetTemporaryPassword = async (req, res) => {
 
 router.post(
   "/temporary",
-  validate(schemas.resetTemporaryPasswordSchema, types.BODY),
+  validate(schemas.resetTemporaryPasswordSchema, "body"),
   asyncHandler(resetTemporaryPassword)
 );
 

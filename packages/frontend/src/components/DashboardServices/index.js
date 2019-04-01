@@ -16,12 +16,23 @@ const styles = theme => ({
 });
 
 const DashboardServices = ({ classes }) => {
-  const [services, showAddModal, showEditModal] = useDashboardServices();
+  const [
+    services,
+    showAddModal,
+    showEditModal,
+    deleteRows,
+    isLoading
+  ] = useDashboardServices();
   return (
     <Dashboard>
       <Grid spacing={24} container>
         <Grid xs={12} item>
-          <Button onClick={showAddModal} variant="contained" color="primary">
+          <Button
+            onClick={showAddModal}
+            variant="contained"
+            color="primary"
+            disabled={isLoading}
+          >
             <AddIcon className={classes.buttonIcon} />
             Add Service
           </Button>
@@ -30,13 +41,47 @@ const DashboardServices = ({ classes }) => {
           <MuiDataTable
             title="Services"
             data={services}
-            columns={["Name", "Short Description"]}
+            columns={[
+              {
+                name: "id",
+                options: {
+                  display: false
+                }
+              },
+              {
+                name: "name",
+                label: "Name"
+              },
+              {
+                name: "blurb",
+                label: "Brief description"
+              },
+              {
+                name: "description",
+                options: {
+                  display: false
+                }
+              },
+              {
+                name: "thumbnail",
+                options: {
+                  display: false
+                }
+              },
+              {
+                name: "to",
+                options: {
+                  display: false
+                }
+              }
+            ]}
             options={{
               print: false,
               download: false,
               viewColumns: false,
               responsive: "scroll",
-              onRowClick: row => showEditModal()
+              onRowClick: showEditModal,
+              onRowsDelete: deleteRows
             }}
           />
         </Grid>

@@ -324,7 +324,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var http_status_codes__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(http_status_codes__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var express_async_handler__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! express-async-handler */ "express-async-handler");
 /* harmony import */ var express_async_handler__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(express_async_handler__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _schemas_validate__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../schemas/validate */ "./src/schemas/validate.js");
+/* harmony import */ var _tomfischer_middleware__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @tomfischer/middleware */ "@tomfischer/middleware");
+/* harmony import */ var _tomfischer_middleware__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_tomfischer_middleware__WEBPACK_IMPORTED_MODULE_4__);
 /* harmony import */ var _client__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../client */ "./src/client.js");
 /* harmony import */ var _schemas_login__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../schemas/login */ "./src/schemas/login.js");
 
@@ -347,7 +348,7 @@ const login = async (req, res) => {
   res.status(http_status_codes__WEBPACK_IMPORTED_MODULE_2___default.a.OK).json(result);
 };
 
-router.post("/", Object(_schemas_validate__WEBPACK_IMPORTED_MODULE_4__["default"])(_schemas_login__WEBPACK_IMPORTED_MODULE_6__["loginSchema"], _schemas_validate__WEBPACK_IMPORTED_MODULE_4__["types"].BODY), express_async_handler__WEBPACK_IMPORTED_MODULE_3___default()(login));
+router.post("/", Object(_tomfischer_middleware__WEBPACK_IMPORTED_MODULE_4__["validate"])(_schemas_login__WEBPACK_IMPORTED_MODULE_6__["loginSchema"], "body"), express_async_handler__WEBPACK_IMPORTED_MODULE_3___default()(login));
 /* harmony default export */ __webpack_exports__["default"] = (router);
 
 /***/ }),
@@ -369,7 +370,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var http_status_codes__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(http_status_codes__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var express_async_handler__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! express-async-handler */ "express-async-handler");
 /* harmony import */ var express_async_handler__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(express_async_handler__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _schemas_validate__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../schemas/validate */ "./src/schemas/validate.js");
+/* harmony import */ var _tomfischer_middleware__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @tomfischer/middleware */ "@tomfischer/middleware");
+/* harmony import */ var _tomfischer_middleware__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_tomfischer_middleware__WEBPACK_IMPORTED_MODULE_4__);
 /* harmony import */ var _client__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../client */ "./src/client.js");
 /* harmony import */ var _schemas_login__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../schemas/login */ "./src/schemas/login.js");
 
@@ -395,7 +397,7 @@ const resetTemporaryPassword = async (req, res) => {
   res.status(http_status_codes__WEBPACK_IMPORTED_MODULE_2___default.a.OK).json(result);
 };
 
-router.post("/temporary", Object(_schemas_validate__WEBPACK_IMPORTED_MODULE_4__["default"])(_schemas_login__WEBPACK_IMPORTED_MODULE_6__["resetTemporaryPasswordSchema"], _schemas_validate__WEBPACK_IMPORTED_MODULE_4__["types"].BODY), express_async_handler__WEBPACK_IMPORTED_MODULE_3___default()(resetTemporaryPassword));
+router.post("/temporary", Object(_tomfischer_middleware__WEBPACK_IMPORTED_MODULE_4__["validate"])(_schemas_login__WEBPACK_IMPORTED_MODULE_6__["resetTemporaryPasswordSchema"], "body"), express_async_handler__WEBPACK_IMPORTED_MODULE_3___default()(resetTemporaryPassword));
 /* harmony default export */ __webpack_exports__["default"] = (router);
 
 /***/ }),
@@ -428,45 +430,6 @@ const resetTemporaryPasswordSchema = joi__WEBPACK_IMPORTED_MODULE_1___default.a.
   lastName: joi__WEBPACK_IMPORTED_MODULE_1___default.a.string().allow(""),
   session: joi__WEBPACK_IMPORTED_MODULE_1___default.a.string().required()
 });
-
-/***/ }),
-
-/***/ "./src/schemas/validate.js":
-/*!*********************************!*\
-  !*** ./src/schemas/validate.js ***!
-  \*********************************/
-/*! exports provided: types, default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "types", function() { return types; });
-/* harmony import */ var source_map_support_register__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! source-map-support/register */ "source-map-support/register");
-/* harmony import */ var source_map_support_register__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(source_map_support_register__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var http_status_codes__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! http-status-codes */ "http-status-codes");
-/* harmony import */ var http_status_codes__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(http_status_codes__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var express_async_handler__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! express-async-handler */ "express-async-handler");
-/* harmony import */ var express_async_handler__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(express_async_handler__WEBPACK_IMPORTED_MODULE_2__);
-
-
-
-const types = {
-  BODY: "body",
-  PARAMS: "params",
-  QUERY: "query"
-};
-/* harmony default export */ __webpack_exports__["default"] = ((schema, type) => express_async_handler__WEBPACK_IMPORTED_MODULE_2___default()(async (req, res, next) => {
-  try {
-    const result = await schema.validate(req[type]);
-    res.locals[type] = result;
-    next();
-  } catch (err) {
-    next({
-      statusCode: http_status_codes__WEBPACK_IMPORTED_MODULE_1___default.a.BAD_REQUEST,
-      message: "The request was invalid"
-    });
-  }
-}));
 
 /***/ }),
 

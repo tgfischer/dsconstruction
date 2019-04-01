@@ -64,7 +64,6 @@ const Login = ({ classes, enqueueSnackbar }) => {
               <TextField
                 label="Email"
                 variant="outlined"
-                autoFocus
                 fullWidth
                 required
                 {...email("email")}
@@ -92,7 +91,7 @@ const Login = ({ classes, enqueueSnackbar }) => {
             disabled={!isValid || isLoading}
             fullWidth
           >
-            {isLoading && <CircularProgress />}
+            {isLoading && <CircularProgress size={30} color="secondary" />}
             {!isLoading && <span>Login</span>}
           </Button>
         </form>

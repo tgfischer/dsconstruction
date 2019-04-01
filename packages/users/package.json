@@ -4,7 +4,7 @@
   "description": "The user service for Tom Fischer's website",
   "main": "src/index.js",
   "scripts": {
-    "start": "npx serverless offline start",
+    "start": "npx serverless offline start --stage local --env local",
     "deploy": "npx serverless deploy --verbose",
     "destroy": "npx serverless remove --verbose",
     "include": "npx lerna add --scope=@tomfischer/users"
@@ -13,7 +13,7 @@
   "license": "ISC",
   "private": true,
   "dependencies": {
-    "@tomfischer/middleware": "^1.0.6",
+    "@tomfischer/middleware": "^1.0.9",
     "aws-sdk": "^2.428.0",
     "body-parser": "^1.18.3",
     "cookie-parser": "^1.4.4",
@@ -24,14 +24,12 @@
     "joi": "^14.3.1",
     "lodash": "^4.17.11",
     "path": "^0.12.7",
-    "serverless-dotenv-plugin": "^2.0.1",
     "serverless-http": "^1.9.1",
     "source-map-support": "^0.5.11"
   },
   "devDependencies": {
     "@babel/core": "^7.4.0",
     "@babel/preset-env": "^7.4.2",
-    "@tomfischer/eslint-config": "^1.0.6",
     "babel-loader": "^8.0.5",
     "babel-plugin-source-map-support": "^2.0.1",
     "eslint": "^5.15.3",
@@ -39,7 +37,7 @@
     "eslint-plugin-prettier": "^3.0.1",
     "prettier": "^1.16.4",
     "serverless": "^1.39.1",
-    "serverless-dynamodb-local": "^0.2.36",
+    "serverless-dotenv-plugin": "^2.0.1",
     "serverless-offline": "^4.9.2",
     "serverless-webpack": "^5.2.0",
     "webpack": "^4.29.6",

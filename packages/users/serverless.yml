@@ -2,7 +2,6 @@ service: dsconstruction-users
 
 plugins:
   - serverless-webpack
-  # - serverless-dynamodb-local
   - serverless-dotenv-plugin
   - serverless-offline
 
@@ -18,17 +17,6 @@ custom:
       name: dsc-user-pool-${self:provider.stage}
     client:
       name: dsc-fuser-pool-client-${self:provider.stage}
-  # dynamodb:
-  #   stages:
-  #     - dev
-  #   start:
-  #     port: 8000
-  #     inMemory: true
-  #     heapInitial: 200m
-  #     heapMax: 1g
-  #     migrate: true
-  #     seed: true
-  #     convertEmptyValues: true
 
 provider:
   name: aws

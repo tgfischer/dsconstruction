@@ -6,6 +6,7 @@ import { RequestProvider } from "react-request-hook";
 import { MuiThemeProvider } from "@material-ui/core/styles";
 import { SnackbarProvider } from "notistack";
 import { CookiesProvider } from "react-cookie";
+import { ModalProvider } from "react-modal-hook";
 import axios from "axios";
 
 import Home from "./Home";
@@ -16,9 +17,7 @@ import DashboardHome from "./DashboardHome";
 import DashboardServices from "./DashboardServices";
 import DashboardGallery from "./DashboardGallery";
 import DashboardContact from "./DashboardContact";
-import Modal from "./Modal";
 import withAuthorizer, { roles } from "./Authorizer";
-import { ModalProvider } from "../hooks/useModal";
 import theme from "../themes/default";
 
 const App = () => (
@@ -73,7 +72,6 @@ const App = () => (
                 />
               </Fragment>
             </Router>
-            <Modal />
           </CookiesProvider>
         </ModalProvider>
       </SnackbarProvider>
