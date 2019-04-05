@@ -50,13 +50,6 @@ functions:
           path: /api/services/add
           method: POST
           cors: true
-  editService:
-    handler: src/index.handler
-    events:
-      - http:
-          path: /api/services/edit
-          method: POST
-          cors: true
   getGalleryPhotos:
     handler: src/index.handler
     events:

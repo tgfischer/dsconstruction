@@ -10,10 +10,6 @@ export const pages = [
     href: "/"
   },
   {
-    label: "Services",
-    href: "/services"
-  },
-  {
     label: "Gallery",
     href: "/gallery"
   },

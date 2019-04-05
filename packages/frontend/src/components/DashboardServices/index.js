@@ -19,7 +19,6 @@ const DashboardServices = ({ classes }) => {
   const [
     services,
     showAddModal,
-    showEditModal,
     deleteRows,
     isLoading
   ] = useDashboardServices();
@@ -51,36 +50,13 @@ const DashboardServices = ({ classes }) => {
               {
                 name: "name",
                 label: "Name"
-              },
-              {
-                name: "blurb",
-                label: "Brief description"
-              },
-              {
-                name: "description",
-                options: {
-                  display: false
-                }
-              },
-              {
-                name: "thumbnail",
-                options: {
-                  display: false
-                }
-              },
-              {
-                name: "to",
-                options: {
-                  display: false
-                }
               }
             ]}
             options={{
               print: false,
               download: false,
               viewColumns: false,
-              responsive: "scroll",
-              onRowClick: showEditModal,
+              rowHover: false,
               onRowsDelete: deleteRows
             }}
           />

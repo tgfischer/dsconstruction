@@ -1,26 +1,34 @@
 import React from "react";
 import PropTypes from "prop-types";
+import TextField from "@material-ui/core/TextField";
 
 import { useServiceDialog } from "./hooks";
-import ServiceDialog from "./ServiceDialog";
+import Modal from "../Modal";
 
 const AddDialog = ({ title, isOpen, onClose }) => {
-  const [onSubmit, values, input, isLoading] = useServiceDialog(
+  const [onSubmit, input, isLoading] = useServiceDialog(
     "/services/add",
     {},
     true,
     onClose
   );
   return (
-    <ServiceDialog
+    <Modal
       title={title}
-      values={values}
-      input={input}
       isOpen={isOpen}
       isLoading={isLoading}
       onClose={onClose}
       onSubmit={onSubmit}
-    />
+    >
+      <TextField
+        label="Service name"
+        variant="outlined"
+        disabled={isLoading}
+        fullWidth
+        required
+        {...input.text("name")}
+      />
+    </Modal>
   );
 };
 

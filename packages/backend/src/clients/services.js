@@ -5,28 +5,12 @@ import Service from "../models/Service";
 
 export const getAll = async () => Service.scan().exec();
 
-export const add = async ({ name, blurb, description, thumbnail }) => {
+export const add = async ({ name }) => {
   const service = new Service({
     id: uuid(),
-    name,
-    blurb,
-    description,
-    thumbnail,
-    to: "/services"
+    name
   });
   await service.save();
-  return getAll();
-};
-
-export const edit = async ({ id, name, blurb, thumbnail, description }) => {
-  await Service.update({
-    id,
-    name,
-    blurb,
-    description,
-    thumbnail,
-    to: "/services"
-  });
   return getAll();
 };
 
