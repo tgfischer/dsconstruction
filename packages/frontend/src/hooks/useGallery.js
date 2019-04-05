@@ -1,22 +1,18 @@
-/* import { useEffect } from "react";
-import { useResource } from "react-request-hook";
+import { useEffect } from "react";
 import get from "lodash/get";
 
-import { backendEndpoint } from "../../constants"; */
+import { endpoints } from "../constants";
+import useRequest from "../hooks/useRequest";
 
-export default ({ size = 20 }) => {
-  return [
-    Array.from({ length: size }, () => ({
-      thumbnail: "/images/thumbnail.jpg",
-      original: "/images/placeholder.jpg"
-    }))
-  ];
-  /* const [{ data, isLoading }, getGallery] = useResource(() => ({
+export default (options = {}) => {
+  const [{ data, isLoading }, getGallery] = useRequest(() => ({
     method: "GET",
-    url: `${backendEndpoint}/api/gallery/page/${page}/size/${size}`
+    url: `${endpoints.backend}/gallery`,
+    params: {
+      size: options.size
+    }
   }));
 
   useEffect(() => void getGallery(), []);
-  const gallery = get(data, "gallery") || [];
-  return [gallery, isLoading]; */
+  return [get(data, "gallery") || [], isLoading];
 };

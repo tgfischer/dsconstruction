@@ -1,16 +1,15 @@
 import { useEffect } from "react";
-import { useResource } from "react-request-hook";
 import get from "lodash/get";
 
 import { endpoints } from "../constants";
+import useRequest from "../hooks/useRequest";
 
 export default () => {
-  const [{ data, isLoading }, getServices] = useResource(() => ({
+  const [{ data, isLoading }, getServices] = useRequest(() => ({
     method: "GET",
     url: `${endpoints.backend}/services`
   }));
 
   useEffect(() => void getServices(), []);
-  const services = get(data, "services") || [];
-  return [services, isLoading];
+  return [get(data, "services") || [], isLoading];
 };

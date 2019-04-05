@@ -4,7 +4,8 @@ export const add = Joi.object()
   .keys({
     name: Joi.string().required(),
     blurb: Joi.string().required(),
-    description: Joi.string().required()
+    description: Joi.string().required(),
+    thumbnail: Joi.string().required()
   })
   .required();
 

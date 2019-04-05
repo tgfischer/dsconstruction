@@ -9,6 +9,7 @@ export default () => {
   return [
     user || {},
     Boolean(user && user.user && user.idToken),
+    Boolean(user && user.user && user.session),
     user => {
       setCookie(cookieName, user, { path: "/" });
     },

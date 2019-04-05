@@ -40,7 +40,7 @@ const styles = theme => ({
 });
 
 const NavBar = ({ title, transparent, classes, history }) => {
-  const [, isLoggedIn, , handleLogOut] = useUser();
+  const [, isLoggedIn, , , handleLogOut] = useUser();
   return (
     <Fragment>
       <AppBar

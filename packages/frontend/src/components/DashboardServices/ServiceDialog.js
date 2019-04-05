@@ -8,22 +8,18 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import CircularProgress from "@material-ui/core/CircularProgress";
-import Card from "@material-ui/core/Card";
-import CardMedia from "@material-ui/core/CardMedia";
 import { withStyles } from "@material-ui/core/styles";
+
+import ServicesDropzone from "./ServicesDropzone";
 
 const styles = theme => ({
   content: {
     paddingTop: theme.spacing.unit
-  },
-  upload: {
-    display: "none"
   }
 });
 
 const ServiceDialog = ({
   title,
-  values,
   input,
   onSubmit,
   onClose,
@@ -35,7 +31,7 @@ const ServiceDialog = ({
     <DialogTitle>{title}</DialogTitle>
     <DialogContent className={classes.content}>
       <Grid spacing={16} container>
-        <Grid item sm={8} xs={12}>
+        <Grid item sm={7} xs={12}>
           <Grid spacing={16} container>
             <Grid item xs={12}>
               <TextField
@@ -72,32 +68,8 @@ const ServiceDialog = ({
             </Grid>
           </Grid>
         </Grid>
-        <Grid item sm={4} xs={12}>
-          <Grid spacing={16} container>
-            <Grid xs={12} item>
-              <Card>
-                <CardMedia
-                  component="img"
-                  src={values.thumbnail || "/images/placeholder.jpg"}
-                  alt={values.thumbnail || "/images/placeholder.jpg"}
-                />
-              </Card>
-            </Grid>
-            <Grid xs={12} item>
-              <input
-                id="upload"
-                className={classes.upload}
-                type="file"
-                accept="image/*"
-                multiple
-              />
-              <label htmlFor="upload">
-                <Button component="span" className={classes.button}>
-                  Browse
-                </Button>
-              </label>
-            </Grid>
-          </Grid>
+        <Grid item sm={5} xs={12}>
+          <ServicesDropzone />
         </Grid>
       </Grid>
     </DialogContent>
@@ -130,8 +102,7 @@ ServiceDialog.propTypes = {
   onClose: PropTypes.func.isRequired,
   onSubmit: PropTypes.func.isRequired,
   classes: PropTypes.shape({
-    content: PropTypes.string.isRequired,
-    upload: PropTypes.string.isRequired
+    content: PropTypes.string.isRequired
   }).isRequired
 };
 

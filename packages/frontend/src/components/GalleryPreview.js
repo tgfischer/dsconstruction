@@ -17,7 +17,7 @@ const GalleryPreview = () => {
       <Grid spacing={16} container>
         {images.map(({ thumbnail, original }, i) => (
           <Grid key={i} sm={3} xs={12} item>
-            <GalleryCard thumbnail={thumbnail} original={original} />
+            <GalleryCard thumbnail={thumbnail} original={original} clickable />
           </Grid>
         ))}
       </Grid>

@@ -3,31 +3,28 @@ import uuid from "uuid/v4";
 
 import Service from "../models/Service";
 
-export const getAll = async () => {
-  const services = await Service.scan().exec();
-  return services;
-};
+export const getAll = async () => Service.scan().exec();
 
-export const add = async ({ name, blurb, description }) => {
+export const add = async ({ name, blurb, description, thumbnail }) => {
   const service = new Service({
     id: uuid(),
     name,
     blurb,
     description,
-    thumbnail: "/images/thumbnail.jpg",
+    thumbnail,
     to: "/services"
   });
   await service.save();
   return getAll();
 };
 
-export const edit = async ({ id, name, blurb, description }) => {
+export const edit = async ({ id, name, blurb, thumbnail, description }) => {
   await Service.update({
     id,
     name,
     blurb,
     description,
-    thumbnail: "/images/thumbnail.jpg",
+    thumbnail,
     to: "/services"
   });
   return getAll();

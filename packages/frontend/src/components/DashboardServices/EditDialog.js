@@ -8,6 +8,7 @@ const EditDialog = ({ title, service, isOpen, onClose }) => {
   const [onSubmit, values, input, isLoading] = useServiceDialog(
     "/services/edit",
     service,
+    false,
     onClose
   );
   return (

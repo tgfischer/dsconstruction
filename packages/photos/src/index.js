@@ -5,9 +5,7 @@ import cookieParser from "cookie-parser";
 import cors from "cors";
 import middleware from "@tomfischer/middleware";
 
-import home from "./routes/home";
-import gallery from "./routes/gallery";
-import services from "./routes/services";
+import upload from "./routes/upload";
 
 const app = express();
 
@@ -16,9 +14,7 @@ app.use(bodyParser.json());
 app.use(cookieParser());
 app.use(cors());
 
-app.use("/api/home", home);
-app.use("/api/gallery", gallery);
-app.use("/api/services", services);
+app.use("/api/upload", upload);
 app.use(middleware.errorHandler);
 
 export const handler = serverless(app);

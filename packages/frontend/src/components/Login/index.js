@@ -8,7 +8,7 @@ import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import Button from "@material-ui/core/Button";
 import { withStyles } from "@material-ui/core/styles";
-import { withSnackbar } from "notistack";
+import { withRouter } from "react-router";
 
 import Page from "../Page";
 import Container from "../Container";
@@ -31,13 +31,8 @@ const styles = theme => ({
   }
 });
 
-const Login = ({ classes, enqueueSnackbar }) => {
-  const [onSubmit, { email, password }, isValid, isLoading] = useLogin(err =>
-    enqueueSnackbar(err, {
-      variant: "error",
-      preventDuplicate: true
-    })
-  );
+const Login = ({ classes, history }) => {
+  const [onSubmit, { email, password }, isValid, isLoading] = useLogin(history);
 
   return (
     <Page>
@@ -101,10 +96,12 @@ const Login = ({ classes, enqueueSnackbar }) => {
 };
 
 Login.propTypes = {
-  enqueueSnackbar: PropTypes.func.isRequired,
   classes: PropTypes.shape({
     textField: PropTypes.string.isRequired
+  }).isRequired,
+  history: PropTypes.shape({
+    replace: PropTypes.func.isRequired
   }).isRequired
 };
 
-export default withStyles(styles)(withSnackbar(Login));
+export default withStyles(styles)(withRouter(Login));

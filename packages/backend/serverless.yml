@@ -57,3 +57,24 @@ functions:
           path: /api/services/edit
           method: POST
           cors: true
+  getGalleryPhotos:
+    handler: src/index.handler
+    events:
+      - http:
+          path: /api/gallery
+          method: GET
+          cors: true
+  destroyGalleryPhotos:
+    handler: src/index.handler
+    events:
+      - http:
+          path: /api/gallery
+          method: DELETE
+          cors: true
+  addGalleryPhoto:
+    handler: src/index.handler
+    events:
+      - http:
+          path: /api/gallery/add
+          method: POST
+          cors: true

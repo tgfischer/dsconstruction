@@ -1,16 +1,16 @@
 import { useEffect } from "react";
-import { useResource } from "react-request-hook";
 import get from "lodash/get";
+
+import useRequest from "../../hooks/useRequest";
 
 import { endpoints } from "../../constants";
 
 export const useHome = () => {
-  const [{ data, isLoading }, getHome] = useResource(() => ({
+  const [{ data, isLoading }, getHome] = useRequest(() => ({
     method: "GET",
     url: `${endpoints.backend}/home`
   }));
 
   useEffect(() => void getHome(), []);
-  const home = get(data, "home") || { masthead: {} };
-  return [home, isLoading];
+  return [get(data, "home") || { masthead: {} }, isLoading];
 };

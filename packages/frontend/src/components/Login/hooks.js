@@ -1,30 +1,38 @@
 import { useEffect } from "react";
-import { useResource } from "react-request-hook";
 import { useFormState } from "react-use-form-state";
-import get from "lodash/get";
 
 import { endpoints } from "../../constants";
 import useUser from "../../hooks/useUser";
+import useRequest from "../../hooks/useRequest";
 
-export const useLogin = (history, onError) => {
+export const useLogin = history => {
   const [{ values, validity }, input] = useFormState();
-  const [, , setUser] = useUser();
-  const [{ data, error, isLoading }, handleLogin] = useResource(data => ({
-    method: "POST",
-    url: `${endpoints.users}/login`,
-    data
-  }));
+  const [, , isChallenged, setUser, clearUser] = useUser();
+  const [{ isLoading }, handleLogin] = useRequest(
+    data => ({
+      method: "POST",
+      url: `${endpoints.users}/login`,
+      data
+    }),
+    ({ session, user, idToken }) => {
+      if (!user) {
+        return;
+      }
+
+      if (session) {
+        setUser({ session, user });
+      } else if (idToken) {
+        setUser({ idToken, user });
+      }
+    },
+    clearUser
+  );
 
   useEffect(() => {
-    const message = get(error, ["data", "err", "message"]);
-    if (data && data.session && data.user) {
-      setUser({ session: data.session, user: data.user });
-    } else if (data && data.idToken && data.user) {
-      setUser({ idToken: data.idToken, user: data.user });
-    } else if (message) {
-      onError(message);
+    if (isChallenged) {
+      history.replace("/reset/temporary");
     }
-  }, [data, error]);
+  }, [isChallenged]);
 
   return [
     e => {

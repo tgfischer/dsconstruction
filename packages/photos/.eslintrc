@@ -1,0 +1,6 @@
+{
+  "extends": ["@tomfischer/eslint-config"],
+  "env": {
+    "node": true
+  }
+}

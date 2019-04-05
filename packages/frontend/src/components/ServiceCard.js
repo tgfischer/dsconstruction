@@ -9,6 +9,7 @@ import Typography from "@material-ui/core/Typography";
 import { withStyles } from "@material-ui/core/styles";
 
 import ButtonLink from "./ButtonLink";
+import { getPhotoUrl } from "../utils";
 
 const styles = {
   media: {
@@ -19,7 +20,11 @@ const styles = {
 const ServiceCard = ({ name, blurb, thumbnail, to, classes }) => (
   <Card>
     <CardHeader title={<Typography variant="subtitle1">{name}</Typography>} />
-    <CardMedia className={classes.media} image={thumbnail} title={name} />
+    <CardMedia
+      className={classes.media}
+      image={getPhotoUrl(thumbnail)}
+      title={name}
+    />
     <CardContent>
       <Typography>{blurb}</Typography>
     </CardContent>
