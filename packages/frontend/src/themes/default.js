@@ -12,11 +12,6 @@ export default createMuiTheme({
     }
   },
   overrides: {
-    MUIDataTableBodyRow: {
-      root: {
-        cursor: "pointer"
-      }
-    },
     MuiTypography: {
       h6: {
         textTransform: "uppercase"

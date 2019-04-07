@@ -1,64 +1,102 @@
 import React from "react";
 import PropTypes from "prop-types";
 import Dialog from "@material-ui/core/Dialog";
+import Grid from "@material-ui/core/Grid";
 import Card from "@material-ui/core/Card";
 import CardActionArea from "@material-ui/core/CardActionArea";
+import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
 import { useModal } from "react-modal-hook";
 import { withStyles } from "@material-ui/core/styles";
 
 import { getPhotoUrl } from "../utils";
 
-const styles = {
+const styles = theme => ({
   thumbnail: {
     height: 300,
     width: "auto"
   },
-  original: {
-    height: "calc(100vh - 5rem)",
-    width: "100vh"
+  icon: {
+    fill: "currentColor",
+    width: "1em",
+    height: "1em",
+    display: "inline-block",
+    fontSize: "24px",
+    transition: "fill 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms",
+    userSelect: "none",
+    flexShrink: "0",
+    color: theme.palette.primary.main
+  },
+  footer: {
+    padding: 0,
+    paddingBottom: "0px !important"
   }
-};
+});
 
-const GalleryCard = ({ clickable, thumbnail, original, classes }) => {
+const GalleryCard = ({ photo, onClick, classes, footer: Footer }) => {
   const [showModal, hideModal] = useModal(() => (
     <Dialog onClose={() => hideModal()} maxWidth="lg" open>
       <Card>
         <CardMedia
-          className={classes.original}
-          image={getPhotoUrl(original)}
-          title={original}
+          component="img"
+          src={getPhotoUrl(photo.original)}
+          alt={photo.original}
         />
       </Card>
     </Dialog>
   ));
   return (
     <Card>
-      {clickable && (
-        <CardActionArea onClick={showModal}>
-          <CardMedia
-            className={classes.thumbnail}
-            image={getPhotoUrl(thumbnail)}
-          />
-        </CardActionArea>
+      <CardActionArea onClick={onClick ? () => onClick(photo) : showModal}>
+        <CardMedia
+          className={classes.thumbnail}
+          image={getPhotoUrl(photo.thumbnail)}
+        >
+          <Grid spacing={8} container>
+            {photo.isSelected && (
+              <Grid item>
+                <svg
+                  className={classes.icon}
+                  focusable="false"
+                  viewBox="0 0 24 24"
+                  aria-hidden="true"
+                  role="presentation"
+                >
+                  <path fill="none" d="M0 0h24v24H0V0z" />
+                  <path d="M5 19h14V5H5v14zm2.41-7.4l2.58 2.58 6.59-6.59L17.99 9l-8 8L6 13.01l1.41-1.41z" />
+                  <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V5h14v14z" />
+                  <path
+                    d="M17.99 9l-1.41-1.42-6.59 6.59-2.58-2.57-1.42 1.41 4 3.99z"
+                    fill="white"
+                  />
+                </svg>
+              </Grid>
+            )}
+          </Grid>
+        </CardMedia>
+      </CardActionArea>
+      {Footer && (
+        <CardContent className={classes.footer}>
+          <Footer photo={photo} />
+        </CardContent>
       )}
-      {!clickable && <CardMedia component="img" src={getPhotoUrl(thumbnail)} />}
     </Card>
   );
 };
 
 GalleryCard.propTypes = {
-  clickable: PropTypes.bool,
-  thumbnail: PropTypes.string.isRequired,
-  original: PropTypes.string.isRequired,
-  classes: PropTypes.shape({
+  photo: PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    thumbnail: PropTypes.string.isRequired,
     original: PropTypes.string.isRequired,
-    thumbnail: PropTypes.string.isRequired
+    isSelected: PropTypes.bool
+  }).isRequired,
+  onClick: PropTypes.func,
+  footer: PropTypes.func,
+  classes: PropTypes.shape({
+    thumbnail: PropTypes.string.isRequired,
+    footer: PropTypes.string.isRequired
   }).isRequired
-};
-
-GalleryCard.defaultProps = {
-  clickable: false
 };
 
 export default withStyles(styles)(GalleryCard);

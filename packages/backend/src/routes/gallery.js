@@ -23,10 +23,17 @@ const destroy = async (req, res) => {
   return res.status(HttpStatus.OK).json({ gallery });
 };
 
+const toggle = async (req, res) => {
+  const tags = await client.toggleTags(res.locals.body);
+  return res.status(HttpStatus.OK).json({ tags });
+};
+
 router.get("/", validate(schemas.get, "query"), asyncHandler(get));
 
-router.post("/add", validate(schemas.add, "body"), asyncHandler(add));
+router.post("/", validate(schemas.add, "body"), asyncHandler(add));
 
 router.delete("/", validate(schemas.destroy, "body"), asyncHandler(destroy));
+
+router.post("/toggle", validate(schemas.toggle, "body"), asyncHandler(toggle));
 
 export default router;

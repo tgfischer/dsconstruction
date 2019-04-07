@@ -1,12 +1,12 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-import { useGalleryDialog } from "./hooks";
+import { useGalleryModal } from "./hooks";
 import GalleryDropzone from "./GalleryDropzone";
 import Modal from "../Modal";
 
-const AddDialog = ({ title, isOpen, onClose }) => {
-  const [onSubmit, isLoading] = useGalleryDialog(onClose);
+const AddPhotosModal = ({ title, isOpen, onClose }) => {
+  const [onSubmit, isLoading] = useGalleryModal(onClose);
   return (
     <Modal
       title={title}
@@ -21,10 +21,10 @@ const AddDialog = ({ title, isOpen, onClose }) => {
   );
 };
 
-AddDialog.propTypes = {
+AddPhotosModal.propTypes = {
   title: PropTypes.string.isRequired,
   isOpen: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired
 };
 
-export default AddDialog;
+export default AddPhotosModal;

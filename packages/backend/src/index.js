@@ -7,6 +7,7 @@ import middleware from "@tomfischer/middleware";
 
 import home from "./routes/home";
 import gallery from "./routes/gallery";
+import tags from "./routes/tags";
 import services from "./routes/services";
 
 const app = express();
@@ -18,6 +19,7 @@ app.use(cors());
 
 app.use("/api/home", home);
 app.use("/api/gallery", gallery);
+app.use("/api/gallery/tags", tags);
 app.use("/api/services", services);
 app.use(middleware.errorHandler);
 

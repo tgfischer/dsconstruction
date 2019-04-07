@@ -22,9 +22,15 @@ const Modal = ({
   onSubmit,
   isLoading,
   maxWidth,
+  fullWidth,
   classes
 }) => (
-  <Dialog open={isOpen} onClose={onClose} maxWidth={maxWidth} fullWidth>
+  <Dialog
+    open={isOpen}
+    onClose={onClose}
+    maxWidth={maxWidth}
+    fullWidth={fullWidth}
+  >
     <DialogTitle>{title}</DialogTitle>
     <DialogContent className={classes.content}>{children}</DialogContent>
     <DialogActions>
@@ -50,13 +56,14 @@ Modal.propTypes = {
   onClose: PropTypes.func.isRequired,
   onSubmit: PropTypes.func.isRequired,
   maxWidth: PropTypes.oneOf(["sm", "md", "lg"]),
+  fullWidth: PropTypes.bool,
   classes: PropTypes.shape({
     content: PropTypes.string.isRequired
   }).isRequired
 };
 
 Modal.defaultProps = {
-  maxWidth: "md"
+  fullWidth: false
 };
 
 export default withStyles(styles)(Modal);

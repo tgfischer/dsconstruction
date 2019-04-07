@@ -2,16 +2,11 @@ import React from "react";
 import PropTypes from "prop-types";
 import TextField from "@material-ui/core/TextField";
 
-import { useServiceDialog } from "./hooks";
+import { useServiceModal } from "./hooks";
 import Modal from "../Modal";
 
-const AddDialog = ({ title, isOpen, onClose }) => {
-  const [onSubmit, input, isLoading] = useServiceDialog(
-    "/services/add",
-    {},
-    true,
-    onClose
-  );
+const DashboardServicesModal = ({ title, isOpen, onClose }) => {
+  const [onSubmit, input, isLoading] = useServiceModal(onClose);
   return (
     <Modal
       title={title}
@@ -19,6 +14,8 @@ const AddDialog = ({ title, isOpen, onClose }) => {
       isLoading={isLoading}
       onClose={onClose}
       onSubmit={onSubmit}
+      maxWidth="sm"
+      fullWidth
     >
       <TextField
         label="Service name"
@@ -32,11 +29,11 @@ const AddDialog = ({ title, isOpen, onClose }) => {
   );
 };
 
-AddDialog.propTypes = {
+DashboardServicesModal.propTypes = {
   title: PropTypes.string.isRequired,
   isOpen: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
   submitButton: PropTypes.func.isRequired
 };
 
-export default AddDialog;
+export default DashboardServicesModal;

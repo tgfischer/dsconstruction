@@ -13,5 +13,6 @@
     "lerna": "^3.13.1",
     "minimist": "^1.2.0",
     "shelljs": "^0.8.3"
-  }
+  },
+  "dependencies": {}
 }

@@ -19,3 +19,17 @@ export const add = Joi.array()
 export const destroy = Joi.array()
   .items(Joi.string().required())
   .required();
+
+export const toggle = Joi.object()
+  .keys({
+    photos: Joi.array()
+      .items(Joi.string().required())
+      .required(),
+    add: Joi.array()
+      .items(Joi.string())
+      .required(),
+    remove: Joi.array()
+      .items(Joi.string())
+      .required()
+  })
+  .required();

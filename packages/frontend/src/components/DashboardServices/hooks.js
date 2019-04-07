@@ -1,20 +1,18 @@
 import React from "react";
-import Button from "@material-ui/core/Button";
 import { useFormState } from "react-use-form-state";
 
 import { endpoints } from "../../constants";
 import useServices from "../../hooks/useServices";
 import useModal from "../../hooks/useModal";
 import useRequest from "../../hooks/useRequest";
-import DashboardServicesDialog from "./DashboardServicesDialog";
+import DashboardServicesModal from "./DashboardServicesModal";
 
 export const useDashboardServices = () => {
   const [services, isLoading] = useServices();
   const [showAddModal, hideAddModal] = useModal(() => () => (
-    <DashboardServicesDialog
+    <DashboardServicesModal
       title="Add a service"
       onClose={hideAddModal}
-      submitButton={() => <Button onClick={hideAddModal}>Add</Button>}
       isOpen
     />
   ));
@@ -36,12 +34,12 @@ export const useDashboardServices = () => {
   ];
 };
 
-export const useServiceDialog = (url, initialState, requiresPhoto, onClose) => {
-  const [{ values }, input] = useFormState(initialState);
+export const useServiceModal = onClose => {
+  const [{ values }, input] = useFormState({});
   const [submitResponse, handleSubmit] = useRequest(
     data => ({
       method: "POST",
-      url: `${endpoints.backend}${url}`,
+      url: `${endpoints.backend}/services/`,
       data
     }),
     () => {

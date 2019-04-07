@@ -7,7 +7,10 @@ import get from "lodash/get";
 export default (request, onSuccess = identity, onError = identity) => {
   const [response, handleRequest] = useResource(request);
   const { enqueueSnackbar } = useSnackbar();
-  const err = get(response, ["error", "data", "err", "message"]);
+  const err =
+    get(response, ["error", "data", "err", "message"]) ||
+    get(response, ["error", "data", "error"]) ||
+    get(response, ["error", "data", "err"]);
 
   useEffect(() => {
     if (response.data) {

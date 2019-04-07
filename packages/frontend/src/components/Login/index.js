@@ -97,7 +97,10 @@ const Login = ({ classes, history }) => {
 
 Login.propTypes = {
   classes: PropTypes.shape({
-    textField: PropTypes.string.isRequired
+    textField: PropTypes.string.isRequired,
+    form: PropTypes.string.isRequired,
+    avatar: PropTypes.string.isRequired,
+    submit: PropTypes.string.isRequired
   }).isRequired,
   history: PropTypes.shape({
     replace: PropTypes.func.isRequired

@@ -47,7 +47,7 @@ functions:
     handler: src/index.handler
     events:
       - http:
-          path: /api/services/add
+          path: /api/services
           method: POST
           cors: true
   getGalleryPhotos:
@@ -68,6 +68,35 @@ functions:
     handler: src/index.handler
     events:
       - http:
-          path: /api/gallery/add
+          path: /api/gallery
+          method: POST
+          cors: true
+  toggleTags:
+    handler: src/index.handler
+    events:
+      - http:
+          path: /api/gallery/toggle
+          method: POST
+          cors: true
+
+  getTags:
+    handler: src/index.handler
+    events:
+      - http:
+          path: /api/gallery/tags
+          method: GET
+          cors: true
+  destroyTag:
+    handler: src/index.handler
+    events:
+      - http:
+          path: /api/gallery/tags
+          method: DELETE
+          cors: true
+  addTag:
+    handler: src/index.handler
+    events:
+      - http:
+          path: /api/gallery/tags
           method: POST
           cors: true
