@@ -6,12 +6,11 @@ import Page from "./Page";
 import SideNav from "./SideNav";
 
 const Container = styled.div`
-  padding-top: 16px;
-  padding-bottom: 16px;
+  padding: 16px;
 `;
 
 const Dashboard = ({ children }) => (
-  <Page>
+  <Page fixed>
     <SideNav />
     <Container>{children}</Container>
   </Page>

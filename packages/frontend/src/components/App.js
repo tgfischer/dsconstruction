@@ -10,6 +10,7 @@ import { ModalProvider } from "react-modal-hook";
 import axios from "axios";
 
 import Home from "./Home";
+import GalleryPage from "./Gallery";
 import Login from "./Login";
 import ResetPassword from "./ResetPassword";
 import DashboardSettings from "./DashboardSettings";
@@ -40,6 +41,7 @@ const App = () => (
                   path="/reset/:type"
                   component={withAuthorizer(roles.GUEST, ResetPassword)}
                 />
+                <Route exact path="/gallery" component={GalleryPage} />
                 <Route
                   exact
                   path="/dashboard"

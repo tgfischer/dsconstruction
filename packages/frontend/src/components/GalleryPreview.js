@@ -1,21 +1,28 @@
 import React from "react";
 
 import Preview from "./Preview";
-import Gallery from "./Gallery";
+import GalleryCards from "./GalleryCards";
 import ButtonLink from "./ButtonLink";
 import useGallery from "../hooks/useGallery";
+import GalleryProvider from "../contexts/GalleryProvider";
 
 const GalleryPreview = () => {
-  const [photos, , isLoading] = useGallery({ size: 4 });
+  const { photos, isLoading } = useGallery();
   return (
     <Preview
       title="Photo Gallery"
       isLoading={isLoading}
       Action={() => <ButtonLink to="/gallery">View More</ButtonLink>}
     >
-      <Gallery photos={photos} />
+      <GalleryCards photos={photos} />
     </Preview>
   );
 };
 
-export default GalleryPreview;
+const GalleryPreviewWrapper = () => (
+  <GalleryProvider initialState={{ page: 0, size: 4 }}>
+    <GalleryPreview />
+  </GalleryProvider>
+);
+
+export default GalleryPreviewWrapper;

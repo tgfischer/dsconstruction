@@ -9,14 +9,22 @@ import useGallery from "../../hooks/useGallery";
 import useModal from "../../hooks/useModal";
 import useRequest from "../../hooks/useRequest";
 import useBulkUpload from "../../hooks/useBulkUpload";
-import useTags from "../../hooks/useTags";
 import AddPhotosModal from "./AddPhotosModal";
 import ToggleTagsModal from "./ToggleTagsModal";
 import AddTagModal from "./AddTagModal";
 
 export const useDashboardGallery = () => {
-  const [photos, toggleSelect, isLoading] = useGallery({ size: 12 });
-  const [tags, deleteTag] = useTags();
+  const {
+    photos,
+    count,
+    tags,
+    handleSelectPhoto,
+    handleGetPage,
+    handleDeleteTag,
+    isLoading
+  } = useGallery({
+    page: 0
+  });
   const [showPhotosModal, hidePhotosModal] = useModal(() => () => (
     <PhotosProvider>
       <AddPhotosModal title="Add photos" onClose={hidePhotosModal} isOpen />
@@ -43,17 +51,19 @@ export const useDashboardGallery = () => {
     () => window.location.reload()
   );
 
-  return [
+  return {
     photos,
+    count,
     showPhotosModal,
     tags,
     showTagModal,
     showEditModal,
-    photos => handleDeletePhoto(photos.map(({ id }) => id)),
-    deleteTag,
-    toggleSelect,
+    handleDeletePhotos: photos => handleDeletePhoto(photos.map(({ id }) => id)),
+    handleDeleteTag,
+    handleSelectPhoto,
+    handleGetPage,
     isLoading
-  ];
+  };
 };
 
 export const useGalleryModal = onClose => {

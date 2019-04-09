@@ -1,10 +1,12 @@
-import { useEffect } from "react";
+import { useEffect, useContext } from "react";
 import get from "lodash/get";
 
 import { endpoints } from "../constants";
 import useRequest from "../hooks/useRequest";
+import { GalleryContext } from "../contexts/GalleryProvider";
 
 export default () => {
+  const [state, setState] = useContext(GalleryContext);
   const [{ data, isLoading }, getTags] = useRequest(() => ({
     method: "GET",
     url: `${endpoints.backend}/gallery/tags`
@@ -20,5 +22,16 @@ export default () => {
   );
 
   useEffect(() => void getTags(), []);
-  return [get(data, "tags") || [], handleDelete, isLoading];
+
+  useEffect(() => {
+    const tags = get(data, "tags") || [];
+    if (tags) {
+      setState({
+        ...state,
+        tags
+      });
+    }
+  }, [data]);
+
+  return [state.tags, handleDelete, isLoading];
 };

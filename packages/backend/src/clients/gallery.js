@@ -4,14 +4,23 @@ import _ from "lodash";
 
 import Gallery from "../models/Gallery";
 
-export const get = async ({ size }) =>
-  Gallery.scan()
-    .limit(size)
-    .exec();
+export const get = async ({ size, page, tags = [] }) => {
+  const photos = await Gallery.scan().exec();
+  const filtered =
+    tags.length === 0
+      ? photos
+      : _.filter(photos, photo => _.intersection(photo.tags, tags).length > 0);
+  const sorted = _.sortBy(filtered, photo => photo.createdAt);
+  const paged = _.take(_.drop(sorted, page * size), size);
+  return {
+    photos: paged,
+    count: filtered.length
+  };
+};
 
 export const add = async photos => {
   await Gallery.batchPut(
-    photos.map(async ({ original }) => ({
+    photos.map(({ original }) => ({
       id: uuid(),
       original,
       thumbnail: original,

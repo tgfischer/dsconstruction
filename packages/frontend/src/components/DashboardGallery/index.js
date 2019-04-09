@@ -13,8 +13,9 @@ import red from "@material-ui/core/colors/red";
 
 import Dashboard from "../Dashboard";
 import Tags from "./Tags";
-import Gallery from "../Gallery";
+import GalleryTable from "../GalleryTable";
 import { useDashboardGallery } from "./hooks";
+import GalleryProvider from "../../contexts/GalleryProvider";
 
 const styles = theme => ({
   button: {
@@ -39,24 +40,24 @@ const styles = theme => ({
 });
 
 const DashboardGallery = ({ classes }) => {
-  const [
+  const {
     photos,
-    showPhotoModal,
+    showPhotosModal,
     tags,
     showTagModal,
     showEditModal,
-    deletePhotos,
-    deleteTag,
-    selectPhoto,
+    handleDeletePhotos,
+    handleDeleteTag,
+    handleSelectPhoto,
     isLoading
-  ] = useDashboardGallery();
+  } = useDashboardGallery();
   return (
     <Dashboard>
       <Grid spacing={24} container>
         <Grid xs={12} item>
           <Button
             className={classes.button}
-            onClick={showPhotoModal}
+            onClick={showPhotosModal}
             variant="contained"
             color="primary"
             disabled={isLoading}
@@ -89,7 +90,9 @@ const DashboardGallery = ({ classes }) => {
               <Button
                 className={classnames(classes.button, classes.deleteButton)}
                 onClick={() =>
-                  deletePhotos(photos.filter(({ isSelected }) => isSelected))
+                  handleDeletePhotos(
+                    photos.filter(({ isSelected }) => isSelected)
+                  )
                 }
                 variant="contained"
                 color="primary"
@@ -102,22 +105,21 @@ const DashboardGallery = ({ classes }) => {
           )}
         </Grid>
         <Grid xs={12} item>
-          <Tags tags={tags} onDelete={deleteTag} />
+          <Tags tags={tags} onDelete={handleDeleteTag} />
         </Grid>
         <Grid xs={12} item>
-          <Gallery
-            photos={photos}
-            onClick={({ id }) => selectPhoto(id)}
-            footer={({ photo }) => {
-              return photo.tags.map(name => (
+          <GalleryTable
+            onClick={({ id }) => handleSelectPhoto(id)}
+            footer={({ photo }) =>
+              photo.tags.map(name => (
                 <Chip
                   key={name}
                   className={classes.tag}
                   label={name}
                   variant="outlined"
                 />
-              ));
-            }}
+              ))
+            }
           />
         </Grid>
       </Grid>
@@ -131,4 +133,10 @@ DashboardGallery.propTypes = {
   }).isRequired
 };
 
-export default withStyles(styles)(DashboardGallery);
+const GalleryPreviewWrapper = props => (
+  <GalleryProvider initialState={{ page: 0, size: 12 }}>
+    <DashboardGallery {...props} />
+  </GalleryProvider>
+);
+
+export default withStyles(styles)(GalleryPreviewWrapper);

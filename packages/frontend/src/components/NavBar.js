@@ -39,7 +39,7 @@ const styles = theme => ({
   }
 });
 
-const NavBar = ({ title, transparent, classes, history }) => {
+const NavBar = ({ title, transparent, classes, history, fixed }) => {
   const [, isLoggedIn, , , handleLogOut] = useUser();
   return (
     <Fragment>
@@ -47,7 +47,7 @@ const NavBar = ({ title, transparent, classes, history }) => {
         className={classnames(classes.root, {
           [classes.transparent]: transparent
         })}
-        position="absolute"
+        position={fixed ? "fixed" : "absolute"}
         color="secondary"
       >
         <Toolbar>
@@ -108,13 +108,15 @@ NavBar.propTypes = {
     button: PropTypes.string.isRequired,
     transparent: PropTypes.string.isRequired
   }).isRequired,
+  fixed: PropTypes.bool,
   history: PropTypes.shape({
     push: PropTypes.func.isRequired
   }).isRequired
 };
 
 NavBar.defaultProps = {
-  transparent: false
+  transparent: false,
+  fixed: false
 };
 
 export default withStyles(styles)(withRouter(NavBar));

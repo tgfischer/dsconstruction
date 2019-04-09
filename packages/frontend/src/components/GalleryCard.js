@@ -6,10 +6,10 @@ import Card from "@material-ui/core/Card";
 import CardActionArea from "@material-ui/core/CardActionArea";
 import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
-import { useModal } from "react-modal-hook";
 import { withStyles } from "@material-ui/core/styles";
 
 import { getPhotoUrl } from "../utils";
+import useModal from "../hooks/useModal";
 
 const styles = theme => ({
   thumbnail: {
@@ -34,20 +34,20 @@ const styles = theme => ({
 });
 
 const GalleryCard = ({ photo, onClick, classes, footer: Footer }) => {
-  const [showModal, hideModal] = useModal(() => (
+  const [showModal, hideModal] = useModal(src => () => (
     <Dialog onClose={() => hideModal()} maxWidth="lg" open>
       <Card>
-        <CardMedia
-          component="img"
-          src={getPhotoUrl(photo.original)}
-          alt={photo.original}
-        />
+        <CardMedia component="img" src={getPhotoUrl(src)} alt={src} />
       </Card>
     </Dialog>
   ));
   return (
     <Card>
-      <CardActionArea onClick={onClick ? () => onClick(photo) : showModal}>
+      <CardActionArea
+        onClick={
+          onClick ? () => onClick(photo) : () => showModal(photo.thumbnail)
+        }
+      >
         <CardMedia
           className={classes.thumbnail}
           image={getPhotoUrl(photo.thumbnail)}

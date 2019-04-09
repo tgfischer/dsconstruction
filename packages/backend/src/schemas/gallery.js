@@ -2,7 +2,13 @@ import Joi from "joi";
 
 export const get = Joi.object()
   .keys({
-    size: Joi.number().integer()
+    size: Joi.number()
+      .integer()
+      .required(),
+    page: Joi.number()
+      .integer()
+      .required(),
+    tags: Joi.array().items(Joi.string())
   })
   .required();
 
