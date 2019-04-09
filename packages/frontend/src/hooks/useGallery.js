@@ -50,12 +50,23 @@ export default () => {
       );
       setState({ ...state, photos });
     },
+    handleSelectTag: e => {
+      setState({
+        ...state,
+        selectedTags: e.target.value
+      });
+      handleGetPage({
+        ...state,
+        tags: e.target.value
+      });
+    },
     handleGetPage: (_, page) => {
       setState({
         ...state,
+        photos: [],
         page
       });
-      handleGetPage({ ...state, page });
+      handleGetPage({ ...state, page, tags: state.selectedTags });
     },
     handleDeleteTag,
     isLoading

@@ -1,13 +1,14 @@
-import dynamoose from "dynamoose";
 import uuid from "uuid/v4";
 import _ from "lodash";
 
 import Gallery from "../models/Gallery";
+import Tag from "../models/Tag";
 
 export const get = async ({ size, page, tags = [] }) => {
   const photos = await Gallery.scan().exec();
+  const savedTags = await Tag.scan().exec();
   const filtered =
-    tags.length === 0
+    tags.length === savedTags.length || tags.length === 0
       ? photos
       : _.filter(photos, photo => _.intersection(photo.tags, tags).length > 0);
   const sorted = _.sortBy(filtered, photo => photo.createdAt);
@@ -38,9 +39,9 @@ export const destroy = async photos => {
 
 export const toggleTags = async ({ photos: ids, add, remove }) => {
   const photos = await Gallery.batchGet(ids.map(id => ({ id })));
-  await dynamoose.transaction(
+  await Promise.all(
     photos.map(photo =>
-      Gallery.transaction.update(
+      Gallery.update(
         {
           id: photo.id
         },

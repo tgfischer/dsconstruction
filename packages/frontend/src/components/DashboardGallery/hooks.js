@@ -22,9 +22,7 @@ export const useDashboardGallery = () => {
     handleGetPage,
     handleDeleteTag,
     isLoading
-  } = useGallery({
-    page: 0
-  });
+  } = useGallery();
   const [showPhotosModal, hidePhotosModal] = useModal(() => () => (
     <PhotosProvider>
       <AddPhotosModal title="Add photos" onClose={hidePhotosModal} isOpen />

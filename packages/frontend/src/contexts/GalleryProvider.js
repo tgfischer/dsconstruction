@@ -8,6 +8,7 @@ const GalleryProvider = ({ children, initialState }) => {
   const test = defaults(initialState, {
     page: 0,
     tags: [],
+    selectedTags: [],
     photos: [],
     size: 12
   });
