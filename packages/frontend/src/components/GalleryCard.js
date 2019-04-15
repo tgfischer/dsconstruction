@@ -16,6 +16,10 @@ const styles = theme => ({
     height: 300,
     width: "auto"
   },
+  original: {
+    maxHeight: 800,
+    width: "auto"
+  },
   icon: {
     fill: "currentColor",
     width: "1em",
@@ -37,7 +41,12 @@ const GalleryCard = ({ photo, onClick, classes, footer: Footer }) => {
   const [showModal, hideModal] = useModal(src => () => (
     <Dialog onClose={() => hideModal()} maxWidth="lg" open>
       <Card>
-        <CardMedia component="img" src={getPhotoUrl(src)} alt={src} />
+        <CardMedia
+          className={classes.original}
+          component="img"
+          src={getPhotoUrl(src)}
+          alt={src}
+        />
       </Card>
     </Dialog>
   ));
@@ -95,6 +104,8 @@ GalleryCard.propTypes = {
   footer: PropTypes.func,
   classes: PropTypes.shape({
     thumbnail: PropTypes.string.isRequired,
+    original: PropTypes.string.isRequired,
+    icon: PropTypes.string.isRequired,
     footer: PropTypes.string.isRequired
   }).isRequired
 };

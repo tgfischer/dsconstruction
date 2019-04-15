@@ -15,7 +15,7 @@ export const get = async ({ size, page, tags = [] }) => {
     tags.length === savedTags.length || tags.length === 0
       ? photos
       : _.filter(photos, photo => _.intersection(photo.tags, tags).length > 0);
-  const sorted = _.sortBy(filtered, photo => photo.createdAt);
+  const sorted = _.orderBy(filtered, photo => photo.createdAt, ["desc"]);
   const paged = _.take(_.drop(sorted, page * size), size);
   return {
     photos: paged,
