@@ -39,3 +39,9 @@ export const toggle = Joi.object()
       .required()
   })
   .required();
+
+export const urlSchema = Joi.object().keys({
+  files: Joi.array()
+    .items(Joi.string().required())
+    .required()
+});

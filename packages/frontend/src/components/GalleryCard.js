@@ -45,7 +45,7 @@ const GalleryCard = ({ photo, onClick, classes, footer: Footer }) => {
     <Card>
       <CardActionArea
         onClick={
-          onClick ? () => onClick(photo) : () => showModal(photo.thumbnail)
+          onClick ? () => onClick(photo) : () => showModal(photo.original)
         }
       >
         <CardMedia

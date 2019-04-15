@@ -1,26 +1,47 @@
 import React, { Fragment } from "react";
 import PropTypes from "prop-types";
+import Typography from "@material-ui/core/Typography";
+import { withStyles } from "@material-ui/core/styles";
 
 import NavBar from "./NavBar";
 import CoreLayout from "./CoreLayout";
 import Container from "./Container";
 
-const Page = ({ fixed, children }) => (
+const styles = theme => ({
+  title: {
+    paddingTop: theme.spacing.unit * 2,
+    paddingBottom: theme.spacing.unit * 2,
+    textTransform: "inherit"
+  }
+});
+
+const Page = ({ title, fixed, classes, children }) => (
   <Fragment>
     <NavBar title="D's Construction" fixed={fixed} />
     <CoreLayout>
-      <Container>{children}</Container>
+      <Container>
+        {title && (
+          <Typography className={classes.title} variant="h2">
+            {title}
+          </Typography>
+        )}
+        {children}
+      </Container>
     </CoreLayout>
   </Fragment>
 );
 
 Page.propTypes = {
   children: PropTypes.node.isRequired,
-  fixed: PropTypes.bool
+  fixed: PropTypes.bool,
+  title: PropTypes.string,
+  classes: PropTypes.shape({
+    title: PropTypes.string.isRequired
+  }).isRequired
 };
 
 Page.defaultProps = {
   fixed: false
 };
 
-export default Page;
+export default withStyles(styles)(Page);

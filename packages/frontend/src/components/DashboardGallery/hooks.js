@@ -22,7 +22,7 @@ export const useDashboardGallery = () => {
     handleGetPage,
     handleDeleteTag,
     isLoading
-  } = useGallery();
+  } = useGallery({ fetch: false });
   const [showPhotosModal, hidePhotosModal] = useModal(() => () => (
     <PhotosProvider>
       <AddPhotosModal title="Add photos" onClose={hidePhotosModal} isOpen />
@@ -78,7 +78,7 @@ export const useGalleryModal = onClose => {
     }
   );
   const [, handleBulkUpload, , isUploading] = useBulkUpload(
-    `${endpoints.photos}/upload`,
+    `${endpoints.backend}/gallery/url`,
     "gallery",
     files,
     data =>

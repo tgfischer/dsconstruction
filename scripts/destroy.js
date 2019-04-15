@@ -4,18 +4,18 @@ const minimist = require("minimist");
 const { stage = "dev" } = minimist(process.argv.slice(2));
 
 shell.exec("npx lerna bootstrap");
-let result = shell.exec(
-  `npx lerna --scope=@dsconstruction/frontend exec "yarn destroy --stage ${stage}"`
-);
+["frontend", "backend", "users"].forEach(service => {
+  let result = shell.exec(
+    `npx lerna --scope=@dsconstruction/${service} exec "yarn destroy --stage ${stage}"`
+  );
+  if (result.code !== 0) {
+    throw 1;
+  }
+});
+
+shell.cd("packages/photos");
+const result = shell.exec(`serverless remove --stage ${stage} --verbose`);
 if (result.code !== 0) {
-  return;
+  throw 1;
 }
-result = shell.exec(
-  `npx lerna --scope=@dsconstruction/backend exec "yarn destroy --stage ${stage}"`
-);
-if (result.code !== 0) {
-  return;
-}
-shell.exec(
-  `npx lerna --scope=@dsconstruction/users exec "yarn destroy --stage ${stage}"`
-);
+shell.cd("../..");

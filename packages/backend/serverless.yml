@@ -12,14 +12,38 @@ custom:
     includeModules: true
     packager: "yarn"
     individually: true
+  s3:
+    bucketName: ${cf:dsconstruction-photos-${self:provider.stage}.StagingBucketName}
 
 provider:
   name: aws
   runtime: nodejs8.10
   region: ${opt:region, "ca-central-1"}
   stage: ${opt:stage, "dev"}
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - dynamodb:CreateTable
+        - dynamodb:DescribeTable
+        - dynamodb:Query
+        - dynamodb:Scan
+        - dynamodb:GetItem
+        - dynamodb:PutItem
+        - dynamodb:UpdateItem
+        - dynamodb:DeleteItem
+        - dynamodb:BatchWriteItem
+        - dynamodb:BatchGetItem
+      Resource: arn:aws:dynamodb:ca-central-1:*:table/DSC*
+    - Effect: Allow
+      Action:
+        - s3:PutObject
+        - s3:PutObjectAcl
+      Resource:
+        - arn:aws:s3:::${self:custom.s3.bucketName}
+        - arn:aws:s3:::${self:custom.s3.bucketName}/*
   environment:
     SERVERLESS_STAGE: ${self:provider.stage}
+    DSC_BUCKET_NAME: ${self:custom.s3.bucketName}
 
 functions:
   home:
@@ -71,6 +95,13 @@ functions:
           path: /api/gallery
           method: POST
           cors: true
+  getSignedUrl:
+    handler: src/index.handler
+    events:
+      - http:
+          path: /api/gallery/url
+          method: POST
+          cors: true
   toggleTags:
     handler: src/index.handler
     events:
@@ -78,7 +109,6 @@ functions:
           path: /api/gallery/toggle
           method: POST
           cors: true
-
   getTags:
     handler: src/index.handler
     events:

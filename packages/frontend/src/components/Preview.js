@@ -11,12 +11,15 @@ const styles = theme => ({
   action: {
     paddingTop: theme.spacing.unit * 2,
     paddingBottom: theme.spacing.unit * 2
+  },
+  title: {
+    textTransform: "inherit"
   }
 });
 
 const Preview = ({ title, Action, isLoading, classes, children }) => (
   <Container spaced>
-    <Typography variant="h3" gutterBottom>
+    <Typography className={classes.title} variant="h3" gutterBottom>
       {title}
     </Typography>
     {isLoading && <LoadingSpinner />}
@@ -36,7 +39,8 @@ Preview.propTypes = {
   Action: PropTypes.func,
   isLoading: PropTypes.bool,
   classes: PropTypes.shape({
-    action: PropTypes.string.isRequired
+    action: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequired
   }).isRequired,
   children: PropTypes.node.isRequired
 };

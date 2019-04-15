@@ -1,48 +1,52 @@
 service: dsconstruction-photos
 
 plugins:
-  - serverless-webpack
-  - serverless-dotenv-plugin
-  - serverless-offline
+  - serverless-python-requirements
 
 custom:
-  serverless-offline:
-    port: 3003
-  webpack:
-    includeModules: true
-    packager: "yarn"
-    individually: true
   s3:
-    bucketName: dsc-photos-${self:provider.stage}
+    bucketNames:
+      staging: dsc-photos-staging-${self:provider.stage}
+      public: dsc-photos-${self:provider.stage}
+  pythonRequirements:
+    dockerizePip: non-linux
+    pythonBin: python
 
 provider:
   name: aws
-  runtime: nodejs8.10
+  runtime: python3.7
   region: ca-central-1
   stage: ${opt:stage, "dev"}
   iamRoleStatements:
-    - Effect: "Allow"
+    - Effect: Allow
       Action:
         - s3:PutObject
-      Resource: arn:aws:s3:::${self:custom.s3.bucketName}
+        - s3:PutObjectAcl
+      Resource:
+        - arn:aws:s3:::${self:custom.s3.bucketNames.public}
+        - arn:aws:s3:::${self:custom.s3.bucketNames.public}/*
+        - arn:aws:s3:::${self:custom.s3.bucketNames.staging}
+        - arn:aws:s3:::${self:custom.s3.bucketNames.staging}/*
   environment:
-    DSC_BUCKET_NAME: ${self:custom.s3.bucketName}
+    DSC_STAGING_BUCKET_NAME: ${self:custom.s3.bucketNames.staging}
+    DSC_PUBLIC_BUCKET_NAME: ${self:custom.s3.bucketNames.public}
 
 functions:
-  getSignedUrl:
-    handler: src/index.handler
+  optimize:
+    handler: handler.optimize
     events:
-      - http:
-          path: /api/upload
-          method: POST
-          cors: true
+      - s3:
+          bucket: staging
+          event: s3:ObjectCreated:*
+          rules:
+            - prefix: gallery/
 
 resources:
   Resources:
-    S3BucketPhotos:
+    S3BucketStaging:
       Type: AWS::S3::Bucket
       Properties:
-        BucketName: ${self:custom.s3.bucketName}
+        BucketName: ${self:custom.s3.bucketNames.staging}
         CorsConfiguration:
           CorsRules:
             - AllowedOrigins:
@@ -53,3 +57,24 @@ resources:
                 - "GET"
                 - "PUT"
                 - "DELETE"
+    S3BucketPhotos:
+      Type: AWS::S3::Bucket
+      Properties:
+        BucketName: ${self:custom.s3.bucketNames.public}
+    OptimizeLambdaPermissionPhotosS3:
+      Type: AWS::Lambda::Permission
+      Properties:
+        FunctionName:
+          Fn::GetAtt:
+            - OptimizeLambdaFunction
+            - Arn
+        Principal: s3.amazonaws.com
+        Action: lambda:InvokeFunction
+        SourceAccount:
+          Ref: AWS::AccountId
+        SourceArn: "arn:aws:s3:::${self:custom.s3.bucketNames.staging}"
+  Outputs:
+    StagingBucketName:
+      Value: ${self:custom.s3.bucketNames.staging}
+    PublicBucketName:
+      Value: ${self:custom.s3.bucketNames.public}

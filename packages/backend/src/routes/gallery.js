@@ -28,6 +28,12 @@ const toggle = async (req, res) => {
   return res.status(HttpStatus.OK).json({ tags });
 };
 
+const getSignedUrl = async (req, res) => {
+  const { files } = res.locals.body;
+  const data = await client.getSignedUrl(files);
+  res.status(HttpStatus.OK).json({ data });
+};
+
 router.get("/", validate(schemas.get, "query"), asyncHandler(get));
 
 router.post("/", validate(schemas.add, "body"), asyncHandler(add));
@@ -35,5 +41,11 @@ router.post("/", validate(schemas.add, "body"), asyncHandler(add));
 router.delete("/", validate(schemas.destroy, "body"), asyncHandler(destroy));
 
 router.post("/toggle", validate(schemas.toggle, "body"), asyncHandler(toggle));
+
+router.post(
+  "/url",
+  validate(schemas.urlSchema, "body"),
+  asyncHandler(getSignedUrl)
+);
 
 export default router;

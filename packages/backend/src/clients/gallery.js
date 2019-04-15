@@ -1,8 +1,12 @@
+import AWS from "aws-sdk";
 import uuid from "uuid/v4";
 import _ from "lodash";
 
 import Gallery from "../models/Gallery";
 import Tag from "../models/Tag";
+import { encodeS3URI } from "../utils";
+
+const getS3Bucket = () => new AWS.S3();
 
 export const get = async ({ size, page, tags = [] }) => {
   const photos = await Gallery.scan().exec();
@@ -21,13 +25,16 @@ export const get = async ({ size, page, tags = [] }) => {
 
 export const add = async photos => {
   await Gallery.batchPut(
-    photos.map(({ original }) => ({
-      id: uuid(),
-      original,
-      thumbnail: original,
-      tags: [],
-      createdAt: new Date()
-    }))
+    photos.map(({ original }) => {
+      const key = encodeS3URI(original.split(".")[0]);
+      return {
+        id: uuid(),
+        original: key,
+        thumbnail: "/thumbnails" + key,
+        tags: [],
+        createdAt: new Date()
+      };
+    })
   );
   return get({});
 };
@@ -58,3 +65,14 @@ export const toggleTags = async ({ photos: ids, add, remove }) => {
 
   return get({});
 };
+
+export const getSignedUrl = files =>
+  files.map(file => ({
+    url: getS3Bucket().getSignedUrl("putObject", {
+      Bucket: process.env.DSC_BUCKET_NAME,
+      Key: encodeS3URI(file.split(".")[0]),
+      Expires: 60 * 5,
+      ACL: "public-read"
+    }),
+    file
+  }));

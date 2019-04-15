@@ -4,20 +4,21 @@ import defaults from "lodash/defaults";
 
 export const GalleryContext = React.createContext();
 
-const GalleryProvider = ({ children, initialState }) => {
-  const test = defaults(initialState, {
-    page: 0,
-    tags: [],
-    selectedTags: [],
-    photos: [],
-    size: 12
-  });
-  return (
-    <GalleryContext.Provider value={useState(test)}>
-      {children}
-    </GalleryContext.Provider>
-  );
-};
+const GalleryProvider = ({ children, initialState }) => (
+  <GalleryContext.Provider
+    value={useState(
+      defaults(initialState, {
+        page: 0,
+        tags: [],
+        selectedTags: [],
+        photos: [],
+        size: 12
+      })
+    )}
+  >
+    {children}
+  </GalleryContext.Provider>
+);
 
 GalleryProvider.propTypes = {
   children: PropTypes.node.isRequired,

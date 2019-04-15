@@ -5,7 +5,7 @@ import Page from "./Page";
 import GalleryTable from "./GalleryTable";
 
 const GalleryPage = () => (
-  <Page fixed>
+  <Page title="Photo Gallery" fixed>
     <GalleryProvider initialState={{}}>
       <GalleryTable />
     </GalleryProvider>

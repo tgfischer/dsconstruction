@@ -21,6 +21,7 @@ app.use("/api/home", home);
 app.use("/api/gallery", gallery);
 app.use("/api/gallery/tags", tags);
 app.use("/api/services", services);
+
 app.use(middleware.errorHandler);
 
 export const handler = serverless(app);

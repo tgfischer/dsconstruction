@@ -1,5 +1,6 @@
 import { useEffect, useContext } from "react";
 import get from "lodash/get";
+import defaults from "lodash/defaults";
 import qs from "qs";
 
 import { GalleryContext } from "../contexts/GalleryProvider";
@@ -7,7 +8,10 @@ import { endpoints } from "../constants";
 import useRequest from "../hooks/useRequest";
 import useTags from "../hooks/useTags";
 
-export default () => {
+export default (args = {}) => {
+  const options = defaults(args, {
+    fetch: true
+  });
   const [state, setState] = useContext(GalleryContext);
   const [, handleDeleteTag] = useTags();
   const [{ data, isLoading }, handleGetPage] = useRequest(data => ({
@@ -21,7 +25,11 @@ export default () => {
     paramsSerializer: qs.stringify
   }));
 
-  useEffect(() => void handleGetPage(state), []);
+  useEffect(() => {
+    if (options.fetch) {
+      handleGetPage(state);
+    }
+  }, []);
 
   useEffect(() => {
     const photos = get(data, ["gallery", "photos"]);
