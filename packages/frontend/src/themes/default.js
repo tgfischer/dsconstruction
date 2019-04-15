@@ -14,19 +14,24 @@ export default createMuiTheme({
   overrides: {
     MuiTypography: {
       h4: {
-        textTransform: "uppercase"
+        textTransform: "uppercase",
+        fontWeight: 700
       },
       h3: {
-        textTransform: "uppercase"
+        textTransform: "uppercase",
+        fontWeight: 700
       },
       h2: {
-        textTransform: "uppercase"
+        textTransform: "uppercase",
+        fontWeight: 700
       },
       h1: {
-        textTransform: "uppercase"
+        textTransform: "uppercase",
+        fontWeight: 700
       },
       title: {
-        textTransform: "uppercase"
+        textTransform: "uppercase",
+        fontWeight: 700
       }
     }
   },

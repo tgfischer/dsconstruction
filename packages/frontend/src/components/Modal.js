@@ -52,7 +52,7 @@ Modal.propTypes = {
   children: PropTypes.node.isRequired,
   title: PropTypes.string.isRequired,
   isOpen: PropTypes.bool.isRequired,
-  isLoading: PropTypes.bool.isRequired,
+  isLoading: PropTypes.bool,
   onClose: PropTypes.func.isRequired,
   onSubmit: PropTypes.func.isRequired,
   maxWidth: PropTypes.oneOf(["sm", "md", "lg"]),
@@ -63,7 +63,8 @@ Modal.propTypes = {
 };
 
 Modal.defaultProps = {
-  fullWidth: false
+  fullWidth: false,
+  isLoading: false
 };
 
 export default withStyles(styles)(Modal);

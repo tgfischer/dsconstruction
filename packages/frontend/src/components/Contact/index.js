@@ -7,6 +7,7 @@ import { withStyles } from "@material-ui/core/styles";
 import Page from "../Page";
 import ContactForm from "./ContactForm";
 import ContactInfo from "./ContactInfo";
+import ContactProvider from "../../contexts/ContactProvider";
 
 const styles = theme => ({
   subtitle: {
@@ -15,19 +16,21 @@ const styles = theme => ({
 });
 
 const Contact = ({ classes }) => (
-  <Page title="Contact Us" fixed>
-    <Typography className={classes.subtitle} variant="h5" gutterBottom>
-      Interested in any of our services? Send us a message to get a quote
-    </Typography>
-    <Grid spacing={16} container>
-      <Grid sm={8} xs={12} item>
-        <ContactForm />
+  <ContactProvider>
+    <Page title="Contact Us" fixed>
+      <Typography className={classes.subtitle} variant="h5" gutterBottom>
+        Interested in any of our services? Send us a message to get a quote
+      </Typography>
+      <Grid spacing={16} container>
+        <Grid sm={8} xs={12} item>
+          <ContactForm />
+        </Grid>
+        <Grid sm={4} xs={12} item>
+          <ContactInfo />
+        </Grid>
       </Grid>
-      <Grid sm={4} xs={12} item>
-        <ContactInfo />
-      </Grid>
-    </Grid>
-  </Page>
+    </Page>
+  </ContactProvider>
 );
 
 Contact.propTypes = {

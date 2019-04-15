@@ -6,7 +6,7 @@ import useUser from "../../hooks/useUser";
 const DashboardHome = () => {
   const [{ user }] = useUser();
   return (
-    <Dashboard>
+    <Dashboard title="Home page settings">
       {user.firstName} {user.lastName}
     </Dashboard>
   );

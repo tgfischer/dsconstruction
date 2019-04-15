@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useContext } from "react";
 import PropTypes from "prop-types";
 import Grid from "@material-ui/core/Grid";
 import List from "@material-ui/core/List";
@@ -11,7 +11,7 @@ import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 import { withStyles } from "@material-ui/core/styles";
 
-import { useContactInfo } from "./hooks";
+import { ContactContext } from "../../contexts/ContactProvider";
 import LoadingSpinner from "../LoadingSpinner";
 
 const styles = theme => ({
@@ -24,7 +24,7 @@ const styles = theme => ({
 });
 
 const ContactForm = ({ classes }) => {
-  const [{ phoneNumbers, address }, isLoading] = useContactInfo();
+  const [{ phoneNumbers, address, isLoading }] = useContext(ContactContext);
   return isLoading ? (
     <LoadingSpinner />
   ) : (

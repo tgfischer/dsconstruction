@@ -32,8 +32,7 @@ const DashboardServicesModal = ({ title, isOpen, onClose }) => {
 DashboardServicesModal.propTypes = {
   title: PropTypes.string.isRequired,
   isOpen: PropTypes.bool.isRequired,
-  onClose: PropTypes.func.isRequired,
-  submitButton: PropTypes.func.isRequired
+  onClose: PropTypes.func.isRequired
 };
 
 export default DashboardServicesModal;
