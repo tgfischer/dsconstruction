@@ -9,6 +9,7 @@ import home from "./routes/home";
 import gallery from "./routes/gallery";
 import tags from "./routes/tags";
 import services from "./routes/services";
+import contact from "./routes/contact";
 
 const app = express();
 
@@ -21,6 +22,7 @@ app.use("/api/home", home);
 app.use("/api/gallery", gallery);
 app.use("/api/gallery/tags", tags);
 app.use("/api/services", services);
+app.use("/api/contact", contact);
 
 app.use(middleware.errorHandler);
 

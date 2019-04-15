@@ -2,7 +2,6 @@ import { useEffect } from "react";
 import get from "lodash/get";
 
 import useRequest from "../../hooks/useRequest";
-
 import { endpoints } from "../../constants";
 
 export const useHome = () => {

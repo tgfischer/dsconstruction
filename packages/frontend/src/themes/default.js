@@ -13,9 +13,6 @@ export default createMuiTheme({
   },
   overrides: {
     MuiTypography: {
-      h6: {
-        textTransform: "uppercase"
-      },
       h4: {
         textTransform: "uppercase"
       },
