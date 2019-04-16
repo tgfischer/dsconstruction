@@ -1,6 +1,7 @@
 import React, { Fragment } from "react";
 import PropTypes from "prop-types";
 import Typography from "@material-ui/core/Typography";
+import Divider from "@material-ui/core/Divider";
 import { withStyles } from "@material-ui/core/styles";
 
 import NavBar from "./NavBar";
@@ -9,9 +10,11 @@ import Container from "./Container";
 
 const styles = theme => ({
   title: {
-    paddingTop: theme.spacing.unit * 2,
-    paddingBottom: theme.spacing.unit * 2,
-    textTransform: "inherit"
+    paddingTop: theme.spacing.unit * 4,
+    paddingBottom: theme.spacing.unit
+  },
+  divider: {
+    marginBottom: theme.spacing.unit * 3
   }
 });
 
@@ -21,12 +24,13 @@ const Page = ({ title, fixed, classes, children }) => (
     <CoreLayout>
       <Container>
         {title && (
-          <Typography className={classes.title} variant="h2">
+          <Typography className={classes.title} variant="h3">
             {title}
           </Typography>
         )}
-        {children}
       </Container>
+      <Divider className={classes.divider} />
+      <Container>{children}</Container>
     </CoreLayout>
   </Fragment>
 );
@@ -36,7 +40,8 @@ Page.propTypes = {
   fixed: PropTypes.bool,
   title: PropTypes.string,
   classes: PropTypes.shape({
-    title: PropTypes.string.isRequired
+    title: PropTypes.string.isRequired,
+    divider: PropTypes.string.isRequired
   }).isRequired
 };
 

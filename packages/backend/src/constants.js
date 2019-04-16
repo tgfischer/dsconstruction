@@ -20,6 +20,7 @@ export const defaultSettings = {
       city: "Walkerton",
       province: "Ontario",
       postalCode: "N0G 2V0"
-    }
+    },
+    email: "dsconstructionwalkerton@gmail.com"
   }
 };

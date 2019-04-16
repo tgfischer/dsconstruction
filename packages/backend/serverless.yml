@@ -137,3 +137,10 @@ functions:
           path: /api/contact
           method: GET
           cors: true
+  editContactInfo:
+    handler: src/index.handler
+    events:
+      - http:
+          path: /api/contact/edit
+          method: POST
+          cors: true

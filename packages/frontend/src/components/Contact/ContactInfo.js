@@ -7,6 +7,7 @@ import ListItemText from "@material-ui/core/ListItemText";
 import Avatar from "@material-ui/core/Avatar";
 import PhoneIcon from "@material-ui/icons/Phone";
 import PlaceIcon from "@material-ui/icons/Place";
+import EmailIcon from "@material-ui/icons/Email";
 import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 import { withStyles } from "@material-ui/core/styles";
@@ -20,11 +21,16 @@ const styles = theme => ({
   },
   subtitle: {
     marginBottom: theme.spacing.unit * 5
+  },
+  email: {
+    wordBreak: "break-word"
   }
 });
 
 const ContactForm = ({ classes }) => {
-  const [{ phoneNumbers, address, isLoading }] = useContext(ContactContext);
+  const [{ phoneNumbers, address, email, isLoading }] = useContext(
+    ContactContext
+  );
   return isLoading ? (
     <LoadingSpinner />
   ) : (
@@ -42,6 +48,15 @@ const ContactForm = ({ classes }) => {
               </ListItem>
             ))}
           </List>
+        </Grid>
+        <Grid xs={12} item>
+          <Typography variant="h6">Email</Typography>
+          <ListItem>
+            <Avatar>
+              <EmailIcon />
+            </Avatar>
+            <ListItemText className={classes.email} primary={email} />
+          </ListItem>
         </Grid>
         <Grid xs={12} item>
           <Typography variant="h6">Address</Typography>
@@ -69,7 +84,9 @@ const ContactForm = ({ classes }) => {
 
 ContactForm.propTypes = {
   classes: PropTypes.shape({
-    paper: PropTypes.string.isRequired
+    paper: PropTypes.string.isRequired,
+    subtitle: PropTypes.string.isRequired,
+    email: PropTypes.string.isRequired
   }).isRequired
 };
 

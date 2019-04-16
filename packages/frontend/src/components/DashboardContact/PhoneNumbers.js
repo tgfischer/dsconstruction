@@ -31,7 +31,7 @@ const PhoneNumbers = ({ classes }) => {
       </Grid>
       <Grid xs={12} item>
         <MuiDataTable
-          title="Phone numbers"
+          title="Edit phone numbers"
           data={phoneNumbers}
           columns={[
             {

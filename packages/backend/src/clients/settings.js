@@ -21,3 +21,14 @@ export const set = async (id, value) => {
   await settings.save();
   return value;
 };
+
+export const update = async (id, value) =>
+  Settings.update(
+    {
+      id
+    },
+    {
+      value
+    },
+    { allowEmptyArray: true }
+  );
