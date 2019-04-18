@@ -41,6 +41,9 @@ provider:
       Resource:
         - arn:aws:s3:::${self:custom.s3.bucketName}
         - arn:aws:s3:::${self:custom.s3.bucketName}/*
+    - Effect: Allow,
+      Action: ses:SendRawEmail,
+      Resource: "*"
   environment:
     SERVERLESS_STAGE: ${self:provider.stage}
     DSC_BUCKET_NAME: ${self:custom.s3.bucketName}
@@ -137,6 +140,14 @@ functions:
           path: /api/contact
           method: GET
           cors: true
+  sendEmail:
+    handler: src/index.handler
+    events:
+      - http:
+          path: /api/contact
+          method: POST
+          cors: true
+
   editContactInfo:
     handler: src/index.handler
     events:
@@ -144,3 +155,8 @@ functions:
           path: /api/contact/edit
           method: POST
           cors: true
+
+resource:
+  Outputs:
+    RecaptchaClientKey:
+      Value: ${env:DSC_RECAPTCHA_KEY}

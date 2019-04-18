@@ -20,6 +20,7 @@ provider:
     REACT_APP_BACKEND_ENDPOINT: ${cf:dsconstruction-backend-${self:provider.stage}.ServiceEndpoint}
     REACT_APP_USERS_ENDPOINT: ${cf:dsconstruction-users-${self:provider.stage}.ServiceEndpoint}
     REACT_APP_PHOTO_BUCKET_NAME: ${cf:dsconstruction-photos-${self:provider.stage}.BucketName}
+    REACT_APP_RECAPTCHA_KEY: ${cf:dsconstruction-backend-${self:provider.stage}.RecaptchaClientKey}
 
 resources:
   Resources:

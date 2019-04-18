@@ -7,10 +7,6 @@ import get from "lodash/get";
 export default (request, onSuccess = identity, onError = identity) => {
   const [response, handleRequest] = useResource(request);
   const { enqueueSnackbar } = useSnackbar();
-  const err =
-    get(response, ["error", "data", "err", "message"]) ||
-    get(response, ["error", "data", "error"]) ||
-    get(response, ["error", "data", "err"]);
 
   useEffect(() => {
     if (response.data) {
@@ -18,13 +14,27 @@ export default (request, onSuccess = identity, onError = identity) => {
     }
   }, [response.data]);
   useEffect(() => {
+    if (!response.error) {
+      return;
+    }
+
+    let err =
+      get(response, ["error", "data", "err", "message"]) ||
+      get(response, ["error", "data", "error"]) ||
+      get(response, ["error", "data", "err"]);
+
+    if (!(err instanceof String)) {
+      err = "Something went wrong. Please refresh the page and try again";
+    }
+
     if (err) {
       enqueueSnackbar(err, {
         variant: "error",
         preventDuplicate: true
       });
       onError(err);
+      response.cancel();
     }
-  }, [err]);
+  }, [response.error]);
   return [response, handleRequest];
 };

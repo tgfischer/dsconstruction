@@ -31,4 +31,4 @@ jobs:
 
       - run: npx lerna run build
 
-      - run: yarn deploy --stage staging
+      - run: yarn deploy --stage prod

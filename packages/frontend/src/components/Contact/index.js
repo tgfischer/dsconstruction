@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import { withStyles } from "@material-ui/core/styles";
+import { GoogleReCaptchaProvider } from "react-google-recaptcha-v3";
 
 import Page from "../Page";
 import ContactForm from "./ContactForm";
@@ -23,7 +24,11 @@ const Contact = ({ classes }) => (
       </Typography>
       <Grid spacing={16} container>
         <Grid sm={8} xs={12} item>
-          <ContactForm />
+          <GoogleReCaptchaProvider
+            reCaptchaKey={process.env.REACT_APP_RECAPTCHA_KEY}
+          >
+            <ContactForm />
+          </GoogleReCaptchaProvider>
         </Grid>
         <Grid sm={4} xs={12} item>
           <ContactInfo />
