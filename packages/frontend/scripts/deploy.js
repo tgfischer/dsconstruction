@@ -9,5 +9,5 @@ if (code !== 0) {
   return;
 }
 
-shell.exec("npx serverless client build");
+shell.exec(`npx serverless client build --stage ${stage}`);
 shell.exec(`npx serverless client deploy --stage ${stage} --no-confirm`);

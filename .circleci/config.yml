@@ -30,5 +30,4 @@ jobs:
       - run: npx lerna run lint
 
       - run: npx lerna run build
-
-      - run: yarn deploy --stage prod
+      # - run: yarn deploy --stage prod
