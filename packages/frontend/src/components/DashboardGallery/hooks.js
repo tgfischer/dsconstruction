@@ -42,14 +42,17 @@ export const useDashboardGallery = () => {
       isOpen
     />
   ));
-  const [{ isLoading: isDeleting }, handleDeletePhoto] = useRequest(data => ({
-    method: "DELETE",
-    url: `${endpoints.backend}/gallery`,
-    data,
-    headers: {
-      Authorization: idToken
-    }
-  }));
+  const [{ isLoading: isDeleting }, handleDeletePhoto] = useRequest(
+    data => ({
+      method: "DELETE",
+      url: `${endpoints.backend}/gallery`,
+      data,
+      headers: {
+        Authorization: idToken
+      }
+    }),
+    () => window.location.reload()
+  );
 
   return {
     photos,

@@ -5,11 +5,14 @@ import qs from "qs";
 import { GalleryContext } from "../contexts/GalleryProvider";
 import { endpoints } from "../constants";
 import useRequest from "../hooks/useRequest";
-import useTags from "../hooks/useTags";
+import useUser from "../hooks/useUser";
 
 export const useFetchGallery = () => {
   const [state, setState] = useContext(GalleryContext);
-  const [{ data, isLoading }, handleGetPage] = useRequest(data => ({
+  const [
+    { data: photosData, isLoading: isPhotosLoading },
+    handleGetPage
+  ] = useRequest(data => ({
     method: "GET",
     url: `${endpoints.backend}/gallery`,
     params: {
@@ -19,15 +22,23 @@ export const useFetchGallery = () => {
     },
     paramsSerializer: qs.stringify
   }));
+  const [
+    { data: tagsData, isLoading: isTagsLoading },
+    handleGetTags
+  ] = useRequest(() => ({
+    method: "GET",
+    url: `${endpoints.backend}/gallery/tags`
+  }));
 
   useEffect(() => {
     const { page, size, selectedTags } = state;
     setState({ ...state, handleGetPage });
     handleGetPage({ page, size, tags: selectedTags });
+    handleGetTags();
   }, []);
 
   useEffect(() => {
-    const photos = get(data, ["gallery", "photos"]);
+    const photos = get(photosData, ["gallery", "photos"]);
     if (photos) {
       setState({
         ...state,
@@ -35,17 +46,38 @@ export const useFetchGallery = () => {
           ...photo,
           isSelected: false
         })),
-        count: get(data, ["gallery", "count"]) || 0
+        count: get(photosData, ["gallery", "count"]) || 0
       });
     }
-  }, [data]);
+  }, [photosData]);
 
-  return [data, handleGetPage, isLoading];
+  useEffect(() => {
+    const tags = get(tagsData, "tags") || [];
+    if (tags) {
+      setState({
+        ...state,
+        tags
+      });
+    }
+  }, [tagsData]);
+
+  return [photosData, handleGetPage, isPhotosLoading || isTagsLoading];
 };
 
 export default () => {
   const [state, setState] = useContext(GalleryContext);
-  const [, handleDeleteTag, isLoadingTags] = useTags();
+  const { idToken } = useUser();
+  const [{ isLoading: isDeleting }, handleDeleteTag] = useRequest(
+    data => ({
+      method: "DELETE",
+      url: `${endpoints.backend}/gallery/tags`,
+      data,
+      headers: {
+        Authorization: idToken
+      }
+    }),
+    () => window.location.reload()
+  );
 
   return {
     ...state,
@@ -79,6 +111,6 @@ export default () => {
       state.handleGetPage({ ...state, page, tags: state.selectedTags });
     },
     handleDeleteTag,
-    isLoading: state.isLoading || isLoadingTags
+    isLoading: state.isLoading || isDeleting
   };
 };
