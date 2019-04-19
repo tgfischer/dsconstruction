@@ -35,7 +35,7 @@ const styles = theme => ({
     boxShadow: "none"
   },
   toolbar: {
-    height: 64
+    height: 91
   }
 });
 
@@ -62,9 +62,17 @@ const NavBar = ({ title, transparent, classes, history, fixed }) => {
                   <MenuIcon />
                 </IconButton>
               </Hidden>
-              <Typography className={classes.flex} variant="h6" color="inherit">
-                {title}
-              </Typography>
+              <img
+                src="/images/logo.png"
+                alt="/images/logo.png"
+                height="75px"
+                width="auto"
+              />
+              <Typography
+                className={classes.flex}
+                variant="h6"
+                color="inherit"
+              />
               <Hidden smDown>
                 {pages.map(({ label, href }) => (
                   <ButtonLink key={href} to={href} className={classes.button}>

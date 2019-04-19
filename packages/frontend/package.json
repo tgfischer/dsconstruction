@@ -24,6 +24,7 @@
     "react-dom": "^16.8.5",
     "react-dropzone": "^10.1.0",
     "react-google-recaptcha-v3": "^1.1.0",
+    "react-helmet": "^5.2.0",
     "react-modal-hook": "^1.1.0",
     "react-request-hook": "^1.0.0",
     "react-router": "^5.0.0",

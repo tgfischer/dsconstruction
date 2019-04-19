@@ -14,7 +14,7 @@ const Home = () => {
   return isLoading ? (
     <LoadingSpinner fullHeight />
   ) : (
-    <CoreLayout>
+    <CoreLayout title="D's Construction - Home">
       <Masthead masthead={masthead} />
       <About about={about} />
       <ServicesPreview services={services} />

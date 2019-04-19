@@ -20,7 +20,7 @@ const styles = theme => ({
     width: 240
   },
   toolbar: {
-    height: 64
+    height: 91
   }
 });
 

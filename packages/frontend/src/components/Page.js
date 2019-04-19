@@ -9,7 +9,7 @@ import CoreLayout from "./CoreLayout";
 import Container from "./Container";
 
 const styles = theme => ({
-  title: {
+  header: {
     paddingTop: theme.spacing.unit * 4,
     paddingBottom: theme.spacing.unit
   },
@@ -18,15 +18,15 @@ const styles = theme => ({
   }
 });
 
-const Page = ({ title, fixed, classes, children }) => (
+const Page = ({ title, header, fixed, classes, children }) => (
   <Fragment>
     <NavBar title="D's Construction" fixed={fixed} />
-    <CoreLayout>
-      {title && (
+    <CoreLayout title={title}>
+      {header && (
         <Fragment>
           <Container>
-            <Typography className={classes.title} variant="h3">
-              {title}
+            <Typography className={classes.header} variant="h3">
+              {header}
             </Typography>
           </Container>
           <Divider className={classes.divider} />
@@ -40,9 +40,10 @@ const Page = ({ title, fixed, classes, children }) => (
 Page.propTypes = {
   children: PropTypes.node.isRequired,
   fixed: PropTypes.bool,
-  title: PropTypes.string,
+  title: PropTypes.string.isRequired,
+  header: PropTypes.string,
   classes: PropTypes.shape({
-    title: PropTypes.string.isRequired,
+    header: PropTypes.string.isRequired,
     divider: PropTypes.string.isRequired
   }).isRequired
 };

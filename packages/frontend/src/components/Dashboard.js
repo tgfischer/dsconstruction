@@ -11,7 +11,7 @@ const Container = styled.div`
 `;
 
 const Dashboard = ({ title, isLoading, children }) => (
-  <Page title={title} fixed>
+  <Page title={`D's Construction - ${title}`} header={title} fixed>
     <SideNav />
     <Container>
       {isLoading ? <LoadingSpinner /> : <Fragment>{children}</Fragment>}

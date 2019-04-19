@@ -18,7 +18,7 @@ const styles = theme => ({
 
 const Contact = ({ classes }) => (
   <ContactProvider>
-    <Page title="Contact Us" fixed>
+    <Page title="D's Construction - Contact" header="Contact Us" fixed>
       <Typography className={classes.subtitle} variant="h5" gutterBottom>
         Interested in any of our services? Send us a message to get a quote
       </Typography>
