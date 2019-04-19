@@ -1,8 +1,19 @@
-import React, { useState } from "react";
+import React, { Fragment, useState } from "react";
 import PropTypes from "prop-types";
 import defaults from "lodash/defaults";
 
+import { useFetchGallery } from "../hooks/useGallery";
+
 export const GalleryContext = React.createContext();
+
+const Provider = ({ children }) => {
+  useFetchGallery();
+  return <Fragment>{children}</Fragment>;
+};
+
+Provider.propTypes = {
+  children: PropTypes.node.isRequired
+};
 
 const GalleryProvider = ({ children, initialState }) => (
   <GalleryContext.Provider
@@ -16,7 +27,7 @@ const GalleryProvider = ({ children, initialState }) => (
       })
     )}
   >
-    {children}
+    <Provider>{children}</Provider>
   </GalleryContext.Provider>
 );
 

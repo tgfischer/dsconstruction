@@ -50,7 +50,7 @@ const DashboardGallery = ({ classes }) => {
     handleDeleteTag,
     handleSelectPhoto,
     isLoading
-  } = useDashboardGallery();
+  } = useDashboardGallery({ fetch: false });
   return (
     <Dashboard title="Gallery settings" isLoading={isLoading}>
       <Grid spacing={24} container>

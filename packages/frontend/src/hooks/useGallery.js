@@ -1,6 +1,5 @@
 import { useEffect, useContext } from "react";
 import get from "lodash/get";
-import defaults from "lodash/defaults";
 import qs from "qs";
 
 import { GalleryContext } from "../contexts/GalleryProvider";
@@ -8,12 +7,8 @@ import { endpoints } from "../constants";
 import useRequest from "../hooks/useRequest";
 import useTags from "../hooks/useTags";
 
-export default (args = {}) => {
-  const options = defaults(args, {
-    fetch: true
-  });
+export const useFetchGallery = () => {
   const [state, setState] = useContext(GalleryContext);
-  const [, handleDeleteTag, isLoadingTags] = useTags();
   const [{ data, isLoading }, handleGetPage] = useRequest(data => ({
     method: "GET",
     url: `${endpoints.backend}/gallery`,
@@ -26,10 +21,9 @@ export default (args = {}) => {
   }));
 
   useEffect(() => {
-    if (options.fetch) {
-      const { page, size, selectedTags } = state;
-      handleGetPage({ page, size, tags: selectedTags });
-    }
+    const { page, size, selectedTags } = state;
+    setState({ ...state, handleGetPage });
+    handleGetPage({ page, size, tags: selectedTags });
   }, []);
 
   useEffect(() => {
@@ -45,6 +39,13 @@ export default (args = {}) => {
       });
     }
   }, [data]);
+
+  return [data, handleGetPage, isLoading];
+};
+
+export default () => {
+  const [state, setState] = useContext(GalleryContext);
+  const [, handleDeleteTag, isLoadingTags] = useTags();
 
   return {
     ...state,
@@ -64,7 +65,7 @@ export default (args = {}) => {
         ...state,
         selectedTags: e.target.value
       });
-      handleGetPage({
+      state.handleGetPage({
         ...state,
         tags: e.target.value
       });
@@ -75,9 +76,9 @@ export default (args = {}) => {
         photos: [],
         page
       });
-      handleGetPage({ ...state, page, tags: state.selectedTags });
+      state.handleGetPage({ ...state, page, tags: state.selectedTags });
     },
     handleDeleteTag,
-    isLoading: isLoading || isLoadingTags
+    isLoading: state.isLoading || isLoadingTags
   };
 };
