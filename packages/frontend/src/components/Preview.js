@@ -16,9 +16,11 @@ const styles = theme => ({
 
 const Preview = ({ title, Action, isLoading, classes, children }) => (
   <Container spaced>
-    <Typography variant="h3" gutterBottom>
-      {title}
-    </Typography>
+    {title && (
+      <Typography variant="h3" gutterBottom>
+        {title}
+      </Typography>
+    )}
     {isLoading && <LoadingSpinner />}
     {!isLoading && <Fragment>{children}</Fragment>}
     {Action && (
@@ -32,7 +34,7 @@ const Preview = ({ title, Action, isLoading, classes, children }) => (
 );
 
 Preview.propTypes = {
-  title: PropTypes.string.isRequired,
+  title: PropTypes.string,
   Action: PropTypes.func,
   isLoading: PropTypes.bool,
   classes: PropTypes.shape({
@@ -45,4 +47,26 @@ Preview.defaultProps = {
   isLoading: false
 };
 
-export default withStyles(styles)(Preview);
+const Wrapper = ({ skinny, inverted, ...props }) => (
+  <Fragment>
+    {skinny ? (
+      <Container inverted={inverted} spaced>
+        <Preview {...props} />
+      </Container>
+    ) : (
+      <Preview {...props} />
+    )}
+  </Fragment>
+);
+
+Wrapper.propTypes = {
+  skinny: PropTypes.bool,
+  inverted: PropTypes.bool
+};
+
+Wrapper.defaultProps = {
+  skinny: false,
+  inverted: false
+};
+
+export default withStyles(styles)(Wrapper);

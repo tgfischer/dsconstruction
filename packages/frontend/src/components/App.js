@@ -14,7 +14,6 @@ import Gallery from "./Gallery";
 import Contact from "./Contact";
 import Login from "./Login";
 import ResetPassword from "./ResetPassword";
-import DashboardSettings from "./DashboardSettings";
 import DashboardHome from "./DashboardHome";
 import DashboardServices from "./DashboardServices";
 import DashboardGallery from "./DashboardGallery";
@@ -47,12 +46,7 @@ const App = () => (
                 <Route
                   exact
                   path="/dashboard"
-                  render={() => <Redirect to="/dashboard/settings" />}
-                />
-                <Route
-                  exact
-                  path="/dashboard/settings"
-                  component={withAuthorizer(roles.ADMIN, DashboardSettings)}
+                  render={() => <Redirect to="/dashboard/home" />}
                 />
                 <Route
                   exact

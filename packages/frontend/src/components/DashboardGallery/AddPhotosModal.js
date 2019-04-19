@@ -16,7 +16,7 @@ const AddPhotosModal = ({ title, isOpen, onClose }) => {
       onSubmit={onSubmit}
       maxWidth="sm"
     >
-      <GalleryDropzone />
+      <GalleryDropzone isLoading={isLoading} />
     </Modal>
   );
 };

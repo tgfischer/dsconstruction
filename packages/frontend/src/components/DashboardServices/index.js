@@ -23,7 +23,7 @@ const DashboardServices = ({ classes }) => {
     isLoading
   ] = useDashboardServices();
   return (
-    <Dashboard title="Services settings">
+    <Dashboard title="Services settings" isLoading={isLoading}>
       <Grid spacing={24} container>
         <Grid xs={12} item>
           <Button

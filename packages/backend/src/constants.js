@@ -1,8 +1,12 @@
 export const defaultSettings = {
   home: {
     masthead: {
-      background: "/images/IMG_2231.JPG"
-    }
+      background: "/images/IMG_2231.JPG",
+      header: "D's Construction",
+      subHeader: "Walkerton, Ontario"
+    },
+    about:
+      "D's Construction is a small company based out of Walkerton, ON that works hard to earn a reputation based on delivering good quality craftsmanship with emphasis on general carpentry and indoor/outdoor renovations. Currently, D's construction is operating with 8 employees dedicated to providing courteous and professional service to all customers."
   },
   contact: {
     phoneNumbers: [

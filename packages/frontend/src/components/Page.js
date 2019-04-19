@@ -22,14 +22,16 @@ const Page = ({ title, fixed, classes, children }) => (
   <Fragment>
     <NavBar title="D's Construction" fixed={fixed} />
     <CoreLayout>
-      <Container>
-        {title && (
-          <Typography className={classes.title} variant="h3">
-            {title}
-          </Typography>
-        )}
-      </Container>
-      <Divider className={classes.divider} />
+      {title && (
+        <Fragment>
+          <Container>
+            <Typography className={classes.title} variant="h3">
+              {title}
+            </Typography>
+          </Container>
+          <Divider className={classes.divider} />
+        </Fragment>
+      )}
       <Container>{children}</Container>
     </CoreLayout>
   </Fragment>

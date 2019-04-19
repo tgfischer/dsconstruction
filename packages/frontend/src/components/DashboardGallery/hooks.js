@@ -40,14 +40,11 @@ export const useDashboardGallery = () => {
       isOpen
     />
   ));
-  const [, handleDeletePhoto] = useRequest(
-    data => ({
-      method: "DELETE",
-      url: `${endpoints.backend}/gallery`,
-      data
-    }),
-    () => window.location.reload()
-  );
+  const [{ isLoading: isDeleting }, handleDeletePhoto] = useRequest(data => ({
+    method: "DELETE",
+    url: `${endpoints.backend}/gallery`,
+    data
+  }));
 
   return {
     photos,
@@ -60,7 +57,7 @@ export const useDashboardGallery = () => {
     handleDeleteTag,
     handleSelectPhoto,
     handleGetPage,
-    isLoading
+    isLoading: isLoading || isDeleting
   };
 };
 

@@ -52,7 +52,7 @@ const DashboardGallery = ({ classes }) => {
     isLoading
   } = useDashboardGallery();
   return (
-    <Dashboard title="Gallery settings">
+    <Dashboard title="Gallery settings" isLoading={isLoading}>
       <Grid spacing={24} container>
         <Grid xs={12} item>
           <Button

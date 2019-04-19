@@ -19,8 +19,8 @@ const add = async (req, res) => {
 };
 
 const destroy = async (req, res) => {
-  const gallery = await client.destroy(res.locals.body);
-  return res.status(HttpStatus.OK).json({ gallery });
+  await client.destroy(res.locals.body);
+  return res.status(HttpStatus.OK).json({ success: true });
 };
 
 const toggle = async (req, res) => {

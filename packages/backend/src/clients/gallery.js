@@ -39,10 +39,8 @@ export const add = async photos => {
   return get({});
 };
 
-export const destroy = async photos => {
-  await Gallery.batchDelete(photos.map(id => ({ id })));
-  return get({});
-};
+export const destroy = async photos =>
+  Gallery.batchDelete(photos.map(id => ({ id })));
 
 export const toggleTags = async ({ photos: ids, add, remove }) => {
   const photos = await Gallery.batchGet(ids.map(id => ({ id })));

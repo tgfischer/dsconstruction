@@ -27,7 +27,8 @@ export default (args = {}) => {
 
   useEffect(() => {
     if (options.fetch) {
-      handleGetPage(state);
+      const { page, size, selectedTags } = state;
+      handleGetPage({ page, size, tags: selectedTags });
     }
   }, []);
 

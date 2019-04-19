@@ -51,12 +51,19 @@ provider:
     DSC_BUCKET_NAME: ${self:custom.s3.bucketName}
 
 functions:
-  home:
+  getHome:
     handler: src/index.handler
     events:
       - http:
           path: /api/home
           method: GET
+          cors: true
+  editHome:
+    handler: src/index.handler
+    events:
+      - http:
+          path: /api/home
+          method: POST
           cors: true
   getServices:
     handler: src/index.handler

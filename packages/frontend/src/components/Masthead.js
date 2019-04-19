@@ -24,7 +24,8 @@ const styles = theme => ({
   },
   title: {
     fontWeight: 700,
-    color: theme.palette.common.white
+    color: theme.palette.common.white,
+    wordBreak: "break-word"
   },
   subtitle: {
     fontWeight: 400,
@@ -32,10 +33,10 @@ const styles = theme => ({
   }
 });
 
-const Masthead = ({ background, classes }) => (
+const Masthead = ({ masthead, classes }) => (
   <div
     className={classnames(classes.masthead, classes.background)}
-    style={getBackgroundStyle({ background }).background}
+    style={getBackgroundStyle({ background: masthead.background }).background}
   >
     <NavBar title="D's Construction" transparent />
     <Grid
@@ -47,12 +48,12 @@ const Masthead = ({ background, classes }) => (
     >
       <Grid item>
         <Typography variant="h2" className={classes.title}>
-          {"D's Construction"}
+          {masthead.header}
         </Typography>
       </Grid>
       <Grid item>
         <Typography variant="subtitle1" className={classes.subtitle}>
-          {"Walkerton, Ontario"}
+          {masthead.subHeader}
         </Typography>
       </Grid>
     </Grid>
@@ -60,7 +61,11 @@ const Masthead = ({ background, classes }) => (
 );
 
 Masthead.propTypes = {
-  background: PropTypes.string,
+  masthead: PropTypes.shape({
+    background: PropTypes.string,
+    header: PropTypes.string,
+    subHeader: PropTypes.string
+  }).isRequired,
   classes: PropTypes.shape({
     masthead: PropTypes.string.isRequired,
     background: PropTypes.string.isRequired,

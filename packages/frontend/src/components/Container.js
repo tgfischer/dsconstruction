@@ -11,15 +11,26 @@ const styles = theme => ({
     width: "100%"
   },
   spaced: {
-    paddingTop: "4em !important",
-    paddingBottom: "4em !important"
+    paddingTop: "5em !important",
+    paddingBottom: "5em !important"
+  },
+  inverted: {
+    backgroundColor: theme.palette.secondary.main,
+    color: "#fff !important"
   }
 });
 
-const Container = ({ children, width, spaced, className, classes }) => (
+const Container = ({
+  children,
+  width,
+  spaced,
+  className,
+  inverted,
+  classes
+}) => (
   <Grid
     container
-    className={classes.container}
+    className={classnames(classes.container, { [classes.inverted]: inverted })}
     spacing={16}
     alignItems="center"
   >
@@ -45,6 +56,7 @@ Container.propTypes = {
   width: PropTypes.oneOf([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]),
   spaced: PropTypes.bool,
   className: PropTypes.string,
+  inverted: PropTypes.bool,
   classes: PropTypes.shape({
     container: PropTypes.string.isRequired,
     spaced: PropTypes.string.isRequired
@@ -54,7 +66,8 @@ Container.propTypes = {
 Container.defaultProps = {
   className: "",
   width: 8,
-  spaced: false
+  spaced: false,
+  inverted: false
 };
 
 export default withStyles(styles)(Container);

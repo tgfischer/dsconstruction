@@ -23,7 +23,7 @@ export default (request, onSuccess = identity, onError = identity) => {
       get(response, ["error", "data", "error"]) ||
       get(response, ["error", "data", "err"]);
 
-    if (!(err instanceof String)) {
+    if (typeof err !== "string") {
       err = "Something went wrong. Please refresh the page and try again";
     }
 

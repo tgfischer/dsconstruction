@@ -1,18 +1,20 @@
 import React from "react";
 import PropTypes from "prop-types";
+import classnames from "classnames";
 import Grid from "@material-ui/core/Grid";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import { withStyles } from "@material-ui/core";
 
 const styles = theme => ({
-  loading: {
-    paddingTop: theme.spacing.unit * 3
+  grid: {
+    height: "100vh"
   }
 });
 
-const LoadingSpinner = ({ padding }) => (
+const LoadingSpinner = ({ padding, fullHeight, classes }) => (
   <Grid
     container
+    className={classnames({ [classes.grid]: fullHeight })}
     style={{ padding: padding + "em" }}
     justify="center"
     alignItems="center"
@@ -22,11 +24,16 @@ const LoadingSpinner = ({ padding }) => (
 );
 
 LoadingSpinner.propTypes = {
-  padding: PropTypes.number.isRequired
+  padding: PropTypes.number.isRequired,
+  fullHeight: PropTypes.bool,
+  classes: PropTypes.shape({
+    grid: PropTypes.string.isRequired
+  }).isRequired
 };
 
 LoadingSpinner.defaultProps = {
-  padding: 0
+  padding: 0,
+  fullHeight: false
 };
 
 export default withStyles(styles)(LoadingSpinner);
