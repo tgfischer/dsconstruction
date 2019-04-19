@@ -28,7 +28,8 @@ const styles = theme => ({
     marginRight: "20px"
   },
   button: {
-    color: theme.palette.common.white
+    color: theme.palette.common.white,
+    marginLeft: theme.spacing.unit
   },
   transparent: {
     background: "transparent",
