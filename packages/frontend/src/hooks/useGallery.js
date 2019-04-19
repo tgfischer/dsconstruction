@@ -32,7 +32,10 @@ export const useFetchGallery = () => {
 
   useEffect(() => {
     const { page, size, selectedTags } = state;
-    setState({ ...state, handleGetPage });
+    setState({
+      ...state,
+      handleGetPage
+    });
     handleGetPage({ page, size, tags: selectedTags });
     handleGetTags();
   }, []);
@@ -60,6 +63,16 @@ export const useFetchGallery = () => {
       });
     }
   }, [tagsData]);
+
+  useEffect(() => {
+    const isLoading = isPhotosLoading || isTagsLoading;
+    if (isLoading !== state.isLoading) {
+      setState({
+        ...state,
+        isLoading
+      });
+    }
+  }, [isPhotosLoading, isTagsLoading]);
 
   return [photosData, handleGetPage, isPhotosLoading || isTagsLoading];
 };
