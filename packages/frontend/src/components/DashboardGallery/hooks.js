@@ -9,11 +9,13 @@ import useGallery from "../../hooks/useGallery";
 import useModal from "../../hooks/useModal";
 import useRequest from "../../hooks/useRequest";
 import useBulkUpload from "../../hooks/useBulkUpload";
+import useUser from "../../hooks/useUser";
 import AddPhotosModal from "./AddPhotosModal";
 import ToggleTagsModal from "./ToggleTagsModal";
 import AddTagModal from "./AddTagModal";
 
 export const useDashboardGallery = () => {
+  const { idToken } = useUser();
   const {
     photos,
     count,
@@ -29,7 +31,7 @@ export const useDashboardGallery = () => {
     </PhotosProvider>
   ));
   const [showTagModal, hideTagModal] = useModal(() => () => (
-    <AddTagModal title="Add a tag" onClose={hideTagModal} isOpen />
+    <AddTagModal title="Add a category" onClose={hideTagModal} isOpen />
   ));
   const [showEditModal, hideEditModal] = useModal(() => () => (
     <ToggleTagsModal
@@ -43,7 +45,10 @@ export const useDashboardGallery = () => {
   const [{ isLoading: isDeleting }, handleDeletePhoto] = useRequest(data => ({
     method: "DELETE",
     url: `${endpoints.backend}/gallery`,
-    data
+    data,
+    headers: {
+      Authorization: idToken
+    }
   }));
 
   return {
@@ -62,12 +67,16 @@ export const useDashboardGallery = () => {
 };
 
 export const useGalleryModal = onClose => {
+  const { idToken } = useUser();
   const [{ files }] = useContext(PhotosContext);
   const [submitResponse, handleSubmit] = useRequest(
     data => ({
       method: "POST",
       url: `${endpoints.backend}/gallery/`,
-      data
+      data,
+      headers: {
+        Authorization: idToken
+      }
     }),
     () => {
       window.location.reload();
@@ -103,12 +112,16 @@ export const useGalleryDropzone = () => {
 };
 
 export const useAddTagModal = onClose => {
+  const { idToken } = useUser();
   const [{ values }, input] = useFormState({});
   const [submitResponse, handleSubmit] = useRequest(
     data => ({
       method: "POST",
       url: `${endpoints.backend}/gallery/tags`,
-      data
+      data,
+      headers: {
+        Authorization: idToken
+      }
     }),
     () => {
       window.location.reload();
@@ -127,13 +140,17 @@ export const useAddTagModal = onClose => {
 };
 
 export const useToggleTagsModal = photos => {
+  const { idToken } = useUser();
   const [{ values: addValues }, addInput] = useFormState({});
   const [{ values: removeValues }, removeInput] = useFormState({});
   const [, handleToggleTags] = useRequest(
     data => ({
       method: "POST",
       url: `${endpoints.backend}/gallery/toggle`,
-      data
+      data,
+      headers: {
+        Authorization: idToken
+      }
     }),
     () => window.location.reload()
   );

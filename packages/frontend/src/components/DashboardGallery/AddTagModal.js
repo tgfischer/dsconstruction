@@ -18,7 +18,7 @@ const AddTagModal = ({ title, isOpen, onClose }) => {
       fullWidth
     >
       <TextField
-        label="Tag name"
+        label="Category name"
         variant="outlined"
         disabled={isLoading}
         fullWidth

@@ -65,6 +65,10 @@ functions:
           path: /api/home
           method: POST
           cors: true
+          authorizer:
+            type: COGNITO_USER_POOLS
+            authorizerId:
+              Ref: ApiGatewayAuthorizer
   getServices:
     handler: src/index.handler
     events:
@@ -79,6 +83,10 @@ functions:
           path: /api/services
           method: DELETE
           cors: true
+          authorizer:
+            type: COGNITO_USER_POOLS
+            authorizerId:
+              Ref: ApiGatewayAuthorizer
   addService:
     handler: src/index.handler
     events:
@@ -86,6 +94,10 @@ functions:
           path: /api/services
           method: POST
           cors: true
+          authorizer:
+            type: COGNITO_USER_POOLS
+            authorizerId:
+              Ref: ApiGatewayAuthorizer
   getGalleryPhotos:
     handler: src/index.handler
     events:
@@ -100,6 +112,10 @@ functions:
           path: /api/gallery
           method: DELETE
           cors: true
+          authorizer:
+            type: COGNITO_USER_POOLS
+            authorizerId:
+              Ref: ApiGatewayAuthorizer
   addGalleryPhoto:
     handler: src/index.handler
     events:
@@ -107,6 +123,10 @@ functions:
           path: /api/gallery
           method: POST
           cors: true
+          authorizer:
+            type: COGNITO_USER_POOLS
+            authorizerId:
+              Ref: ApiGatewayAuthorizer
   getSignedUrl:
     handler: src/index.handler
     events:
@@ -114,6 +134,10 @@ functions:
           path: /api/gallery/url
           method: POST
           cors: true
+          authorizer:
+            type: COGNITO_USER_POOLS
+            authorizerId:
+              Ref: ApiGatewayAuthorizer
   toggleTags:
     handler: src/index.handler
     events:
@@ -121,6 +145,10 @@ functions:
           path: /api/gallery/toggle
           method: POST
           cors: true
+          authorizer:
+            type: COGNITO_USER_POOLS
+            authorizerId:
+              Ref: ApiGatewayAuthorizer
   getTags:
     handler: src/index.handler
     events:
@@ -135,6 +163,10 @@ functions:
           path: /api/gallery/tags
           method: DELETE
           cors: true
+          authorizer:
+            type: COGNITO_USER_POOLS
+            authorizerId:
+              Ref: ApiGatewayAuthorizer
   addTag:
     handler: src/index.handler
     events:
@@ -142,6 +174,10 @@ functions:
           path: /api/gallery/tags
           method: POST
           cors: true
+          authorizer:
+            type: COGNITO_USER_POOLS
+            authorizerId:
+              Ref: ApiGatewayAuthorizer
   getContactInfo:
     handler: src/index.handler
     events:
@@ -156,7 +192,6 @@ functions:
           path: /api/contact
           method: POST
           cors: true
-
   editContactInfo:
     handler: src/index.handler
     events:
@@ -164,8 +199,34 @@ functions:
           path: /api/contact/edit
           method: POST
           cors: true
+          authorizer:
+            type: COGNITO_USER_POOLS
+            authorizerId:
+              Ref: ApiGatewayAuthorizer
 
 resources:
+  Resources:
+    GatewayResponseDefault4XX:
+      Type: AWS::ApiGateway::GatewayResponse
+      Properties:
+        ResponseParameters:
+          gatewayresponse.header.Access-Control-Allow-Origin: "'*'"
+          gatewayresponse.header.Access-Control-Allow-Headers: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'"
+          gatewayresponse.header.Access-Control-Allow-Methods: "'GET,POST,DELETE,OPTIONS'"
+        ResponseType: DEFAULT_4XX
+        RestApiId:
+          Ref: ApiGatewayRestApi
+    ApiGatewayAuthorizer:
+      Type: AWS::ApiGateway::Authorizer
+      Properties:
+        AuthorizerResultTtlInSeconds: 300
+        IdentitySource: method.request.header.Authorization
+        Name: Cognito
+        RestApiId:
+          Ref: ApiGatewayRestApi
+        Type: COGNITO_USER_POOLS
+        ProviderARNs:
+          - ${cf:dsconstruction-users-${self:provider.stage}.UserPoolArn}
   Outputs:
     RecaptchaClientKey:
       Value: ${env:DSC_RECAPTCHA_KEY}

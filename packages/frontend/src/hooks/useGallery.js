@@ -13,7 +13,7 @@ export default (args = {}) => {
     fetch: true
   });
   const [state, setState] = useContext(GalleryContext);
-  const [, handleDeleteTag] = useTags();
+  const [, handleDeleteTag, isLoadingTags] = useTags();
   const [{ data, isLoading }, handleGetPage] = useRequest(data => ({
     method: "GET",
     url: `${endpoints.backend}/gallery`,
@@ -78,6 +78,6 @@ export default (args = {}) => {
       handleGetPage({ ...state, page, tags: state.selectedTags });
     },
     handleDeleteTag,
-    isLoading
+    isLoading: isLoading || isLoadingTags
   };
 };

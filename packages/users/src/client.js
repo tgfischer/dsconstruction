@@ -7,7 +7,10 @@ const getUserPool = () =>
 
 const initiateAuthResponseHandler = result => {
   if (!result.ChallengeName) {
-    return { idToken: result.AuthenticationResult.IdToken };
+    return {
+      idToken: result.AuthenticationResult.IdToken,
+      refreshToken: result.AuthenticationResult.RefreshToken
+    };
   }
   const { name: firstName, family_name: lastName, email } = JSON.parse(
     result.ChallengeParameters.userAttributes

@@ -5,11 +5,13 @@ import find from "lodash/find";
 
 import * as constants from "./constants";
 import useRequest from "../useRequest";
+import useUser from "../useUser";
 import action from "./action";
 import reducer from "./reducer";
 
 export default (url, folder, files, onUploaded = identity) => {
   const { enqueueSnackbar } = useSnackbar();
+  const { idToken } = useUser();
   const [{ data, isUploaded, isUploading }, dispatch] = useReducer(reducer, {
     isUploaded: false,
     isUploading: false
@@ -18,7 +20,10 @@ export default (url, folder, files, onUploaded = identity) => {
     data => ({
       method: "POST",
       url,
-      data
+      data,
+      headers: {
+        Authorization: idToken
+      }
     }),
     ({ data }) => {
       if (!data) {

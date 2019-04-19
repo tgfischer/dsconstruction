@@ -40,7 +40,7 @@ const styles = theme => ({
 });
 
 const NavBar = ({ title, transparent, classes, history, fixed }) => {
-  const [, isLoggedIn, , , handleLogOut] = useUser();
+  const { isLoggedIn, clearUser } = useUser();
   return (
     <Fragment>
       <AppBar
@@ -78,7 +78,7 @@ const NavBar = ({ title, transparent, classes, history, fixed }) => {
                     </ButtonLink>
                     <Button
                       onClick={() => {
-                        handleLogOut();
+                        clearUser();
                         history.push("/login");
                       }}
                       className={classes.button}

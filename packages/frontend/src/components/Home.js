@@ -10,7 +10,7 @@ import LoadingSpinner from "./LoadingSpinner";
 import HomeProvider from "../contexts/HomeProvider";
 
 const Home = () => {
-  const [{ masthead, about, services, isLoading }] = useHome();
+  const [{ masthead, about, services, photos, isLoading }] = useHome();
   return isLoading ? (
     <LoadingSpinner fullHeight />
   ) : (
@@ -18,7 +18,7 @@ const Home = () => {
       <Masthead masthead={masthead} />
       <About about={about} />
       <ServicesPreview services={services} />
-      <GalleryPreview />
+      <GalleryPreview photos={photos} />
     </CoreLayout>
   );
 };

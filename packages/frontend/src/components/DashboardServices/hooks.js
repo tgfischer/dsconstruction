@@ -6,9 +6,11 @@ import useServices from "../../hooks/useServices";
 import useModal from "../../hooks/useModal";
 import useRequest from "../../hooks/useRequest";
 import DashboardServicesModal from "./DashboardServicesModal";
+import useUser from "../../hooks/useUser";
 
 export const useDashboardServices = () => {
   const [services, isLoading] = useServices();
+  const { idToken } = useUser();
   const [showAddModal, hideAddModal] = useModal(() => () => (
     <DashboardServicesModal
       title="Add a service"
@@ -20,7 +22,10 @@ export const useDashboardServices = () => {
     data => ({
       method: "DELETE",
       url: `${endpoints.backend}/services`,
-      data
+      data,
+      headers: {
+        Authorization: idToken
+      }
     }),
     () => window.location.reload()
   );
@@ -36,11 +41,15 @@ export const useDashboardServices = () => {
 
 export const useServiceModal = onClose => {
   const [{ values }, input] = useFormState({});
+  const { idToken } = useUser();
   const [submitResponse, handleSubmit] = useRequest(
     data => ({
       method: "POST",
-      url: `${endpoints.backend}/services/`,
-      data
+      url: `${endpoints.backend}/services`,
+      data,
+      headers: {
+        Authorization: idToken
+      }
     }),
     () => {
       window.location.reload();

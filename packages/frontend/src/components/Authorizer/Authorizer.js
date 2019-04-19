@@ -6,7 +6,7 @@ import useUser from "../../hooks/useUser";
 import { roles } from "./constants";
 
 const Authorizer = ({ children, role, history }) => {
-  const [, isLoggedIn] = useUser();
+  const { isLoggedIn } = useUser();
   useEffect(() => {
     if (isLoggedIn && role === roles.GUEST) {
       history.replace("/");

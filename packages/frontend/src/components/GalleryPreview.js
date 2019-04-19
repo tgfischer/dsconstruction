@@ -1,27 +1,31 @@
 import React from "react";
+import PropTypes from "prop-types";
 
 import Preview from "./Preview";
 import GalleryCards from "./GalleryCards";
 import ButtonLink from "./ButtonLink";
-import useGallery from "../hooks/useGallery";
 import GalleryProvider from "../contexts/GalleryProvider";
 
-const GalleryPreview = () => {
-  const { photos, isLoading } = useGallery();
-  return (
-    <Preview
-      title="Photo Gallery"
-      isLoading={isLoading}
-      Action={() => <ButtonLink to="/gallery">View More</ButtonLink>}
-    >
-      <GalleryCards photos={photos} />
-    </Preview>
-  );
+const GalleryPreview = ({ photos }) => (
+  <Preview
+    title="Photo Gallery"
+    Action={() => <ButtonLink to="/gallery">View More</ButtonLink>}
+  >
+    <GalleryCards photos={photos} />
+  </Preview>
+);
+
+GalleryPreview.propTypes = {
+  photos: PropTypes.array
 };
 
-const GalleryPreviewWrapper = () => (
+GalleryPreview.defaultProps = {
+  photos: []
+};
+
+const GalleryPreviewWrapper = props => (
   <GalleryProvider initialState={{ page: 0, size: 4 }}>
-    <GalleryPreview />
+    <GalleryPreview {...props} />
   </GalleryProvider>
 );
 

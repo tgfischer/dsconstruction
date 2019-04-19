@@ -8,15 +8,20 @@ import useModal from "../../hooks/useModal";
 import AddPhoneNumberModal from "./AddPhoneNumberModal";
 import useRequest from "../../hooks/useRequest";
 import { endpoints } from "../../constants";
+import useUser from "../../hooks/useUser";
 
 export const useDashboardContacts = () => {
+  const { idToken } = useUser();
   const [state] = useContext(ContactContext);
   const { enqueueSnackbar } = useSnackbar();
   const [{ isLoading: isSubmitting }, handleSubmit] = useRequest(
     ({ isLoading, ...data }) => ({
       method: "POST",
       url: `${endpoints.backend}/contact/edit`,
-      data
+      data,
+      headers: {
+        Authorization: idToken
+      }
     }),
     () =>
       enqueueSnackbar("Successfully updated the settings", {

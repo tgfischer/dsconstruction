@@ -17,7 +17,7 @@ const getBackgroundStyle = ({ background }) => ({
 
 const styles = theme => ({
   masthead: {
-    height: 600
+    height: 800
   },
   background: {
     backgroundSize: "cover !important"

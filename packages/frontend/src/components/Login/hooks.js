@@ -7,22 +7,22 @@ import useRequest from "../../hooks/useRequest";
 
 export const useLogin = history => {
   const [{ values, validity }, input] = useFormState();
-  const [, , isChallenged, setUser, clearUser] = useUser();
+  const { isChallenged, setUser, clearUser } = useUser();
   const [{ isLoading }, handleLogin] = useRequest(
     data => ({
       method: "POST",
       url: `${endpoints.users}/login`,
       data
     }),
-    ({ session, user, idToken }) => {
+    ({ session, user, idToken, refreshToken }) => {
       if (!user) {
         return;
       }
 
       if (session) {
         setUser({ session, user });
-      } else if (idToken) {
-        setUser({ idToken, user });
+      } else if (idToken && refreshToken) {
+        setUser({ idToken, refreshToken, user });
       }
     },
     clearUser

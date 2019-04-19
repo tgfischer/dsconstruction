@@ -4,15 +4,20 @@ import { useSnackbar } from "notistack";
 import { HomeContext } from "../../contexts/HomeProvider";
 import { endpoints } from "../../constants";
 import useRequest from "../../hooks/useRequest";
+import useUser from "../../hooks/useUser";
 
 export const useDashboardHome = () => {
   const [state] = useContext(HomeContext);
+  const { idToken } = useUser();
   const { enqueueSnackbar } = useSnackbar();
   const [{ isLoading: isSubmitting }, handleSubmit] = useRequest(
-    ({ isLoading, gallery, services, ...data }) => ({
+    ({ isLoading, photos, services, ...data }) => ({
       method: "POST",
       url: `${endpoints.backend}/home`,
-      data
+      data,
+      headers: {
+        Authorization: idToken
+      }
     }),
     () =>
       enqueueSnackbar("Successfully updated the settings", {

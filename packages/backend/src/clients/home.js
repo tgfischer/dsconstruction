@@ -6,7 +6,7 @@ export const get = async () => {
   const home = await settingsClient.get("home");
   const services = await servicesClient.getAll();
   const gallery = await galleryClient.get({ size: 4 });
-  return { ...home, services, gallery };
+  return { ...home, services, photos: gallery.photos };
 };
 
 export const update = async body => settingsClient.update("home", body);
