@@ -63,7 +63,7 @@ const GalleryCard = ({ photo, onClick, classes, footer: Footer }) => {
         >
           <Grid spacing={8} container>
             {photo.isSelected && (
-              <Grid item>
+              <Grid xs={12} item>
                 <svg
                   className={classes.icon}
                   focusable="false"

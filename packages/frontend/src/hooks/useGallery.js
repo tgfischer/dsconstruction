@@ -31,24 +31,11 @@ export const useFetchGallery = () => {
   }));
 
   useEffect(() => {
-    const { page, size, selectedTags } = state;
-    setState({
-      ...state,
-      handleGetPage
-    });
-    handleGetPage({ page, size, tags: selectedTags });
-    handleGetTags();
-  }, []);
-
-  useEffect(() => {
     const photos = get(photosData, ["gallery", "photos"]);
     if (photos) {
       setState({
         ...state,
-        photos: photos.map(photo => ({
-          ...photo,
-          isSelected: false
-        })),
+        photos: photos.map(photo => ({ ...photo, isSelected: false })),
         count: get(photosData, ["gallery", "count"]) || 0
       });
     }
@@ -57,22 +44,23 @@ export const useFetchGallery = () => {
   useEffect(() => {
     const tags = get(tagsData, "tags") || [];
     if (tags) {
-      setState({
-        ...state,
-        tags
-      });
+      setState({ ...state, tags });
     }
   }, [tagsData]);
 
   useEffect(() => {
     const isLoading = isPhotosLoading || isTagsLoading;
     if (isLoading !== state.isLoading) {
-      setState({
-        ...state,
-        isLoading
-      });
+      setState({ ...state, isLoading });
     }
   }, [isPhotosLoading, isTagsLoading]);
+
+  useEffect(() => {
+    const { page, size, selectedTags } = state;
+    setState({ ...state, handleGetPage });
+    handleGetPage({ page, size, tags: selectedTags });
+    handleGetTags();
+  }, []);
 
   return [photosData, handleGetPage, isPhotosLoading || isTagsLoading];
 };
@@ -106,21 +94,11 @@ export default () => {
       setState({ ...state, photos });
     },
     handleSelectTag: e => {
-      setState({
-        ...state,
-        selectedTags: e.target.value
-      });
-      state.handleGetPage({
-        ...state,
-        tags: e.target.value
-      });
+      setState({ ...state, selectedTags: e.target.value });
+      state.handleGetPage({ ...state, tags: e.target.value });
     },
     handleGetPage: (_, page) => {
-      setState({
-        ...state,
-        photos: [],
-        page
-      });
+      setState({ ...state, photos: [], page });
       state.handleGetPage({ ...state, page, tags: state.selectedTags });
     },
     handleDeleteTag,

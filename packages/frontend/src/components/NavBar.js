@@ -16,6 +16,7 @@ import { pages } from "../constants";
 import Container from "./Container";
 import ButtonLink from "./ButtonLink";
 import useUser from "../hooks/useUser";
+import useSidebar from "../hooks/useSidebar";
 
 const styles = theme => ({
   root: {
@@ -42,6 +43,7 @@ const styles = theme => ({
 
 const NavBar = ({ title, transparent, classes, history, fixed }) => {
   const { isLoggedIn, clearUser } = useUser();
+  const [, openSidebar] = useSidebar();
   return (
     <Fragment>
       <AppBar
@@ -57,6 +59,7 @@ const NavBar = ({ title, transparent, classes, history, fixed }) => {
               <Hidden mdUp>
                 <IconButton
                   className={classes.menuButton}
+                  onClick={openSidebar}
                   color="inherit"
                   aria-label="Menu"
                 >

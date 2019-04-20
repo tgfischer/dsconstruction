@@ -3,11 +3,14 @@ import PropTypes from "prop-types";
 import Helmet from "react-helmet";
 import Grid from "@material-ui/core/Grid";
 
+import Sidebar from "./Sidebar";
+
 const CoreLayout = ({ title, children }) => (
   <Fragment>
     <Helmet>
       <title>{title}</title>
     </Helmet>
+    <Sidebar />
     <Grid container>
       <Grid item xs={12}>
         {children}

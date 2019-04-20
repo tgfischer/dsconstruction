@@ -39,6 +39,7 @@ const Container = ({
     </Hidden>
     <Grid
       item
+      xs={12}
       sm={12}
       md={width}
       className={classnames(className, { [classes.spaced]: spaced })}

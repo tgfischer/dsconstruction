@@ -20,6 +20,7 @@ import DashboardGallery from "./DashboardGallery";
 import DashboardContact from "./DashboardContact";
 import withAuthorizer, { roles } from "./Authorizer";
 import theme from "../themes/default";
+import SidebarProvider from "../contexts/SidebarProvider";
 
 const App = () => (
   <MuiThemeProvider theme={theme}>
@@ -27,49 +28,51 @@ const App = () => (
       <SnackbarProvider maxSnack={1}>
         <ModalProvider>
           <CookiesProvider>
-            <CssBaseline />
-            <Router history={createBrowserHistory()}>
-              <Fragment>
-                <Route exact path="/" component={Home} />
-                <Route
-                  exact
-                  path="/login"
-                  component={withAuthorizer(roles.GUEST, Login)}
-                />
-                <Route
-                  exact
-                  path="/reset/:type"
-                  component={withAuthorizer(roles.GUEST, ResetPassword)}
-                />
-                <Route exact path="/gallery" component={Gallery} />
-                <Route exact path="/contact" component={Contact} />
-                <Route
-                  exact
-                  path="/dashboard"
-                  render={() => <Redirect to="/dashboard/home" />}
-                />
-                <Route
-                  exact
-                  path="/dashboard/home"
-                  component={withAuthorizer(roles.ADMIN, DashboardHome)}
-                />
-                <Route
-                  exact
-                  path="/dashboard/services"
-                  component={withAuthorizer(roles.ADMIN, DashboardServices)}
-                />
-                <Route
-                  exact
-                  path="/dashboard/gallery"
-                  component={withAuthorizer(roles.ADMIN, DashboardGallery)}
-                />
-                <Route
-                  exact
-                  path="/dashboard/contact"
-                  component={withAuthorizer(roles.ADMIN, DashboardContact)}
-                />
-              </Fragment>
-            </Router>
+            <SidebarProvider>
+              <CssBaseline />
+              <Router history={createBrowserHistory()}>
+                <Fragment>
+                  <Route exact path="/" component={Home} />
+                  <Route
+                    exact
+                    path="/login"
+                    component={withAuthorizer(roles.GUEST, Login)}
+                  />
+                  <Route
+                    exact
+                    path="/reset/:type"
+                    component={withAuthorizer(roles.GUEST, ResetPassword)}
+                  />
+                  <Route exact path="/gallery" component={Gallery} />
+                  <Route exact path="/contact" component={Contact} />
+                  <Route
+                    exact
+                    path="/dashboard"
+                    render={() => <Redirect to="/dashboard/home" />}
+                  />
+                  <Route
+                    exact
+                    path="/dashboard/home"
+                    component={withAuthorizer(roles.ADMIN, DashboardHome)}
+                  />
+                  <Route
+                    exact
+                    path="/dashboard/services"
+                    component={withAuthorizer(roles.ADMIN, DashboardServices)}
+                  />
+                  <Route
+                    exact
+                    path="/dashboard/gallery"
+                    component={withAuthorizer(roles.ADMIN, DashboardGallery)}
+                  />
+                  <Route
+                    exact
+                    path="/dashboard/contact"
+                    component={withAuthorizer(roles.ADMIN, DashboardContact)}
+                  />
+                </Fragment>
+              </Router>
+            </SidebarProvider>
           </CookiesProvider>
         </ModalProvider>
       </SnackbarProvider>

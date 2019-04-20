@@ -17,3 +17,22 @@ export const pages = [
     href: "/contact"
   }
 ];
+
+export const adminPages = [
+  {
+    label: "Home settings",
+    href: "/dashboard/home"
+  },
+  {
+    label: "Services settings",
+    href: "/dashboard/services"
+  },
+  {
+    label: "Gallery settings",
+    href: "/dashboard/gallery"
+  },
+  {
+    label: "Contact settings",
+    href: "/dashboard/contact"
+  }
+];
