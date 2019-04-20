@@ -29,6 +29,7 @@ provider:
         - cognito-idp:AdminInitiateAuth
         - cognito-idp:AdminRespondToAuthChallenge
         - cognito-idp:AdminGetUser
+        - cognito-idp:AdminCreateUser
       Resource:
         Fn::GetAtt:
           - CognitoUserPool

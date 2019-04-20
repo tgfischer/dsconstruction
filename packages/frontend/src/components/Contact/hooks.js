@@ -1,6 +1,5 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useFormState } from "react-use-form-state";
-import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
 import { useSnackbar } from "notistack";
 
 import useRequest from "../../hooks/useRequest";
@@ -9,9 +8,8 @@ import { endpoints } from "../../constants";
 export const useContactForm = () => {
   const [state, setState] = useState({});
   const [{ values }, input] = useFormState({});
-  const { executeRecaptcha } = useGoogleReCaptcha();
   const { enqueueSnackbar } = useSnackbar();
-  const [{ data, error, isLoading }, handleSubmit] = useRequest(
+  const [{ isLoading }, handleSubmit] = useRequest(
     data => ({
       method: "POST",
       url: `${endpoints.backend}/contact`,
@@ -23,14 +21,9 @@ export const useContactForm = () => {
       })
   );
 
-  useEffect(() => {
-    executeRecaptcha("contact").then(token => {
-      setState({ "g-recaptcha-response": token });
-    });
-  }, [data, error]);
-
   return {
     input,
+    handleRecaptcha: token => setState({ "g-recaptcha-response": token }),
     handleSubmit: e => {
       e.preventDefault();
       handleSubmit({ ...values, ...state });

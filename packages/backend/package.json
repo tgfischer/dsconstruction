@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "npx serverless offline start --stage local --env local",
-    "deploy": "npx serverless deploy --verbose",
+    "deploy": "node ./scripts/deploy.js",
     "destroy": "node ./scripts/destroy.js",
     "include": "npx lerna add --scope=@dsconstruction/backend"
   },

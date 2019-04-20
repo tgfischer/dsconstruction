@@ -49,7 +49,7 @@ const NavBar = ({ title, transparent, classes, history, fixed }) => {
           [classes.transparent]: transparent
         })}
         position={fixed ? "fixed" : "absolute"}
-        color="primary"
+        color="secondary"
       >
         <Toolbar>
           <Container>

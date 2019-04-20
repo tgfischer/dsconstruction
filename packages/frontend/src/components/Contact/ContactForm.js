@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import ReCAPTCHA from "react-google-recaptcha";
 import Grid from "@material-ui/core/Grid";
 import TextField from "@material-ui/core/TextField";
 import SendIcon from "@material-ui/icons/Send";
@@ -15,7 +16,7 @@ const styles = theme => ({
 });
 
 const ContactForm = ({ classes }) => {
-  const { input, handleSubmit, isLoading } = useContactForm();
+  const { input, handleRecaptcha, handleSubmit, isLoading } = useContactForm();
   return (
     <form>
       <Grid spacing={16} container>
@@ -59,6 +60,12 @@ const ContactForm = ({ classes }) => {
             disabled={isLoading}
             multiline
             rows={10}
+          />
+        </Grid>
+        <Grid xs={12} item>
+          <ReCAPTCHA
+            sitekey={process.env.REACT_APP_RECAPTCHA_KEY}
+            onChange={handleRecaptcha}
           />
         </Grid>
         <Grid xs={12} item>
