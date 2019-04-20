@@ -32,6 +32,8 @@ export const update = Joi.object()
         postalCode: Joi.string().required()
       })
       .required(),
-    email: Joi.string().required()
+    email: Joi.string()
+      .email()
+      .required()
   })
   .required();

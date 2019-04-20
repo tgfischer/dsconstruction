@@ -39,7 +39,7 @@ const ResetPassword = ({ classes, history, match }) => {
   );
 
   return (
-    <Page>
+    <Page title="D's Construction - Reset password">
       <Container width={4}>
         <form className={classes.form} onSubmit={onSubmit}>
           <Grid

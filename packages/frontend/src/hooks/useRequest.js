@@ -4,9 +4,12 @@ import { useSnackbar } from "notistack";
 import identity from "lodash/identity";
 import get from "lodash/get";
 
+import useUser from "./useUser";
+
 export default (request, onSuccess = identity, onError = identity) => {
   const [response, handleRequest] = useResource(request);
   const { enqueueSnackbar } = useSnackbar();
+  const { clearUser } = useUser();
 
   useEffect(() => {
     if (response.data) {
@@ -16,6 +19,10 @@ export default (request, onSuccess = identity, onError = identity) => {
   useEffect(() => {
     if (!response.error) {
       return;
+    }
+
+    if (response.error.code === 401) {
+      return clearUser();
     }
 
     let err =

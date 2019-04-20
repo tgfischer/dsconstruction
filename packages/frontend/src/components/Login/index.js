@@ -35,7 +35,7 @@ const Login = ({ classes, history }) => {
   const [onSubmit, { email, password }, isValid, isLoading] = useLogin(history);
 
   return (
-    <Page>
+    <Page title="D's Construction - Login">
       <Container width={4}>
         <form className={classes.form} onSubmit={onSubmit}>
           <Grid
