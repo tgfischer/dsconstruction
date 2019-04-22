@@ -12,7 +12,7 @@ import Preview from "./Preview";
 const styles = theme => ({
   chip: {
     margin: theme.spacing.unit * 1.5,
-    fontSize: theme.typography.fontSize
+    fontSize: theme.typography.fontSize * 1.3
   }
 });
 
@@ -41,7 +41,10 @@ ServicesPreview.propTypes = {
       id: PropTypes.string.isRequired,
       name: PropTypes.string.isRequired
     }).isRequired
-  )
+  ),
+  classes: PropTypes.shape({
+    chip: PropTypes.string.isRequired
+  }).isRequired
 };
 
 ServicesPreview.defaultProps = {
