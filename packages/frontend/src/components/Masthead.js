@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import classnames from "classnames";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
+import Hidden from "@material-ui/core/Hidden";
 import { withStyles } from "@material-ui/core/styles";
 
 import NavBar from "./NavBar";
@@ -17,7 +18,7 @@ const getBackgroundStyle = ({ background }) => ({
 
 const styles = theme => ({
   masthead: {
-    height: 800
+    height: "100vh"
   },
   background: {
     backgroundSize: "cover !important"
@@ -27,8 +28,13 @@ const styles = theme => ({
     color: theme.palette.common.white,
     wordBreak: "break-word"
   },
+  desktop: {
+    fontSize: "3.5em"
+  },
+  mobile: {
+    fontSize: "2em"
+  },
   subtitle: {
-    fontWeight: 400,
     color: theme.palette.common.white
   }
 });
@@ -47,9 +53,22 @@ const Masthead = ({ masthead, classes }) => (
       container
     >
       <Grid item>
-        <Typography variant="h2" className={classes.title}>
-          {masthead.header}
-        </Typography>
+        <Hidden mdUp>
+          <Typography
+            variant="h1"
+            className={classnames(classes.title, classes.mobile)}
+          >
+            {masthead.header}
+          </Typography>
+        </Hidden>
+        <Hidden mdDown>
+          <Typography
+            variant="h1"
+            className={classnames(classes.title, classes.desktop)}
+          >
+            {masthead.header}
+          </Typography>
+        </Hidden>
       </Grid>
       <Grid item>
         <Typography variant="subtitle1" className={classes.subtitle}>

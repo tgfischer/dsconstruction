@@ -5,16 +5,24 @@ import Chip from "@material-ui/core/Chip";
 import Avatar from "@material-ui/core/Avatar";
 import BuildIcon from "@material-ui/icons/Build";
 import sortBy from "lodash/sortBy";
+import { withStyles } from "@material-ui/core/styles";
 
 import Preview from "./Preview";
 
-const ServicesPreview = ({ services }) => (
+const styles = theme => ({
+  chip: {
+    margin: theme.spacing.unit * 1.5,
+    fontSize: theme.typography.fontSize
+  }
+});
+
+const ServicesPreview = ({ services, classes }) => (
   <Preview title="Services">
     <Grid spacing={16} justify="center" container>
       {sortBy(services, ["name"]).map(({ name }) => (
         <Chip
           key={name}
-          style={{ margin: 10 }}
+          className={classes.chip}
           label={name}
           avatar={
             <Avatar>
@@ -40,4 +48,4 @@ ServicesPreview.defaultProps = {
   services: []
 };
 
-export default ServicesPreview;
+export default withStyles(styles)(ServicesPreview);

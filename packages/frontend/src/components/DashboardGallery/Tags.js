@@ -6,7 +6,7 @@ import { withStyles } from "@material-ui/core/styles";
 
 const styles = theme => ({
   chip: {
-    marginRight: theme.spacing.unit
+    margin: theme.spacing.unit
   }
 });
 

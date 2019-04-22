@@ -93,7 +93,7 @@ const ResetPassword = ({ classes, history, match }) => {
             disabled={!isValid || isLoading}
             fullWidth
           >
-            {isLoading && <CircularProgress />}
+            {isLoading && <CircularProgress size={30} color="secondary" />}
             {!isLoading && <span>Reset Password</span>}
           </Button>
         </form>
