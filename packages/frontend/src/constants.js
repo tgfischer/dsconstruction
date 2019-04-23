@@ -13,7 +13,7 @@ export const pages = {
   HOME: {
     icon: HomeIcon,
     name: "Home",
-    to: "/home"
+    to: "/"
   },
   GALLERY: {
     icon: CollectionsIcon,
