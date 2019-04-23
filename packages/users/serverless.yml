@@ -30,6 +30,8 @@ provider:
         - cognito-idp:AdminRespondToAuthChallenge
         - cognito-idp:AdminGetUser
         - cognito-idp:AdminCreateUser
+        - cognito-idp:ListUsers
+        - cognito-idp:AdminDeleteUser
       Resource:
         Fn::GetAtt:
           - CognitoUserPool

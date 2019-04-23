@@ -9,12 +9,16 @@ import AddUserModal from "./AddUserModal";
 import useUser from "../../hooks/useUser";
 
 export const useUsers = () => {
-  const [{ data, isLoading }, getServices] = useRequest(() => ({
+  const { idToken } = useUser();
+  const [{ data, isLoading }, getUsers] = useRequest(() => ({
     method: "GET",
-    url: `${endpoints.users}/users`
+    url: `${endpoints.users}/users`,
+    headers: {
+      Authorization: idToken
+    }
   }));
 
-  useEffect(() => void getServices(), []);
+  useEffect(() => void getUsers(), []);
   return [get(data, "users") || [], isLoading];
 };
 
