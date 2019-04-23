@@ -24,7 +24,7 @@ export const useDashboardUsers = () => {
   const [showAddModal, hideAddModal] = useModal(() => () => (
     <AddUserModal title="Add a user" onClose={hideAddModal} isOpen />
   ));
-  const [, handleDelete] = useRequest(
+  const [{ isLoading: isDeleting }, handleDelete] = useRequest(
     data => ({
       method: "DELETE",
       url: `${endpoints.users}/users`,
@@ -41,7 +41,7 @@ export const useDashboardUsers = () => {
     ({ data }) => {
       handleDelete(data.map(({ index }) => users[index].id));
     },
-    isLoading
+    isLoading || isDeleting
   ];
 };
 

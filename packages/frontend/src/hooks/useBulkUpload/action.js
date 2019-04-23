@@ -2,17 +2,19 @@ import axios from "axios";
 
 import * as constants from "./constants";
 
-export default async (dispatch, data, onError) => {
+export default async (dispatch, data, onUpload, onError) => {
   try {
     dispatch({ type: constants.REQUEST, data });
 
     await Promise.all(
       data.map(({ url, file }) =>
-        axios.put(url, file, {
-          headers: {
-            "Content-Type": file.type
-          }
-        })
+        axios
+          .put(url, file, {
+            headers: {
+              "Content-Type": file.type
+            }
+          })
+          .then(onUpload)
       )
     );
     dispatch({ type: constants.SUCCESS });

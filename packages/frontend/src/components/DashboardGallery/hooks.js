@@ -86,7 +86,14 @@ export const useGalleryModal = onClose => {
       onClose();
     }
   );
-  const [, handleBulkUpload, , isUploading] = useBulkUpload(
+  const [
+    ,
+    handleBulkUpload,
+    ,
+    isUploading,
+    progress,
+    totalPhotos
+  ] = useBulkUpload(
     `${endpoints.backend}/gallery/url`,
     "gallery",
     files,
@@ -105,7 +112,9 @@ export const useGalleryModal = onClose => {
         files: files.map(({ name }) => "gallery/" + name)
       });
     },
-    Boolean(submitResponse.isLoading || isUploading)
+    Boolean(submitResponse.isLoading || isUploading),
+    progress,
+    totalPhotos
   ];
 };
 

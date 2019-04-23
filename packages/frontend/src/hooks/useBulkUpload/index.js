@@ -2,6 +2,7 @@ import { useReducer, useEffect } from "react";
 import { useSnackbar } from "notistack";
 import identity from "lodash/identity";
 import find from "lodash/find";
+import get from "lodash/get";
 
 import * as constants from "./constants";
 import useRequest from "../useRequest";
@@ -12,10 +13,14 @@ import reducer from "./reducer";
 export default (url, folder, files, onUploaded = identity) => {
   const { enqueueSnackbar } = useSnackbar();
   const { idToken } = useUser();
-  const [{ data, isUploaded, isUploading }, dispatch] = useReducer(reducer, {
-    isUploaded: false,
-    isUploading: false
-  });
+  const [{ data, isUploaded, isUploading, progress }, dispatch] = useReducer(
+    reducer,
+    {
+      isUploaded: false,
+      isUploading: false,
+      progress: 0
+    }
+  );
   const [response, handleRequest] = useRequest(
     data => ({
       method: "POST",
@@ -35,6 +40,7 @@ export default (url, folder, files, onUploaded = identity) => {
           url,
           file: find(files, ({ name }) => `${folder}/${name}` === file)
         })),
+        () => dispatch({ type: constants.PROGRESS }),
         ({ message }) =>
           enqueueSnackbar(message, {
             variant: "error",
@@ -58,6 +64,8 @@ export default (url, folder, files, onUploaded = identity) => {
       dispatch({ type: constants.SET_IS_UPLOADING });
     },
     isUploaded,
-    isUploading
+    isUploading,
+    progress,
+    get(data, ["length"]) || 0
   ];
 };

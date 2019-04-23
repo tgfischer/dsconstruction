@@ -1,22 +1,39 @@
 import React from "react";
 import PropTypes from "prop-types";
+import CircularProgress from "@material-ui/core/CircularProgress";
+import Grid from "@material-ui/core/Grid";
+import Typography from "@material-ui/core/Typography";
 
 import { useGalleryModal } from "./hooks";
 import GalleryDropzone from "./GalleryDropzone";
 import Modal from "../Modal";
 
 const AddPhotosModal = ({ title, isOpen, onClose }) => {
-  const [onSubmit, isLoading] = useGalleryModal(onClose);
+  const [onSubmit, isLoading, progress, totalPhotos] = useGalleryModal(onClose);
   return (
     <Modal
       title={title}
       isOpen={isOpen}
-      isLoading={isLoading}
       onClose={onClose}
       onSubmit={onSubmit}
       maxWidth="sm"
     >
-      <GalleryDropzone isLoading={isLoading} />
+      {totalPhotos > 0 && isLoading && (
+        <Grid container spacing={16} justify="center" alignItems="center">
+          <CircularProgress
+            variant="static"
+            size={100}
+            color="secondary"
+            value={(progress / totalPhotos) * 100}
+          />
+          <Grid xs={12} item>
+            <Typography align="center">
+              Uploaded {progress} of {totalPhotos}
+            </Typography>
+          </Grid>
+        </Grid>
+      )}
+      {!isLoading && <GalleryDropzone />}
     </Modal>
   );
 };
