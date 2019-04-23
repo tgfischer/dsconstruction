@@ -78,9 +78,13 @@ const NavBar = ({ title, transparent, classes, history, fixed }) => {
                 color="inherit"
               />
               <Hidden smDown>
-                {pages.map(({ label, href }) => (
-                  <ButtonLink key={href} to={href} className={classes.button}>
-                    {label}
+                {Object.keys(pages).map(key => (
+                  <ButtonLink
+                    key={pages[key].to}
+                    to={pages[key].to}
+                    className={classes.button}
+                  >
+                    {pages[key].name}
                   </ButtonLink>
                 ))}
                 {isLoggedIn && (

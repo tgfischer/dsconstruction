@@ -1,15 +1,18 @@
 import React, { Fragment } from "react";
 import PropTypes from "prop-types";
-import { Link } from "react-router-dom";
 import { withStyles } from "@material-ui/core/styles";
 import SwipeableDrawer from "@material-ui/core/Drawer";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
+import ListItemIcon from "@material-ui/core/ListItemIcon";
+import Divider from "@material-ui/core/Divider";
+import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 
-import * as constants from "../constants";
+import { pages, adminPages } from "../constants";
 import useSidebar from "../hooks/useSidebar";
 import useUser from "../hooks/useUser";
+import StyledLink from "./StyledLink";
 
 const styles = {
   list: {
@@ -21,40 +24,50 @@ const styles = {
 const Sidebar = ({ classes, isOpen, closeSidebar, isLoggedIn, clearUser }) => (
   <SwipeableDrawer open={isOpen} onClose={closeSidebar}>
     <List className={classes.list}>
-      {constants.pages.map(({ href, label }) => (
-        <ListItem
-          key={href}
-          component={Link}
-          to={href}
-          onClick={closeSidebar}
-          button
-        >
-          <ListItemText primary={label} />
-        </ListItem>
-      ))}
+      {Object.keys(pages).map(key => {
+        const Icon = pages[key].icon;
+        return (
+          <StyledLink key={key} to={pages[key].to}>
+            <ListItem onClick={closeSidebar} button>
+              <ListItemIcon>
+                <Icon />
+              </ListItemIcon>
+              <ListItemText>{pages[key].name}</ListItemText>
+            </ListItem>
+          </StyledLink>
+        );
+      })}
       {isLoggedIn && (
         <Fragment>
-          {constants.adminPages.map(({ href, label }) => (
+          <Divider />
+          {Object.keys(adminPages).map(key => {
+            const Icon = adminPages[key].icon;
+            return (
+              <StyledLink key={key} to={adminPages[key].to}>
+                <ListItem onClick={closeSidebar} button>
+                  <ListItemIcon>
+                    <Icon />
+                  </ListItemIcon>
+                  <ListItemText>{adminPages[key].name}</ListItemText>
+                </ListItem>
+              </StyledLink>
+            );
+          })}
+          <Divider />
+          <StyledLink to="/login">
             <ListItem
-              key={href}
-              component={Link}
-              to={href}
-              onClick={closeSidebar}
+              onClick={() => {
+                closeSidebar();
+                clearUser();
+              }}
               button
             >
-              <ListItemText primary={label} />
+              <ListItemIcon>
+                <ExitToAppIcon />
+              </ListItemIcon>
+              <ListItemText>Log out</ListItemText>
             </ListItem>
-          ))}
-          <ListItem
-            component={Link}
-            onClick={() => {
-              closeSidebar();
-              clearUser();
-            }}
-            button
-          >
-            <ListItemText primary="Log out" />
-          </ListItem>
+          </StyledLink>
         </Fragment>
       )}
     </List>

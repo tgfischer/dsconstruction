@@ -1,38 +1,56 @@
+import HomeIcon from "@material-ui/icons/Home";
+import CollectionsIcon from "@material-ui/icons/Collections";
+import BuildIcon from "@material-ui/icons/Build";
+import PhoneIcon from "@material-ui/icons/Phone";
+import PersonIcon from "@material-ui/icons/Person";
+
 export const endpoints = {
   backend: process.env.REACT_APP_BACKEND_ENDPOINT + "/api",
   users: process.env.REACT_APP_USERS_ENDPOINT + "/api"
 };
 
-export const pages = [
-  {
-    label: "Home",
-    href: "/"
+export const pages = {
+  HOME: {
+    icon: HomeIcon,
+    name: "Home",
+    to: "/home"
   },
-  {
-    label: "Gallery",
-    href: "/gallery"
+  GALLERY: {
+    icon: CollectionsIcon,
+    name: "Gallery",
+    to: "/gallery"
   },
-  {
-    label: "Contact",
-    href: "/contact"
+  CONTACT: {
+    icon: PhoneIcon,
+    name: "Contact",
+    to: "/contact"
   }
-];
+};
 
-export const adminPages = [
-  {
-    label: "Home settings",
-    href: "/dashboard/home"
+export const adminPages = {
+  HOME: {
+    icon: HomeIcon,
+    name: "Home",
+    to: "/dashboard/home"
   },
-  {
-    label: "Services settings",
-    href: "/dashboard/services"
+  SERVICES: {
+    icon: BuildIcon,
+    name: "Services",
+    to: "/dashboard/services"
   },
-  {
-    label: "Gallery settings",
-    href: "/dashboard/gallery"
+  GALLERY: {
+    icon: CollectionsIcon,
+    name: "Gallery",
+    to: "/dashboard/gallery"
   },
-  {
-    label: "Contact settings",
-    href: "/dashboard/contact"
+  CONTACT: {
+    icon: PhoneIcon,
+    name: "Contact",
+    to: "/dashboard/contact"
+  },
+  USERS: {
+    icon: PersonIcon,
+    name: "Users",
+    to: "/dashboard/users"
   }
-];
+};

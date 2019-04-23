@@ -7,7 +7,7 @@ import middleware from "@tomfischer/middleware";
 
 import login from "./routes/login";
 import reset from "./routes/reset";
-import create from "./routes/create";
+import users from "./routes/users";
 
 const app = express();
 
@@ -18,7 +18,7 @@ app.use(cors());
 
 app.use("/api/login", login);
 app.use("/api/reset", reset);
-app.use("/api/create", create);
+app.use("/api/users", users);
 app.use(middleware.errorHandler);
 
 export const handler = serverless(app);

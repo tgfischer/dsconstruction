@@ -1,4 +1,5 @@
 import AWS from "aws-sdk";
+import find from "lodash/find";
 
 const getUserPool = () =>
   new AWS.CognitoIdentityServiceProvider({
@@ -100,6 +101,23 @@ export const getUser = async username => {
   );
 };
 
+export const getUsers = async () => {
+  const { Users: users } = await getUserPool()
+    .listUsers({
+      UserPoolId: process.env.COGNITO_USER_POOL_ID
+    })
+    .promise();
+  return users.map(
+    ({ Username: id, Attributes: attributes, UserStatus: status }) => ({
+      id,
+      firstName: find(attributes, ["Name", "name"]).Value,
+      lastName: find(attributes, ["Name", "family_name"]).Value,
+      email: find(attributes, ["Name", "email"]).Value,
+      status
+    })
+  );
+};
+
 export const createUser = async (firstName, lastName, email, password) => {
   const result = await getUserPool()
     .adminCreateUser({
@@ -125,3 +143,15 @@ export const createUser = async (firstName, lastName, email, password) => {
 
   return result.UserAttributes;
 };
+
+export const deleteUsers = async users =>
+  Promise.all(
+    users.map(id =>
+      getUserPool()
+        .adminDeleteUser({
+          UserPoolId: process.env.COGNITO_USER_POOL_ID,
+          Username: id
+        })
+        .promise()
+    )
+  );

@@ -28,6 +28,7 @@ const Email = ({ classes }) => {
               <TextField
                 label="Email"
                 variant="outlined"
+                type="email"
                 fullWidth
                 required
                 value={email}

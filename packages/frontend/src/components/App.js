@@ -18,6 +18,7 @@ import DashboardHome from "./DashboardHome";
 import DashboardServices from "./DashboardServices";
 import DashboardGallery from "./DashboardGallery";
 import DashboardContact from "./DashboardContact";
+import DashboardUsers from "./DashboardUsers";
 import withAuthorizer, { roles } from "./Authorizer";
 import theme from "../themes/default";
 import SidebarProvider from "../contexts/SidebarProvider";
@@ -69,6 +70,11 @@ const App = () => (
                     exact
                     path="/dashboard/contact"
                     component={withAuthorizer(roles.ADMIN, DashboardContact)}
+                  />
+                  <Route
+                    exact
+                    path="/dashboard/users"
+                    component={withAuthorizer(roles.ADMIN, DashboardUsers)}
                   />
                 </Fragment>
               </Router>

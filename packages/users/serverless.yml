@@ -56,13 +56,39 @@ functions:
           path: /api/reset/temporary
           method: POST
           cors: true
-  create:
+  getUsers:
     handler: src/index.handler
     events:
       - http:
-          path: /api/create
+          path: /api/users
+          method: GET
+          cors: true
+          authorizer:
+            type: COGNITO_USER_POOLS
+            authorizerId:
+              Ref: ApiGatewayAuthorizer
+  addUser:
+    handler: src/index.handler
+    events:
+      - http:
+          path: /api/users
           method: POST
           cors: true
+          authorizer:
+            type: COGNITO_USER_POOLS
+            authorizerId:
+              Ref: ApiGatewayAuthorizer
+  deleteUsers:
+    handler: src/index.handler
+    events:
+      - http:
+          path: /api/users
+          method: DELETE
+          cors: true
+          authorizer:
+            type: COGNITO_USER_POOLS
+            authorizerId:
+              Ref: ApiGatewayAuthorizer
 
 resources:
   Resources:
@@ -96,6 +122,19 @@ resources:
         ExplicitAuthFlows:
           - ADMIN_NO_SRP_AUTH
         GenerateSecret: false
+    ApiGatewayAuthorizer:
+      Type: AWS::ApiGateway::Authorizer
+      Properties:
+        AuthorizerResultTtlInSeconds: 300
+        IdentitySource: method.request.header.Authorization
+        Name: Cognito
+        RestApiId:
+          Ref: ApiGatewayRestApi
+        Type: COGNITO_USER_POOLS
+        ProviderARNs:
+          - Fn::GetAtt:
+              - CognitoUserPool
+              - Arn
   Outputs:
     UserPoolId:
       Value:

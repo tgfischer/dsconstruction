@@ -8,8 +8,8 @@ import ListItemText from "@material-ui/core/ListItemText";
 import Hidden from "@material-ui/core/Hidden";
 import { withStyles } from "@material-ui/core/styles";
 
-import { items } from "./constants";
-import StyledLink from "../StyledLink";
+import { adminPages } from "../constants";
+import StyledLink from "./StyledLink";
 
 const styles = theme => ({
   root: {
@@ -34,15 +34,15 @@ const SideNav = ({ classes }) => (
     >
       <div className={classes.toolbar} />
       <List>
-        {Object.keys(items).map(key => {
-          const Icon = items[key].icon;
+        {Object.keys(adminPages).map(key => {
+          const Icon = adminPages[key].icon;
           return (
-            <StyledLink key={key} to={items[key].to}>
+            <StyledLink key={key} to={adminPages[key].to}>
               <ListItem button>
                 <ListItemIcon>
                   <Icon />
                 </ListItemIcon>
-                <ListItemText>{items[key].name}</ListItemText>
+                <ListItemText>{adminPages[key].name}</ListItemText>
               </ListItem>
             </StyledLink>
           );
