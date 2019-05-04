@@ -57,7 +57,8 @@ const DashboardServices = ({ classes }) => {
               download: false,
               viewColumns: false,
               rowHover: false,
-              onRowsDelete: deleteRows
+              onRowsDelete: deleteRows,
+              responsive: "scroll"
             }}
           />
         </Grid>

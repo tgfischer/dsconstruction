@@ -17,7 +17,8 @@ const styles = theme => ({
     width: "auto"
   },
   original: {
-    maxHeight: 800,
+    maxHeight: `calc(100vh - ${theme.spacing.unit}px)`,
+    maxWidth: "100%",
     width: "auto"
   },
   icon: {

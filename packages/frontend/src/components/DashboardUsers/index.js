@@ -79,7 +79,8 @@ const DashboardUsers = ({ classes }) => {
               print: false,
               download: false,
               viewColumns: false,
-              onRowsDelete: deleteRows
+              onRowsDelete: deleteRows,
+              responsive: "scroll"
             }}
           />
         </Grid>

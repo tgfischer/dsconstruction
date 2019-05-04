@@ -54,7 +54,8 @@ const PhoneNumbers = ({ classes }) => {
             download: false,
             viewColumns: false,
             rowHover: false,
-            onRowsDelete: deleteRow
+            onRowsDelete: deleteRow,
+            responsive: "scroll"
           }}
         />
       </Grid>

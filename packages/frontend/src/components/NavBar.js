@@ -87,6 +87,15 @@ const NavBar = ({ title, transparent, classes, history, fixed }) => {
                     {pages[key].name}
                   </ButtonLink>
                 ))}
+                {!isLoggedIn && (
+                  <ButtonLink
+                    className={classes.button}
+                    to="/login"
+                    variant="outlined"
+                  >
+                    Login
+                  </ButtonLink>
+                )}
                 {isLoggedIn && (
                   <Fragment>
                     <ButtonLink to="/dashboard" className={classes.button}>

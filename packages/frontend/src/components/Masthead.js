@@ -61,7 +61,7 @@ const Masthead = ({ masthead, classes }) => (
             {masthead.header}
           </Typography>
         </Hidden>
-        <Hidden mdDown>
+        <Hidden smDown>
           <Typography
             variant="h1"
             className={classnames(classes.title, classes.desktop)}

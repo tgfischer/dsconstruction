@@ -8,22 +8,25 @@ import ListItemText from "@material-ui/core/ListItemText";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import Divider from "@material-ui/core/Divider";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
+import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 
 import { pages, adminPages } from "../constants";
 import useSidebar from "../hooks/useSidebar";
 import useUser from "../hooks/useUser";
 import StyledLink from "./StyledLink";
+import DividerText from "./DividerText";
 
-const styles = {
+const styles = theme => ({
   list: {
     width: 250,
     backgroundColor: "white"
   }
-};
+});
 
 const Sidebar = ({ classes, isOpen, closeSidebar, isLoggedIn, clearUser }) => (
   <SwipeableDrawer open={isOpen} onClose={closeSidebar}>
     <List className={classes.list}>
+      <DividerText>D's Construction</DividerText>
       {Object.keys(pages).map(key => {
         const Icon = pages[key].icon;
         return (
@@ -37,9 +40,20 @@ const Sidebar = ({ classes, isOpen, closeSidebar, isLoggedIn, clearUser }) => (
           </StyledLink>
         );
       })}
+      {!isLoggedIn && (
+        <StyledLink to="/login">
+          <ListItem onClick={closeSidebar} button>
+            <ListItemIcon>
+              <AccountCircleIcon />
+            </ListItemIcon>
+            <ListItemText>Login</ListItemText>
+          </ListItem>
+        </StyledLink>
+      )}
       {isLoggedIn && (
         <Fragment>
-          <Divider />
+          <Divider component="li" />
+          <DividerText>Settings</DividerText>
           {Object.keys(adminPages).map(key => {
             const Icon = adminPages[key].icon;
             return (

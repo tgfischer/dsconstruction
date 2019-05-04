@@ -16,6 +16,11 @@ export default createMuiTheme({
     }
   },
   overrides: {
+    MUIDataTable: {
+      responsiveScroll: {
+        maxHeight: "none"
+      }
+    },
     MuiTypography: {
       h4: {
         textTransform: "uppercase",
