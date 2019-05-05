@@ -68,7 +68,7 @@ const NavBar = ({ title, transparent, classes, history, fixed }) => {
               </Hidden>
               <img
                 src="/images/logo.png"
-                alt="/images/logo.png"
+                alt="D's Construction"
                 height="75px"
                 width="auto"
               />
