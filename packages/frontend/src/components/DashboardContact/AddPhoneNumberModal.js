@@ -49,12 +49,7 @@ const AddPhoneNumberModal = ({
 
 AddPhoneNumberModal.propTypes = {
   title: PropTypes.string.isRequired,
-  phoneNumbers: PropTypes.arrayOf(
-    PropTypes.shape({
-      name: PropTypes.string.isRequired,
-      number: PropTypes.string.isRequired
-    }).isRequired
-  ).isRequired,
+  phoneNumbers: PropTypes.func.isRequired,
   isOpen: PropTypes.bool.isRequired,
   onSubmit: PropTypes.func.isRequired,
   onClose: PropTypes.func.isRequired

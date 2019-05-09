@@ -37,7 +37,7 @@ export const usePhoneNumbers = () => {
   const [showModal, hideModal] = useModal(() => () => (
     <AddPhoneNumberModal
       title="Add a phone number"
-      phoneNumbers={state.phoneNumbers}
+      phoneNumbers={() => state.phoneNumbers}
       onSubmit={phoneNumbers => {
         setState({
           ...state,
@@ -63,12 +63,12 @@ export const usePhoneNumbers = () => {
   ];
 };
 
-export const useAddPhoneNumberModal = (phoneNumbers, onSubmit) => {
+export const useAddPhoneNumberModal = (getPhoneNumbers, onSubmit) => {
   const [{ values }, input] = useFormState({});
   return [
     e => {
       e.preventDefault();
-      onSubmit([...phoneNumbers, values]);
+      onSubmit([...getPhoneNumbers(), values]);
     },
     input
   ];

@@ -1690,6 +1690,10 @@ autoprefixer@^9.4.2:
     postcss "^7.0.14"
     postcss-value-parser "^3.3.1"
 
+awesome-phonenumber@^2.10.0:
+  version "2.10.0"
+  resolved "https://registry.yarnpkg.com/awesome-phonenumber/-/awesome-phonenumber-2.10.0.tgz#04d3e97720d847bcf8d2131b6b0b9d83c2794c17"
+
 aws-sdk@^2.430.0:
   version "2.432.0"
   resolved "https://registry.yarnpkg.com/aws-sdk/-/aws-sdk-2.432.0.tgz#8cc677d683355df6d11bbc4ec16784a2267fd710"

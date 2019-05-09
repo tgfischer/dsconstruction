@@ -7,9 +7,7 @@ import Sidebar from "./Sidebar";
 
 const CoreLayout = ({ title, children }) => (
   <Fragment>
-    <Helmet>
-      <title>{title}</title>
-    </Helmet>
+    <Helmet title={title} />
     <Sidebar />
     <Grid container>
       <Grid item xs={12}>

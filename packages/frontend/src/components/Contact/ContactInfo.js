@@ -1,5 +1,6 @@
 import React, { Fragment, useContext } from "react";
 import PropTypes from "prop-types";
+import PhoneNumber from "awesome-phonenumber";
 import Grid from "@material-ui/core/Grid";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
@@ -39,14 +40,20 @@ const ContactForm = ({ classes }) => {
         <Grid xs={12} item>
           <Typography variant="h6">Phone numbers</Typography>
           <List>
-            {phoneNumbers.map(({ name, number }) => (
-              <ListItem key={number}>
-                <Avatar>
-                  <PhoneIcon />
-                </Avatar>
-                <ListItemText primary={number} secondary={name} />
-              </ListItem>
-            ))}
+            {phoneNumbers.map(({ name, number }) => {
+              const phoneNumber = new PhoneNumber(number, "CA");
+              return (
+                <ListItem key={number}>
+                  <Avatar>
+                    <PhoneIcon />
+                  </Avatar>
+                  <ListItemText
+                    primary={phoneNumber.getNumber("national")}
+                    secondary={name}
+                  />
+                </ListItem>
+              );
+            })}
           </List>
         </Grid>
         <Grid xs={12} item>
