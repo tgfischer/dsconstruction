@@ -1,26 +1,52 @@
 import React from "react";
+import PropTypes from "prop-types";
 import TablePagination from "@material-ui/core/TablePagination";
 import Grid from "@material-ui/core/Grid";
+import styled from "styled-components";
 
 import GalleryCards from "./GalleryCards";
 import useGallery from "../hooks/useGallery";
 import LoadingSpinner from "./LoadingSpinner";
 import TagsSelect from "./TagsSelect";
 
+const StyledGrid = styled(Grid)`
+  padding-bottom: 3em;
+`;
+
+const Pagination = ({ handleGetPage, count, page, size }) => (
+  <TablePagination
+    component="div"
+    onChangePage={handleGetPage}
+    count={count || 0}
+    page={page || 0}
+    rowsPerPage={size}
+    rowsPerPageOptions={[12]}
+  />
+);
+
+Pagination.propTypes = {
+  handleGetPage: PropTypes.func.isRequired,
+  count: PropTypes.number,
+  page: PropTypes.number,
+  size: PropTypes.number.isRequired
+};
+
+Pagination.defaultProps = {
+  count: 0,
+  page: 0
+};
+
 const GalleryTable = props => {
   const {
     photos,
     tags,
     selectedTags,
-    count,
-    page,
-    size,
-    handleGetPage,
     handleSelectTag,
-    isLoading
+    isLoading,
+    ...gallery
   } = useGallery();
   return (
-    <Grid spacing={16} container>
+    <StyledGrid spacing={16} container>
       {isLoading && (
         <Grid xs={12} item>
           <LoadingSpinner padding={3} />
@@ -33,18 +59,12 @@ const GalleryTable = props => {
             selectedTags={selectedTags}
             handleSelectTag={handleSelectTag}
           />
-          <TablePagination
-            component="div"
-            onChangePage={handleGetPage}
-            count={count || 0}
-            page={page || 0}
-            rowsPerPage={size}
-            rowsPerPageOptions={[12]}
-          />
+          <Pagination {...gallery} />
           <GalleryCards photos={photos} {...props} />
+          <Pagination {...gallery} />
         </Grid>
       )}
-    </Grid>
+    </StyledGrid>
   );
 };
 

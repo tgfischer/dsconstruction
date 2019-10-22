@@ -1,9 +1,11 @@
+import "@babel/polyfill";
+
 import React from "react";
 import ReactDOM from "react-dom";
 
 import App from "./components/App";
 import * as serviceWorker from "./serviceWorker";
-// import "./seoPolyfill";
+import "./seoPolyfill";
 
 ReactDOM.render(<App />, document.getElementById("root"));
 
