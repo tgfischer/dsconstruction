@@ -3,7 +3,6 @@ import uuid from "uuid/v4";
 import _ from "lodash";
 
 import Gallery from "../models/Gallery";
-import Tag from "../models/Tag";
 import { encodeS3URI } from "../utils";
 
 const getS3Bucket = () => new AWS.S3();

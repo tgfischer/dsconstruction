@@ -1,5 +1,7 @@
 import React, { useContext } from "react";
 import { useFormState } from "react-use-form-state";
+import path from "path";
+import uuid from "uuid/v4";
 import sortBy from "lodash/sortBy";
 import omitBy from "lodash/omitBy";
 
@@ -120,7 +122,18 @@ export const useGalleryModal = onClose => {
 
 export const useGalleryDropzone = () => {
   const [{ files }, setState] = useContext(PhotosContext);
-  return [files, files => setState({ files })];
+  return [
+    files,
+    files =>
+      setState({
+        files: files.map(
+          file =>
+            new File([file], uuid() + path.extname(file.name), {
+              type: file.type
+            })
+        )
+      })
+  ];
 };
 
 export const useAddTagModal = onClose => {

@@ -15,7 +15,6 @@ import filter from "lodash/filter";
 import { withStyles } from "@material-ui/core/styles";
 
 import { usePaperDropzone } from "./hooks";
-import LoadingSpinner from "../LoadingSpinner";
 
 const styles = theme => ({
   button: {
@@ -26,13 +25,11 @@ const styles = theme => ({
   }
 });
 
-const PaperDropzone = ({ multiple, files, setFiles, isLoading, classes }) => {
+const PaperDropzone = ({ multiple, files, setFiles, classes }) => {
   const [{ ref, rootProps, getInputProps }] = usePaperDropzone(setFiles, {
     multiple
   });
-  return isLoading ? (
-    <LoadingSpinner />
-  ) : (
+  return (
     <Fragment>
       <RootRef rootRef={ref}>
         <Fragment>
@@ -55,7 +52,7 @@ const PaperDropzone = ({ multiple, files, setFiles, isLoading, classes }) => {
           <Typography variant="h6">Photos</Typography>
           <List dense>
             {files.map(({ name, path, type }) => (
-              <ListItem key={path}>
+              <ListItem key={name}>
                 <ListItemText primary={name} secondary={type} />
                 <ListItemSecondaryAction>
                   <IconButton
@@ -80,7 +77,6 @@ PaperDropzone.propTypes = {
   multiple: PropTypes.bool,
   files: PropTypes.arrayOf(PropTypes.object.isRequired).isRequired,
   setFiles: PropTypes.func.isRequired,
-  isLoading: PropTypes.bool.isRequired,
   classes: PropTypes.shape({
     button: PropTypes.string.isRequired,
     buttonIcon: PropTypes.string.isRequired
