@@ -17,7 +17,7 @@ export const useFetchGallery = () => {
     url: `${endpoints.backend}/gallery`,
     params: {
       page: data.page,
-      tags: data.tags,
+      tag: data.tag,
       size: data.size
     },
     paramsSerializer: qs.stringify
@@ -56,9 +56,9 @@ export const useFetchGallery = () => {
   }, [isPhotosLoading, isTagsLoading]);
 
   useEffect(() => {
-    const { page, size, selectedTags } = state;
+    const { page, size, selectedTag } = state;
     setState({ ...state, handleGetPage });
-    handleGetPage({ page, size, tags: selectedTags });
+    handleGetPage({ page, size, tag: selectedTag });
     handleGetTags();
   }, []);
 
@@ -94,12 +94,12 @@ export default () => {
       setState({ ...state, photos });
     },
     handleSelectTag: e => {
-      setState({ ...state, selectedTags: e.target.value });
-      state.handleGetPage({ ...state, tags: e.target.value });
+      setState({ ...state, selectedTag: e.target.value });
+      state.handleGetPage({ ...state, tag: e.target.value });
     },
     handleGetPage: (_, page) => {
       setState({ ...state, photos: [], page });
-      state.handleGetPage({ ...state, page, tags: state.selectedTags });
+      state.handleGetPage({ ...state, page, tag: state.selectedTag });
     },
     handleDeleteTag,
     isLoading: state.isLoading || isDeleting

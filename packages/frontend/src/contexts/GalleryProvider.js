@@ -21,7 +21,7 @@ const GalleryProvider = ({ children, initialState }) => (
       defaults(initialState, {
         page: 0,
         tags: [],
-        selectedTags: [],
+        selectedTags: null,
         photos: [],
         size: 12
       })

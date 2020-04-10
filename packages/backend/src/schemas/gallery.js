@@ -8,7 +8,7 @@ export const get = Joi.object()
     page: Joi.number()
       .integer()
       .required(),
-    tags: Joi.array().items(Joi.string())
+    tag: Joi.string()
   })
   .required();
 

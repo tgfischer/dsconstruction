@@ -20,7 +20,7 @@ custom:
 
 provider:
   name: aws
-  runtime: nodejs8.10
+  runtime: nodejs12.x
   region: ca-central-1
   stage: ${opt:stage, "dev"}
   iamRoleStatements:

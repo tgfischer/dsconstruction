@@ -8,13 +8,11 @@ import { encodeS3URI } from "../utils";
 
 const getS3Bucket = () => new AWS.S3();
 
-export const get = async ({ size, page, tags = [] }) => {
+export const get = async ({ size, page, tag }) => {
   const photos = await Gallery.scan().exec();
-  const savedTags = await Tag.scan().exec();
-  const filtered =
-    tags.length === savedTags.length || tags.length === 0
-      ? photos
-      : _.filter(photos, photo => _.intersection(photo.tags, tags).length > 0);
+  const filtered = !tag
+    ? photos
+    : _.filter(photos, photo => _.intersection(photo.tags, [tag]).length > 0);
   const sorted = _.orderBy(filtered, photo => photo.createdAt, ["desc"]);
   const paged = _.take(_.drop(sorted, page * size), size);
   return {

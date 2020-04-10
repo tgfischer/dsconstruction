@@ -2,8 +2,6 @@ import React, { useContext } from "react";
 import { useFormState } from "react-use-form-state";
 import sortBy from "lodash/sortBy";
 import omitBy from "lodash/omitBy";
-import path from "path";
-import uuid from "uuid";
 
 import { endpoints } from "../../constants";
 import PhotosProvider, { PhotosContext } from "../../contexts/PhotosProvider";
@@ -102,7 +100,7 @@ export const useGalleryModal = onClose => {
     data =>
       handleSubmit(
         data.map(({ file }) => ({
-          original: "/gallery/" + uuid() + path.extname(file.name)
+          original: "/gallery/" + file.name
         }))
       )
   );

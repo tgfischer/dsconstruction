@@ -40,7 +40,7 @@ const GalleryTable = props => {
   const {
     photos,
     tags,
-    selectedTags,
+    selectedTag,
     handleSelectTag,
     isLoading,
     ...gallery
@@ -56,7 +56,7 @@ const GalleryTable = props => {
         <Grid xs={12} item>
           <TagsSelect
             tags={tags}
-            selectedTags={selectedTags}
+            selectedTag={selectedTag}
             handleSelectTag={handleSelectTag}
           />
           <Pagination {...gallery} />

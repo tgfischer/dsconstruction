@@ -22,19 +22,16 @@ const styles = theme => ({
   }
 });
 
-const TagsSelect = ({ tags, selectedTags, handleSelectTag, classes }) => (
+const TagsSelect = ({ tags, selectedTag, handleSelectTag, classes }) => (
   <FormControl className={classes.formControl}>
     <InputLabel htmlFor="select-multiple-chip">All categories</InputLabel>
     <Select
-      multiple
-      value={selectedTags}
+      value={selectedTag}
       onChange={handleSelectTag}
       input={<Input id="select-multiple-chip" />}
-      renderValue={selected => (
+      renderValue={tag => (
         <div className={classes.chips}>
-          {selected.map(tag => (
-            <Chip key={tag} label={tag} className={classes.chip} />
-          ))}
+          <Chip key={tag} label={tag} className={classes.chip} />
         </div>
       )}
     >
@@ -54,13 +51,17 @@ TagsSelect.propTypes = {
       name: PropTypes.string.isRequired
     }).isRequired
   ).isRequired,
-  selectedTags: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
+  selectedTag: PropTypes.string,
   handleSelectTag: PropTypes.func.isRequired,
   classes: PropTypes.shape({
     formControl: PropTypes.string.isRequired,
     chips: PropTypes.string.isRequired,
     chip: PropTypes.string.isRequired
   }).isRequired
+};
+
+TagsSelect.defaultProps = {
+  selectedTag: ""
 };
 
 export default withStyles(styles)(TagsSelect);
