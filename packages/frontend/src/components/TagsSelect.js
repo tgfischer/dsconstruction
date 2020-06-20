@@ -1,16 +1,18 @@
 import React from "react";
 import PropTypes from "prop-types";
-import Input from "@material-ui/core/Input";
-import InputLabel from "@material-ui/core/InputLabel";
-import MenuItem from "@material-ui/core/MenuItem";
-import FormControl from "@material-ui/core/FormControl";
-import Select from "@material-ui/core/Select";
-import Chip from "@material-ui/core/Chip";
 import { withStyles } from "@material-ui/core/styles";
+import {
+  Input,
+  InputLabel,
+  MenuItem,
+  FormControl,
+  Select,
+  Chip
+} from "@material-ui/core";
 
 const styles = theme => ({
   formControl: {
-    margin: theme.spacing.unit,
+    margin: theme.spacing(1),
     minWidth: 300
   },
   chips: {
@@ -18,7 +20,7 @@ const styles = theme => ({
     flexWrap: "wrap"
   },
   chip: {
-    margin: theme.spacing.unit / 4
+    margin: theme.spacing(0.25)
   }
 });
 

@@ -1,8 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
-import TextField from "@material-ui/core/TextField";
-
 import { useServiceModal } from "./hooks";
+import { TextField } from "@material-ui/core";
+
 import Modal from "../Modal";
 
 const DashboardServicesModal = ({ title, isOpen, onClose }) => {

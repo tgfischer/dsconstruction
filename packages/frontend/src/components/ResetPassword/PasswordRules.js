@@ -1,11 +1,13 @@
 import React from "react";
 import PropTypes from "prop-types";
-import Paper from "@material-ui/core/Paper";
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemText from "@material-ui/core/ListItemText";
-import Typography from "@material-ui/core/Typography";
 import { withStyles } from "@material-ui/core/styles";
+import {
+  Paper,
+  List,
+  ListItem,
+  ListItemText,
+  Typography
+} from "@material-ui/core";
 
 const rules = [
   "Must contain at least one uppercase letter",
@@ -18,8 +20,8 @@ const rules = [
 const styles = theme => ({
   root: {
     ...theme.mixins.gutters(),
-    paddingTop: theme.spacing.unit * 2,
-    paddingBottom: theme.spacing.unit * 2
+    paddingTop: theme.spacing(2),
+    paddingBottom: theme.spacing(2)
   }
 });
 

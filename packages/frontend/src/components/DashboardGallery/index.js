@@ -1,17 +1,15 @@
 import React, { Fragment } from "react";
 import PropTypes from "prop-types";
 import classnames from "classnames";
-import Grid from "@material-ui/core/Grid";
-import Button from "@material-ui/core/Button";
-import Chip from "@material-ui/core/Chip";
 import AddIcon from "@material-ui/icons/Add";
 import LabelIcon from "@material-ui/icons/Label";
 import DeleteIcon from "@material-ui/icons/Delete";
 import EditAttributesIcon from "@material-ui/icons/EditAttributes";
 import { withStyles } from "@material-ui/core/styles";
-import red from "@material-ui/core/colors/red";
-
 import Dashboard from "../Dashboard";
+import { red } from "@material-ui/core/colors";
+import { Grid, Button, Chip } from "@material-ui/core";
+
 import Tags from "./Tags";
 import GalleryTable from "../GalleryTable";
 import { useDashboardGallery } from "./hooks";
@@ -19,8 +17,8 @@ import GalleryProvider from "../../contexts/GalleryProvider";
 
 const styles = theme => ({
   button: {
-    marginRight: theme.spacing.unit,
-    marginBottom: theme.spacing.unit
+    marginRight: theme.spacing(1),
+    marginBottom: theme.spacing(1)
   },
   deleteButton: {
     backgroundColor: red[500],
@@ -29,10 +27,10 @@ const styles = theme => ({
     }
   },
   buttonIcon: {
-    marginRight: theme.spacing.unit
+    marginRight: theme.spacing(1)
   },
   spinner: {
-    marginLeft: theme.spacing.unit
+    marginLeft: theme.spacing(1)
   },
   tag: {
     margin: 5
@@ -53,7 +51,7 @@ const DashboardGallery = ({ classes }) => {
   } = useDashboardGallery({ fetch: false });
   return (
     <Dashboard title="Gallery settings" isLoading={isLoading}>
-      <Grid spacing={24} container>
+      <Grid spacing={3} container>
         <Grid xs={12} item>
           <Button
             className={classes.button}

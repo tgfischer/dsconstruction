@@ -1,16 +1,13 @@
 import React from "react";
 import PropTypes from "prop-types";
-import Grid from "@material-ui/core/Grid";
-import Paper from "@material-ui/core/Paper";
-import Typography from "@material-ui/core/Typography";
-import TextField from "@material-ui/core/TextField";
 import { withStyles } from "@material-ui/core/styles";
+import { Grid, Paper, Typography, TextField } from "@material-ui/core";
 
 import { useEmail } from "./hooks";
 
 const styles = theme => ({
   paper: {
-    padding: theme.spacing.unit * 3
+    padding: theme.spacing(3)
   }
 });
 
@@ -18,12 +15,12 @@ const Email = ({ classes }) => {
   const [email, onChange] = useEmail();
   return (
     <Paper className={classes.paper}>
-      <Grid spacing={16} container>
+      <Grid spacing={2} container>
         <Grid xs={12} item>
           <Typography variant="h5">Edit email</Typography>
         </Grid>
         <Grid xs={12} item>
-          <Grid spacing={16} container>
+          <Grid spacing={2} container>
             <Grid xs={12} item>
               <TextField
                 label="Email"

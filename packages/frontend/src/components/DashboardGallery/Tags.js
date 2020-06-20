@@ -1,12 +1,12 @@
 import React, { Fragment } from "react";
 import PropTypes from "prop-types";
-import Chip from "@material-ui/core/Chip";
 import sortBy from "lodash/sortBy";
 import { withStyles } from "@material-ui/core/styles";
+import { Chip } from "@material-ui/core";
 
 const styles = theme => ({
   chip: {
-    margin: theme.spacing.unit
+    margin: theme.spacing(1)
   }
 });
 

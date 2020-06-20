@@ -1,7 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import TextField from "@material-ui/core/TextField";
-import Grid from "@material-ui/core/Grid";
+import { TextField, Grid } from "@material-ui/core";
 
 import { useAddPhoneNumberModal } from "./hooks";
 import Modal from "../Modal";
@@ -23,7 +22,7 @@ const AddPhoneNumberModal = ({
       maxWidth="sm"
       fullWidth
     >
-      <Grid spacing={16} container>
+      <Grid spacing={2} container>
         <Grid xs={12} item>
           <TextField
             label="Name"

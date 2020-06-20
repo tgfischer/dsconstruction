@@ -1,8 +1,7 @@
 import React, { Fragment } from "react";
 import PropTypes from "prop-types";
-import Typography from "@material-ui/core/Typography";
-import Divider from "@material-ui/core/Divider";
 import { withStyles } from "@material-ui/core/styles";
+import { Typography, Divider } from "@material-ui/core";
 
 import NavBar from "./NavBar";
 import CoreLayout from "./CoreLayout";
@@ -10,11 +9,11 @@ import Container from "./Container";
 
 const styles = theme => ({
   header: {
-    paddingTop: theme.spacing.unit * 4,
-    paddingBottom: theme.spacing.unit
+    paddingTop: theme.spacing(4),
+    paddingBottom: theme.spacing(1)
   },
   divider: {
-    marginBottom: theme.spacing.unit * 3
+    marginBottom: theme.spacing(3)
   }
 });
 

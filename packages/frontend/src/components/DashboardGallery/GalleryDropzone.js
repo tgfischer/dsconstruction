@@ -1,4 +1,5 @@
 import React from "react";
+
 import PaperDropzone from "../PaperDropzone";
 import { useGalleryDropzone } from "./hooks";
 

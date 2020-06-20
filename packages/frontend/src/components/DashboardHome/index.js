@@ -1,6 +1,5 @@
 import React from "react";
-import Grid from "@material-ui/core/Grid";
-import Button from "@material-ui/core/Button";
+import { Grid, Button } from "@material-ui/core";
 
 import Dashboard from "../Dashboard";
 import HomeProvider from "../../contexts/HomeProvider";
@@ -12,7 +11,7 @@ const DashboardHome = () => {
   const [state, handleSubmit, isLoading] = useDashboardHome();
   return (
     <Dashboard title="Home page settings" isLoading={isLoading}>
-      <Grid spacing={16} container>
+      <Grid spacing={2} container>
         <Grid xs={12} item>
           <Masthead />
         </Grid>

@@ -1,27 +1,29 @@
 import React, { Fragment, useContext } from "react";
 import PropTypes from "prop-types";
 import PhoneNumber from "awesome-phonenumber";
-import Grid from "@material-ui/core/Grid";
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemText from "@material-ui/core/ListItemText";
-import Avatar from "@material-ui/core/Avatar";
 import PhoneIcon from "@material-ui/icons/Phone";
 import PlaceIcon from "@material-ui/icons/Place";
 import EmailIcon from "@material-ui/icons/Email";
-import Paper from "@material-ui/core/Paper";
-import Typography from "@material-ui/core/Typography";
 import { withStyles } from "@material-ui/core/styles";
+import {
+  Grid,
+  List,
+  ListItem,
+  ListItemText,
+  Avatar,
+  Paper,
+  Typography
+} from "@material-ui/core";
 
 import { ContactContext } from "../../contexts/ContactProvider";
 import LoadingSpinner from "../LoadingSpinner";
 
 const styles = theme => ({
   paper: {
-    padding: theme.spacing.unit * 2
+    padding: theme.spacing(2)
   },
   subtitle: {
-    marginBottom: theme.spacing.unit * 5
+    marginBottom: theme.spacing(5)
   },
   email: {
     wordBreak: "break-word"
@@ -36,7 +38,7 @@ const ContactForm = ({ classes }) => {
     <LoadingSpinner />
   ) : (
     <Paper className={classes.paper}>
-      <Grid spacing={16} container>
+      <Grid spacing={2} container>
         <Grid xs={12} item>
           <Typography variant="h6">Phone numbers</Typography>
           <List>

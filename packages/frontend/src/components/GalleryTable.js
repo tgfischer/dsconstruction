@@ -1,8 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
-import TablePagination from "@material-ui/core/TablePagination";
-import Grid from "@material-ui/core/Grid";
 import styled from "styled-components";
+import { TablePagination, Grid } from "@material-ui/core";
 
 import GalleryCards from "./GalleryCards";
 import useGallery from "../hooks/useGallery";
@@ -46,7 +45,7 @@ const GalleryTable = props => {
     ...gallery
   } = useGallery();
   return (
-    <StyledGrid spacing={16} container>
+    <StyledGrid spacing={2} container>
       {isLoading && (
         <Grid xs={12} item>
           <LoadingSpinner padding={3} />

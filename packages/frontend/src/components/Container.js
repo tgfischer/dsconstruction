@@ -1,9 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import classnames from "classnames";
-import Grid from "@material-ui/core/Grid";
-import Hidden from "@material-ui/core/Hidden";
-import { withStyles } from "@material-ui/core";
+import { withStyles, Grid, Hidden } from "@material-ui/core";
 
 const styles = theme => ({
   container: {
@@ -31,7 +29,7 @@ const Container = ({
   <Grid
     container
     className={classnames(classes.container, { [classes.inverted]: inverted })}
-    spacing={16}
+    spacing={2}
     alignItems="center"
   >
     <Hidden smDown>

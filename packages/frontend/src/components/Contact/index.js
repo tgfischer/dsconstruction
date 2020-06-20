@@ -1,8 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
-import Grid from "@material-ui/core/Grid";
-import Typography from "@material-ui/core/Typography";
 import { withStyles } from "@material-ui/core/styles";
+import { Grid, Typography } from "@material-ui/core";
 
 import Page from "../Page";
 import ContactForm from "./ContactForm";
@@ -11,7 +10,7 @@ import ContactProvider from "../../contexts/ContactProvider";
 
 const styles = theme => ({
   subtitle: {
-    marginBottom: theme.spacing.unit * 5
+    marginBottom: theme.spacing(5)
   }
 });
 
@@ -21,7 +20,7 @@ const Contact = ({ classes }) => (
       <Typography className={classes.subtitle} variant="h5" gutterBottom>
         Interested in any of our services? Send us a message to get a quote
       </Typography>
-      <Grid spacing={16} container>
+      <Grid spacing={2} container>
         <Grid sm={8} xs={12} item>
           <ContactForm />
         </Grid>

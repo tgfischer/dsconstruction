@@ -1,16 +1,15 @@
 import React, { Fragment } from "react";
 import PropTypes from "prop-types";
-import Typography from "@material-ui/core/Typography";
-import Grid from "@material-ui/core/Grid";
 import { withStyles } from "@material-ui/core/styles";
+import { Typography, Grid } from "@material-ui/core";
 
 import Container from "./Container";
 import LoadingSpinner from "./LoadingSpinner";
 
 const styles = theme => ({
   action: {
-    paddingTop: theme.spacing.unit * 2,
-    paddingBottom: theme.spacing.unit * 2
+    paddingTop: theme.spacing(2),
+    paddingBottom: theme.spacing(2)
   }
 });
 

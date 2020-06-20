@@ -1,6 +1,5 @@
 import React from "react";
-import Grid from "@material-ui/core/Grid";
-import Button from "@material-ui/core/Button";
+import { Grid, Button } from "@material-ui/core";
 
 import Dashboard from "../Dashboard";
 import PhoneNumbers from "./PhoneNumbers";
@@ -13,7 +12,7 @@ const DashboardContact = () => {
   const [state, onSubmit, isLoading] = useDashboardContacts();
   return (
     <Dashboard title="Contact settings" isLoading={isLoading}>
-      <Grid spacing={16} container>
+      <Grid spacing={2} container>
         <Grid xs={12} item>
           <PhoneNumbers />
         </Grid>

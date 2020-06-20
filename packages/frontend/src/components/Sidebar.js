@@ -1,12 +1,6 @@
 import React, { Fragment } from "react";
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
-import SwipeableDrawer from "@material-ui/core/Drawer";
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemText from "@material-ui/core/ListItemText";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
-import Divider from "@material-ui/core/Divider";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 
@@ -15,6 +9,15 @@ import useSidebar from "../hooks/useSidebar";
 import useUser from "../hooks/useUser";
 import StyledLink from "./StyledLink";
 import DividerText from "./DividerText";
+
+import {
+  Drawer as SwipeableDrawer,
+  List,
+  ListItem,
+  ListItemText,
+  ListItemIcon,
+  Divider,
+} from '@material-ui/core';
 
 const styles = theme => ({
   list: {

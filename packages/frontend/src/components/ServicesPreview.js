@@ -1,34 +1,27 @@
 import React from "react";
 import PropTypes from "prop-types";
-import Grid from "@material-ui/core/Grid";
-import Chip from "@material-ui/core/Chip";
-import Avatar from "@material-ui/core/Avatar";
-import BuildIcon from "@material-ui/icons/Build";
 import sortBy from "lodash/sortBy";
 import { withStyles } from "@material-ui/core/styles";
+import { Grid, Chip } from "@material-ui/core";
 
 import Preview from "./Preview";
 
 const styles = theme => ({
   chip: {
-    margin: theme.spacing.unit * 1.5,
+    margin: theme.spacing(1),
     fontSize: theme.typography.fontSize * 1.3
   }
 });
 
 const ServicesPreview = ({ services, classes }) => (
   <Preview title="Services">
-    <Grid spacing={16} justify="center" container>
+    <Grid container>
       {sortBy(services, ["name"]).map(({ name }) => (
         <Chip
           key={name}
           className={classes.chip}
           label={name}
-          avatar={
-            <Avatar>
-              <BuildIcon />
-            </Avatar>
-          }
+          variant="outlined"
         />
       ))}
     </Grid>

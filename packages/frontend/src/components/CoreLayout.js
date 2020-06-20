@@ -1,13 +1,15 @@
 import React, { Fragment } from "react";
 import PropTypes from "prop-types";
-import Helmet from "react-helmet";
-import Grid from "@material-ui/core/Grid";
+import { Helmet } from "react-helmet";
+import { Grid } from "@material-ui/core";
 
 import Sidebar from "./Sidebar";
 
 const CoreLayout = ({ title, children }) => (
   <Fragment>
-    <Helmet title={title} />
+    <Helmet>
+      <title>{title}</title>
+    </Helmet>
     <Sidebar />
     <Grid container>
       <Grid item xs={12}>

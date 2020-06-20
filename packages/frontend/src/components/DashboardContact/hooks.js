@@ -53,7 +53,10 @@ export const usePhoneNumbers = () => {
     state.phoneNumbers,
     showModal,
     ({ data }) => {
-      pullAt(state.phoneNumbers, data.map(({ index }) => index));
+      pullAt(
+        state.phoneNumbers,
+        data.map(({ index }) => index)
+      );
       setState({
         ...state,
         phoneNumbers: state.phoneNumbers

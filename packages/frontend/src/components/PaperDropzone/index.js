@@ -1,27 +1,29 @@
 import React, { Fragment } from "react";
 import PropTypes from "prop-types";
 
-import Button from "@material-ui/core/Button";
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
-import ListItemText from "@material-ui/core/ListItemText";
-import IconButton from "@material-ui/core/IconButton";
-import Typography from "@material-ui/core/Typography";
-import RootRef from "@material-ui/core/RootRef";
 import CloudUploadIcon from "@material-ui/icons/CloudUpload";
 import DeleteIcon from "@material-ui/icons/Delete";
 import filter from "lodash/filter";
 import { withStyles } from "@material-ui/core/styles";
+import {
+  Button,
+  List,
+  ListItem,
+  ListItemSecondaryAction,
+  ListItemText,
+  IconButton,
+  Typography,
+  RootRef
+} from "@material-ui/core";
 
 import { usePaperDropzone } from "./hooks";
 
 const styles = theme => ({
   button: {
-    marginBottom: theme.spacing.unit * 2
+    marginBottom: theme.spacing(2)
   },
   buttonIcon: {
-    marginRight: theme.spacing.unit
+    marginRight: theme.spacing(1)
   }
 });
 

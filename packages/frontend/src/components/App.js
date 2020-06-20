@@ -1,6 +1,5 @@
 import React, { Fragment } from "react";
-import { Router, Route, Redirect } from "react-router-dom";
-import CssBaseline from "@material-ui/core/CssBaseline";
+import { BrowserRouter as Router, Route, Redirect } from "react-router-dom";
 import { createBrowserHistory } from "history";
 import { RequestProvider } from "react-request-hook";
 import { MuiThemeProvider } from "@material-ui/core/styles";
@@ -8,6 +7,7 @@ import { SnackbarProvider } from "notistack";
 import { CookiesProvider } from "react-cookie";
 import { ModalProvider } from "react-modal-hook";
 import axios from "axios";
+import { CssBaseline } from "@material-ui/core";
 
 import Home from "./Home";
 import Gallery from "./Gallery";

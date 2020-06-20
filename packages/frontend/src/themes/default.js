@@ -1,6 +1,5 @@
 import { createMuiTheme } from "@material-ui/core/styles";
-import primary from "@material-ui/core/colors/blue";
-import secondary from "@material-ui/core/colors/grey";
+import { blue as primary, grey as secondary } from "@material-ui/core/colors";
 
 export default createMuiTheme({
   palette: {
@@ -43,8 +42,5 @@ export default createMuiTheme({
         fontWeight: 700
       }
     }
-  },
-  typography: {
-    useNextVariants: true
   }
 });

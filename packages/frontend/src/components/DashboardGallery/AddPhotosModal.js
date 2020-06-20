@@ -1,8 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import CircularProgress from "@material-ui/core/CircularProgress";
-import Grid from "@material-ui/core/Grid";
-import Typography from "@material-ui/core/Typography";
+import { CircularProgress, Grid, Typography } from "@material-ui/core";
 
 import { useGalleryModal } from "./hooks";
 import GalleryDropzone from "./GalleryDropzone";
@@ -19,7 +17,7 @@ const AddPhotosModal = ({ title, isOpen, onClose }) => {
       maxWidth="sm"
     >
       {totalPhotos > 0 && isLoading && (
-        <Grid container spacing={16} justify="center" alignItems="center">
+        <Grid container spacing={2} justify="center" alignItems="center">
           <CircularProgress
             variant="static"
             size={100}

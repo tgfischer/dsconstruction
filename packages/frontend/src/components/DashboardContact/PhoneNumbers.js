@@ -1,23 +1,22 @@
 import React from "react";
 import PropTypes from "prop-types";
 import MuiDataTable from "mui-datatables";
-import Grid from "@material-ui/core/Grid";
-import Button from "@material-ui/core/Button";
 import AddIcon from "@material-ui/icons/Add";
 import { withStyles } from "@material-ui/core/styles";
+import { Grid, Button } from "@material-ui/core";
 
 import { usePhoneNumbers } from "./hooks";
 
 const styles = theme => ({
   buttonIcon: {
-    marginRight: theme.spacing.unit
+    marginRight: theme.spacing(1)
   }
 });
 
 const PhoneNumbers = ({ classes }) => {
   const [phoneNumbers, showModal, deleteRow, isLoading] = usePhoneNumbers();
   return (
-    <Grid spacing={16} container>
+    <Grid spacing={2} container>
       <Grid xs={12} item>
         <Button
           onClick={showModal}

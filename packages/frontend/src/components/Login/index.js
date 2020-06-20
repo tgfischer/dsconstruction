@@ -1,14 +1,16 @@
 import React from "react";
 import PropTypes from "prop-types";
-import Grid from "@material-ui/core/Grid";
-import Typography from "@material-ui/core/Typography";
-import TextField from "@material-ui/core/TextField";
-import Avatar from "@material-ui/core/Avatar";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
-import CircularProgress from "@material-ui/core/CircularProgress";
-import Button from "@material-ui/core/Button";
 import { withStyles } from "@material-ui/core/styles";
 import { withRouter } from "react-router";
+import {
+  Grid,
+  Typography,
+  TextField,
+  Avatar,
+  CircularProgress,
+  Button
+} from "@material-ui/core";
 
 import Page from "../Page";
 import Container from "../Container";
@@ -17,7 +19,7 @@ import { useLogin } from "./hooks";
 const styles = theme => ({
   form: {
     width: "100%", // Fix IE 11 issue.
-    marginTop: theme.spacing.unit * 5
+    marginTop: theme.spacing(5)
   },
   avatar: {
     backgroundColor: theme.palette.secondary.main
@@ -26,8 +28,8 @@ const styles = theme => ({
     width: "100%"
   },
   submit: {
-    marginTop: theme.spacing.unit * 3,
-    marginBottom: theme.spacing.unit * 3
+    marginTop: theme.spacing(3),
+    marginBottom: theme.spacing(3)
   }
 });
 
@@ -42,7 +44,7 @@ const Login = ({ classes, history }) => {
             direction="column"
             justify="center"
             alignItems="center"
-            spacing={16}
+            spacing={2}
             container
           >
             <Grid item>
