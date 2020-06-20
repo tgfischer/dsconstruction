@@ -94,8 +94,10 @@ export default () => {
       setState({ ...state, photos });
     },
     handleSelectTag: e => {
-      setState({ ...state, selectedTag: e.target.value });
-      state.handleGetPage({ ...state, tag: e.target.value });
+      const selectedTag =
+        state.selectedTag === e.target.value ? undefined : e.target.value;
+      setState({ ...state, selectedTag });
+      state.handleGetPage({ ...state, tag: selectedTag });
     },
     handleGetPage: (_, page) => {
       setState({ ...state, photos: [], page });
