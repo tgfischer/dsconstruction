@@ -1,21 +1,10 @@
 import React from "react";
-import {
-  EuiPage,
-  EuiPageBody,
-  EuiPageContent,
-  EuiLoadingSpinner
-} from "@elastic/eui";
+import { Spinner } from "react-bootstrap";
 
 export const FullPageSpinner = () => (
-  <EuiPage className="ds-vh-100">
-    <EuiPageBody component="div">
-      <EuiPageContent
-        className="ds-borderless"
-        verticalPosition="center"
-        horizontalPosition="center"
-      >
-        <EuiLoadingSpinner className="ds-full-page-spinner" size="xl" />
-      </EuiPageContent>
-    </EuiPageBody>
-  </EuiPage>
+  <div className="vh-100 d-flex justify-content-center align-items-center">
+    <Spinner animation="border" role="status">
+      <span className="sr-only">Loading...</span>
+    </Spinner>
+  </div>
 );

@@ -1,5 +1,4 @@
 import React from "react";
-import { EuiText } from "@elastic/eui";
 
 import { Navbar } from "components/Navbar";
 import { useMasthead } from "./hooks";
@@ -7,12 +6,12 @@ import { useMasthead } from "./hooks";
 export const Masthead = ({ header, subHeader, ...props }) => {
   const { getMastheadProps } = useMasthead(props);
   return (
-    <div {...getMastheadProps()}>
+    <div className="vh-100" {...getMastheadProps()}>
       <Navbar />
-      <EuiText textAlign="center">
+      <div className="ds-masthead-content">
         <h1>{header}</h1>
         <p>{subHeader}</p>
-      </EuiText>
+      </div>
     </div>
   );
 };

@@ -13,7 +13,7 @@ export const useHome = () => {
 
 export const useMasthead = ({ background }) => ({
   getMastheadProps: () => ({
-    className: "ds-masthead",
+    className: "ds-masthead vh-100 d-flex flex-column",
     style: {
       background: `linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url(${background}) no-repeat center center / cover`
     }
