@@ -1,0 +1,24 @@
+.ds-masthead {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+
+  .euiText {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex: 1;
+  }
+
+  h1 {
+    font-size: 4rem;
+    font-weight: 700;
+    color: white;
+  }
+
+  p {
+    font-size: 1.25rem;
+    font-weight: 100;
+    color: white;
+  }
+}

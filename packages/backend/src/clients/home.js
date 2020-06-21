@@ -3,12 +3,8 @@ import * as servicesClient from "./services";
 import * as galleryClient from "./gallery";
 
 export const get = async () => {
-  const [home, services, gallery] = await Promise.all([
-    settingsClient.get("home"),
-    servicesClient.getAll(),
-    galleryClient.get({ size: 4 })
-  ]);
-  return { ...home, services, photos: gallery.photos };
+  const home = await settingsClient.get("home");
+  return home;
 };
 
 export const update = async body => settingsClient.update("home", body);

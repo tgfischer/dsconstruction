@@ -10,7 +10,7 @@ const router = express.Router({ mergeParams: true });
 
 const get = async (req, res) => {
   const home = await client.get();
-  return res.status(HttpStatus.OK).json({ home });
+  return res.status(HttpStatus.OK).json(home);
 };
 
 const update = async (req, res) => {

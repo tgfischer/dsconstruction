@@ -5,9 +5,21 @@
     "source.fixAll": false
   },
   "eslint.workingDirectories": [
-    "./packages/frontend-v1",
-    "./packages/frontend-v2",
-    "./packages/backend",
-    "./packages/users"
+    {
+      "directory": "./packages/frontend",
+      "changeProcessCWD": true
+    },
+    {
+      "directory": "./packages/frontend-v2",
+      "changeProcessCWD": true
+    },
+    {
+      "directory": "./packages/backend",
+      "changeProcessCWD": true
+    },
+    {
+      "directory": "./packages/users",
+      "changeProcessCWD": true
+    }
   ]
 }
