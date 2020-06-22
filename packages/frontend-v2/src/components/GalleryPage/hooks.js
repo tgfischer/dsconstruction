@@ -35,6 +35,18 @@ export const useGallery = () => {
     photos: gallery?.photos ?? [],
     tags: tags ?? [],
     selectedTag: tag,
+    pagination: {
+      currentPage: Number.parseInt(page ?? 0, 10),
+      totalCount: Math.ceil(
+        Number.parseInt(gallery?.count ?? 0, 10) /
+          Number.parseInt(size ?? 1, 10)
+      ),
+      onChange: nextPage => () =>
+        push({
+          pathname: "/gallery",
+          search: qs.stringify({ page: nextPage, size })
+        })
+    },
     handleChangeTag: e =>
       e.target.value === "-1"
         ? push({
