@@ -10,7 +10,7 @@ const router = express.Router({ mergeParams: true });
 
 const get = async (req, res) => {
   const gallery = await client.get(res.locals.query);
-  return res.status(HttpStatus.OK).json({ gallery });
+  return res.status(HttpStatus.OK).json(gallery);
 };
 
 const add = async (req, res) => {

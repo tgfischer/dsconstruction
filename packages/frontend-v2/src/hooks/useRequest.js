@@ -1,6 +1,14 @@
 import { useEffect } from "react";
-import useAxios from "axios-hooks";
+import axios from "axios";
+import { makeUseAxios } from "axios-hooks";
 import { identity } from "lodash";
+import qs from "qs";
+
+const useAxios = makeUseAxios({
+  axios: axios.create({
+    paramsSerializer: qs.stringify
+  })
+});
 
 const defaultOptions = { onSuccess: identity, onError: identity };
 
@@ -8,7 +16,9 @@ const useRequest = (
   config,
   { onSuccess = identity, onError = identity } = defaultOptions
 ) => {
-  const [{ data, loading, error }, execute] = useAxios(config);
+  const [{ data, loading, error }, execute] = useAxios(config, {
+    manual: true
+  });
   useEffect(() => {
     if (!data) {
       return;

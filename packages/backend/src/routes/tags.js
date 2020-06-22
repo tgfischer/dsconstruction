@@ -10,7 +10,7 @@ const router = express.Router({ mergeParams: true });
 
 const getAll = async (req, res) => {
   const tags = await client.getAll();
-  return res.status(HttpStatus.OK).json({ tags });
+  return res.status(HttpStatus.OK).json(tags);
 };
 
 const add = async (req, res) => {

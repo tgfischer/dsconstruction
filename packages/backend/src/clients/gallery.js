@@ -15,7 +15,10 @@ export const get = async ({ size, page, tag }) => {
   const sorted = _.orderBy(filtered, photo => photo.createdAt, ["desc"]);
   const paged = _.take(_.drop(sorted, page * size), size);
   return {
-    photos: paged,
+    photos: paged.map(({ thumbnail, ...photo }) => ({
+      ...photo,
+      thumbnail: `https://s3.ca-central-1.amazonaws.com/${process.env.DSC_PHOTOS_BUCKET_NAME}${thumbnail}.jpeg`
+    })),
     count: filtered.length
   };
 };

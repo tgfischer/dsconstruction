@@ -13,6 +13,7 @@ custom:
     packager: "yarn"
     individually: true
   s3:
+    photosBucketName: ${cf:dsconstruction-photos-${self:provider.stage}.PublicBucketName}
     bucketName: ${cf:dsconstruction-photos-${self:provider.stage}.StagingBucketName}
 
 provider:
@@ -48,6 +49,7 @@ provider:
         - "*"
   environment:
     SERVERLESS_STAGE: ${self:provider.stage}
+    DSC_PHOTOS_BUCKET_NAME: ${self:custom.s3.photosBucketName}
     DSC_BUCKET_NAME: ${self:custom.s3.bucketName}
 
 functions:

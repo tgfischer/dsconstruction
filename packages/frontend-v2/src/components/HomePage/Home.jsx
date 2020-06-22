@@ -1,15 +1,25 @@
 import React from "react";
 
-import { Page } from "components/Page";
+import { Layout } from "components/Layout";
 import { Masthead } from "./Masthead";
+import { About } from "./About";
+import { Services } from "./Services";
+import { Gallery } from "./Gallery";
 import { useHome } from "./hooks";
 
 const HomePage = () => {
-  const { data, isLoading } = useHome();
+  const { masthead, about, isLoading } = useHome();
   return (
-    <Page title="foo bar" isLoading={isLoading}>
-      {!isLoading && <Masthead {...data?.masthead} />}
-    </Page>
+    <Layout isLoading={isLoading}>
+      {!isLoading && (
+        <>
+          <Masthead {...masthead} />
+          <About>{about}</About>
+          <Services />
+          <Gallery />
+        </>
+      )}
+    </Layout>
   );
 };
 

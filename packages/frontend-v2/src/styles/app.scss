@@ -1,7 +1,9 @@
+@import "~bootstrap/scss/functions.scss";
+@import "~bootstrap/scss/variables.scss";
+@import "./variables";
+@import "./overrides";
 @import "~bootstrap/scss/bootstrap.scss";
-// @import "./height";
+@import "./gallery";
 @import "./home";
-// @import "./navbar";
-// @import "./panel";
-// @import "./spinner";
-// @import "./typography";
+@import "./navbar";
+@import "./typography";
