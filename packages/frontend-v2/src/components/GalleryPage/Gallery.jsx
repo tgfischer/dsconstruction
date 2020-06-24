@@ -29,12 +29,12 @@ const GalleryPage = () => {
               />
             </Col>
             <Col className="d-flex justify-content-end" sm={8} xs={12}>
-              <Pagination {...pagination} />
+              {pagination.totalCount > 0 && <Pagination {...pagination} />}
             </Col>
           </>
         )}
       </Row>
-      <GalleryTable photos={photos} />
+      <GalleryTable photos={photos} currentPage={pagination.currentPage} />
     </Page>
   );
 };

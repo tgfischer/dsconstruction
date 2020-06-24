@@ -35,7 +35,12 @@ export const Navbar = ({ variant, className }) => (
           <Button as={Link} to="/" className="mr-2" variant="link">
             Home
           </Button>
-          <Button as={Link} to="/gallery" className="mr-2" variant="link">
+          <Button
+            as={Link}
+            to="/gallery?page=0&size=12"
+            className="mr-2"
+            variant="link"
+          >
             Photo Gallery
           </Button>
           <Button as={Link} to="/contact" className="mr-2" variant="link">

@@ -14,7 +14,7 @@ export const Gallery = () => {
     <Section
       title="Photo Gallery"
       action={() => (
-        <Button as={Link} to="/gallery" variant="link">
+        <Button as={Link} to="/gallery?page=0&size=12" variant="link">
           View Photos <FontAwesomeIcon className="ml-1" icon={faArrowRight} />
         </Button>
       )}

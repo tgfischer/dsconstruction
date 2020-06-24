@@ -13,10 +13,13 @@ export const get = async ({ size, page, tag }) => {
     ? photos
     : _.filter(photos, photo => _.intersection(photo.tags, [tag]).length > 0);
   const sorted = _.orderBy(filtered, photo => photo.createdAt, ["desc"]);
-  const paged = _.take(_.drop(sorted, page * size), size);
+  const paged = _.isNil(size)
+    ? sorted
+    : _.take(_.drop(sorted, page * size), size);
   return {
-    photos: paged.map(({ thumbnail, ...photo }) => ({
+    photos: paged.map(({ original, thumbnail, ...photo }) => ({
       ...photo,
+      original: `https://s3.ca-central-1.amazonaws.com/${process.env.DSC_PHOTOS_BUCKET_NAME}${original}.jpeg`,
       thumbnail: `https://s3.ca-central-1.amazonaws.com/${process.env.DSC_PHOTOS_BUCKET_NAME}${thumbnail}.jpeg`
     })),
     count: filtered.length

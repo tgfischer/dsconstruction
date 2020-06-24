@@ -2,9 +2,7 @@ import Joi from "joi";
 
 export const get = Joi.object()
   .keys({
-    size: Joi.number()
-      .integer()
-      .required(),
+    size: Joi.number().integer(),
     page: Joi.number()
       .integer()
       .required(),

@@ -1,6 +1,5 @@
 import { useEffect } from "react";
 import { useHistory } from "react-router-dom";
-import { isNil } from "lodash";
 import qs from "qs";
 
 import { useGetRequest } from "hooks/useRequest";
@@ -8,7 +7,7 @@ import { useQuery } from "hooks/useQuery";
 import { endpoints } from "constants/api";
 
 export const useGallery = () => {
-  const { page, size, tag } = useQuery();
+  const { page = 0, size, tag } = useQuery();
   const { push } = useHistory();
   const [
     { data: gallery, isLoading: isGalleryLoading },
@@ -22,14 +21,10 @@ export const useGallery = () => {
 
   useEffect(() => void fetchTags(), [fetchTags]);
   useEffect(() => {
-    if (isNil(page) || isNil(size)) {
-      push("/gallery?page=0&size=12");
-    } else {
-      fetchGallery({
-        params: { size, page, tag }
-      });
-    }
-  }, [page, size, tag, push, fetchGallery]);
+    fetchGallery({
+      params: { page: 0, tag }
+    });
+  }, [tag, push, fetchGallery]);
 
   return {
     photos: gallery?.photos ?? [],
@@ -39,7 +34,7 @@ export const useGallery = () => {
       currentPage: Number.parseInt(page ?? 0, 10),
       totalCount: Math.ceil(
         Number.parseInt(gallery?.count ?? 0, 10) /
-          Number.parseInt(size ?? 1, 10)
+          Number.parseInt(size ?? gallery?.count ?? 1, 10)
       ),
       onChange: nextPage => () =>
         push({
