@@ -10,7 +10,7 @@ export const Masthead = ({ header, subHeader, ...props }) => {
     <div className="vh-100" {...getMastheadProps()}>
       <Navbar />
       <div className="ds-masthead-content d-flex justify-content-center align-items-center flex-column">
-        <h1 className="text-light">{header}</h1>
+        <h1 className="text-light font-weight-bold">{header}</h1>
         <p className="text-light lead">{subHeader}</p>
       </div>
     </div>
@@ -18,6 +18,6 @@ export const Masthead = ({ header, subHeader, ...props }) => {
 };
 
 Masthead.propTypes = {
-  header: PropTypes.string.isRequired,
-  subHeader: PropTypes.string.isRequired
+  header: PropTypes.string,
+  subHeader: PropTypes.string
 };

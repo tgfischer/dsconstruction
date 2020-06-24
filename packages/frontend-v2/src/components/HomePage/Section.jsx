@@ -10,7 +10,7 @@ export const Section = ({
   children,
   ...props
 }) => (
-  <Container className={classnames("mt-5 mb-5", className)} {...props}>
+  <Container className={classnames("ds-section", className)} {...props}>
     {title && (
       <div className="d-flex justify-content-between mb-3">
         <h2>{title}</h2>

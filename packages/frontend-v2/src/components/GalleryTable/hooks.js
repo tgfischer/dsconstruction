@@ -26,7 +26,7 @@ export const useGalleryTable = ({ photos, currentPage }) => {
       [page, size, views]
     ),
     getGalleryPreviewProps: ({ thumbnail, regular }, i) => ({
-      className: "ds-gallery-preview",
+      className: "ds-gallery-preview shadow",
       style: {
         background: `url(${thumbnail}) no-repeat center center / cover`
       },
