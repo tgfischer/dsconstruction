@@ -5,7 +5,7 @@ import { Spinner } from "components/Spinner";
 
 export const Layout = ({ isLoading, children }) => (
   <>
-    {isLoading && <Spinner className="vh-100" />}
+    {isLoading && <Spinner className="vh-100" isCentered />}
     {children}
   </>
 );

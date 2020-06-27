@@ -7,7 +7,7 @@ import { Services } from "./Services";
 import { Gallery } from "./Gallery";
 import { useHome } from "./hooks";
 
-const HomePage = () => {
+const Home = () => {
   const { masthead, about, isLoading } = useHome();
   return (
     <Layout isLoading={isLoading}>
@@ -23,4 +23,4 @@ const HomePage = () => {
   );
 };
 
-export default HomePage;
+export default Home;

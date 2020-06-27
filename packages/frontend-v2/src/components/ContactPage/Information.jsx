@@ -6,27 +6,25 @@ import {
   faAddressCard
 } from "@fortawesome/free-solid-svg-icons";
 
+import { InformationSection } from "./InformationSection";
 import { InformationItem } from "./InformationItem";
 
 export const Information = ({ phoneNumbers, email, address }) => (
   <>
-    <div className="mb-4">
-      <h6>Phone numbers</h6>
+    <InformationSection title="Phone numbers">
       {phoneNumbers.map(({ name, number }) => (
-        <InformationItem icon={faPhoneAlt}>
+        <InformationItem key={name} icon={faPhoneAlt}>
+          <p className="m-0">{name}</p>
           <p className="m-0">{number}</p>
-          <p className="m-0 text-muted">{name}</p>
         </InformationItem>
       ))}
-    </div>
-    <div className="mb-4">
-      <h6>Email</h6>
+    </InformationSection>
+    <InformationSection title="Email">
       <InformationItem icon={faInbox}>
         <p className="m-0">{email}</p>
       </InformationItem>
-    </div>
-    <div className="mb-4">
-      <h6>Address</h6>
+    </InformationSection>
+    <InformationSection title="Address">
       <InformationItem icon={faAddressCard}>
         <address className="m-0">
           {address.street}
@@ -36,7 +34,7 @@ export const Information = ({ phoneNumbers, email, address }) => (
           {address.postalCode}
         </address>
       </InformationItem>
-    </div>
+    </InformationSection>
   </>
 );
 
@@ -46,13 +44,13 @@ Information.propTypes = {
       name: PropTypes.string.isRequired,
       number: PropTypes.string.isRequired
     }).isRequired
-  ).isRequired,
+  ),
   email: PropTypes.string,
   address: PropTypes.shape({
-    street: PropTypes.string.isRequired,
-    city: PropTypes.string.isRequired,
-    province: PropTypes.string.isRequired,
-    postalCode: PropTypes.string.isRequired
+    street: PropTypes.string,
+    city: PropTypes.string,
+    province: PropTypes.string,
+    postalCode: PropTypes.string
   }).isRequired
 };
 

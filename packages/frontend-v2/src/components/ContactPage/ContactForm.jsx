@@ -7,27 +7,38 @@ import { schema } from "./constants";
 export const ContactForm = () => {
   return (
     <Formik validationSchema={schema}>
-      {() => (
-        <Form>
+      {({ handleSubmit, handleChange }) => (
+        <Form className="mb-3" onSubmit={handleSubmit}>
           <Row>
-            <Form.Group as={Col} controlId="firstName">
+            <Form.Group as={Col} controlId="firstName" sm={6} xs={12}>
               <Form.Label>First name</Form.Label>
-              <Form.Control size="lg" required />
+              <Form.Control size="lg" onChange={handleChange} required />
             </Form.Group>
-            <Form.Group as={Col} controlId="lastName">
+            <Form.Group as={Col} controlId="lastName" sm={6} xs={12}>
               <Form.Label>Last name</Form.Label>
-              <Form.Control size="lg" required />
+              <Form.Control size="lg" onChange={handleChange} required />
             </Form.Group>
           </Row>
           <Form.Group controlId="email">
             <Form.Label>Email</Form.Label>
-            <Form.Control type="email" size="lg" required />
+            <Form.Control
+              type="email"
+              size="lg"
+              onChange={handleChange}
+              required
+            />
           </Form.Group>
           <Form.Group controlId="message">
             <Form.Label>Message</Form.Label>
-            <Form.Control as="textarea" size="lg" rows={10} required />
+            <Form.Control
+              as="textarea"
+              size="lg"
+              rows={10}
+              onChange={handleChange}
+              required
+            />
           </Form.Group>
-          <Button>Send message</Button>
+          <Button type="submit">Send message</Button>
         </Form>
       )}
     </Formik>

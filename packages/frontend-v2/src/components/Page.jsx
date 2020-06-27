@@ -11,7 +11,7 @@ export const Page = ({ title, navbarVariant, isLoading, children }) => (
     <Navbar className="mb-5" variant={navbarVariant} />
     <Container>
       {title && <h2 className="mb-3">{title}</h2>}
-      {isLoading ? <Spinner /> : <>{children}</>}
+      {isLoading ? <Spinner isCentered /> : <>{children}</>}
     </Container>
   </Layout>
 );

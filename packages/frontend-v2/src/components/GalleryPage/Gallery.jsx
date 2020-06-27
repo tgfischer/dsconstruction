@@ -7,7 +7,7 @@ import { TagsDropdown } from "components/TagsDropdown";
 import { Pagination } from "components/Pagination";
 import { useGallery } from "./hooks";
 
-const GalleryPage = () => {
+const Gallery = () => {
   const {
     photos,
     tags,
@@ -39,4 +39,4 @@ const GalleryPage = () => {
   );
 };
 
-export default GalleryPage;
+export default Gallery;

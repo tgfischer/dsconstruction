@@ -6,7 +6,7 @@ import { ContactForm } from "./ContactForm";
 import { Information } from "./Information";
 import { useContact } from "./hooks";
 
-const ContactPage = () => {
+const Contact = () => {
   const { contact, isLoading } = useContact();
   return (
     <Page title="Contact" isLoading={isLoading}>
@@ -25,4 +25,4 @@ const ContactPage = () => {
   );
 };
 
-export default ContactPage;
+export default Contact;
