@@ -3,7 +3,7 @@ import { isNil, take, drop } from "lodash";
 import { useQuery } from "hooks/useQuery";
 
 export const useGalleryTable = ({ photos, currentPage }) => {
-  const { page = 0, size } = useQuery();
+  const query = useQuery();
   const [state, setState] = useState({});
   const views = useMemo(
     () =>
@@ -18,6 +18,9 @@ export const useGalleryTable = ({ photos, currentPage }) => {
     [photos]
   );
 
+  const page = query.page ? Number.parseInt(query.page, 10) : 0;
+  const size = query.size ? Number.parseInt(query.size, 10) : null;
+
   return {
     ...state,
     views,
@@ -31,7 +34,10 @@ export const useGalleryTable = ({ photos, currentPage }) => {
         background: `url(${thumbnail}) no-repeat center center / cover`
       },
       onClick: () =>
-        setState({ url: regular, currentIndex: i * (currentPage + 1) })
+        setState({
+          url: regular,
+          currentIndex: (size ?? views.length) * page + i
+        })
     }),
     handleCloseModal: () => setState({})
   };

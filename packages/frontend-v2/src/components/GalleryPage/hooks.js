@@ -6,7 +6,7 @@ import { useGetRequest } from "hooks/useRequest";
 import { useQuery } from "hooks/useQuery";
 import { endpoints } from "constants/api";
 
-export const useGallery = () => {
+export const useGalleryPage = () => {
   const { page = 0, size, tag } = useQuery();
   const { push } = useHistory();
   const [

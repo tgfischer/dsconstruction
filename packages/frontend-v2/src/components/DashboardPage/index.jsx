@@ -1,9 +1,9 @@
 import React, { Suspense, lazy } from "react";
 
-const LazyDashboard = lazy(() => import("./Dashboard"));
+const LazyDashboardPage = lazy(() => import("./DashboardPage"));
 
 export const DashboardPage = () => (
   <Suspense fallback={null}>
-    <LazyDashboard />
+    <LazyDashboardPage />
   </Suspense>
 );

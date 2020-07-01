@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import { makeUseAxios } from "axios-hooks";
 import { identity } from "lodash";
@@ -16,6 +16,7 @@ const useRequest = (
   config,
   { onSuccess = identity, onError = identity } = defaultOptions
 ) => {
+  const [isLoaded, setIsLoaded] = useState(false);
   const [{ data, loading, error }, execute] = useAxios(config, {
     manual: true
   });
@@ -23,15 +24,17 @@ const useRequest = (
     if (!data) {
       return;
     }
+    setIsLoaded(true);
     onSuccess(data);
   }, [data, onSuccess]);
   useEffect(() => {
     if (!error) {
       return;
     }
+    setIsLoaded(true);
     onError(error);
   }, [error, onError]);
-  return [{ data, error, isLoading: loading }, execute];
+  return [{ data, error, isLoading: loading, isLoaded }, execute];
 };
 
 export const useGetRequest = (config, options) =>

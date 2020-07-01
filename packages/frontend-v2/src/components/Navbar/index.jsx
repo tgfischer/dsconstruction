@@ -9,10 +9,10 @@ import {
 import { Link } from "react-router-dom";
 import classnames from "classnames";
 
-import { useUser } from "hooks/useUser";
+import { useNavbar } from "./hooks";
 
 export const Navbar = ({ variant, className }) => {
-  const { isLoggedIn, clearUser } = useUser();
+  const { links, buttons } = useNavbar();
   return (
     <BootstrapNavbar
       className={classnames(
@@ -36,43 +36,33 @@ export const Navbar = ({ variant, className }) => {
         <BootstrapNavbar.Toggle />
         <BootstrapNavbar.Collapse className="justify-content-end">
           <Nav>
-            <Button as={Link} to="/" className="mr-2" variant="link">
-              Home
-            </Button>
-            <Button
-              as={Link}
-              to="/gallery?page=0&size=12"
-              className="mr-2"
-              variant="link"
-            >
-              Photo Gallery
-            </Button>
-            <Button as={Link} to="/contact" className="mr-2" variant="link">
-              Contact
-            </Button>
-            {isLoggedIn && (
-              <Button as={Link} to="/dashboard" className="mr-2" variant="link">
-                Dashboard
-              </Button>
+            {links.map(
+              ({ displayName, url, isActive, isVisible, variant }) =>
+                isVisible && (
+                  <Button
+                    key={url}
+                    as={Link}
+                    to={url}
+                    className="mr-2"
+                    variant={variant}
+                    active={isActive}
+                  >
+                    {displayName}
+                  </Button>
+                )
             )}
-            {!isLoggedIn && (
-              <Button
-                as={Link}
-                to="/login"
-                className="mr-2"
-                variant="outline-light"
-              >
-                Login
-              </Button>
-            )}
-            {isLoggedIn && (
-              <Button
-                className="mr-2"
-                variant="outline-light"
-                onClick={clearUser}
-              >
-                Log out
-              </Button>
+            {buttons.map(
+              ({ displayName, action, isVisible }) =>
+                isVisible && (
+                  <Button
+                    key={displayName}
+                    className="mr-2"
+                    variant="outline-light"
+                    onClick={action}
+                  >
+                    {displayName}
+                  </Button>
+                )
             )}
           </Nav>
         </BootstrapNavbar.Collapse>

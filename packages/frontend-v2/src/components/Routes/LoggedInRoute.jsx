@@ -8,7 +8,7 @@ export const LoggedInRoute = ({ children, ...props }) => {
   const { isLoggedIn } = useUser();
   return (
     <Route {...props}>
-      {isLoggedIn ? <>{children}</> : <Redirect to={{ pathname: "/login" }} />}
+      {isLoggedIn ? <>{children}</> : <Redirect to="/login" />}
     </Route>
   );
 };

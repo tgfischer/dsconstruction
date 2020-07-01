@@ -3,15 +3,15 @@ import { useEffect } from "react";
 import { useGetRequest } from "hooks/useRequest";
 import { endpoints } from "constants/api";
 
-export const useHome = () => {
-  const [{ data, isLoading }, fetchHome] = useGetRequest({
+export const useHomePage = () => {
+  const [{ data, ...request }, fetchHome] = useGetRequest({
     url: `${endpoints.backend}/home`
   });
   useEffect(() => void fetchHome(), [fetchHome]);
   return {
+    ...request,
     masthead: data?.masthead,
-    about: data?.about ?? "",
-    isLoading
+    about: data?.about ?? ""
   };
 };
 
