@@ -25,11 +25,11 @@ export const useMasthead = ({ background }) => ({
 });
 
 export const useServices = () => {
-  const [{ data, isLoading }, fetchServices] = useGetRequest({
+  const [{ data, isLoaded }, fetchServices] = useGetRequest({
     url: `${endpoints.backend}/services`
   });
   useEffect(() => void fetchServices(), [fetchServices]);
-  return { services: data?.services ?? [], isLoading };
+  return { services: data?.services ?? [], isLoaded, fetchServices };
 };
 
 export const useGallery = () => {

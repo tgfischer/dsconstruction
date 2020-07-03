@@ -6,10 +6,18 @@ import { ContactPageSettingsForm } from "./ContactPageSettingsForm";
 import { useContactPageSettings } from "./hooks";
 
 const ContactPageSettings = () => {
-  const { isLoaded, phoneNumbers, ...settings } = useContactPageSettings();
+  const {
+    isLoaded,
+    phoneNumbers,
+    fetchContact,
+    ...settings
+  } = useContactPageSettings();
   return isLoaded ? (
     <>
-      <PhoneNumbersTable phoneNumbers={phoneNumbers} />
+      <PhoneNumbersTable
+        phoneNumbers={phoneNumbers}
+        fetchContact={fetchContact}
+      />
       <ContactPageSettingsForm {...settings} />
     </>
   ) : (

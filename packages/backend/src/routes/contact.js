@@ -17,7 +17,10 @@ const recaptcha = new RecaptchaV2(
 
 const get = async (req, res) => {
   const contact = await settings.get("contact");
-  return res.status(HttpStatus.OK).json({ contact });
+  const phoneNumbers = await settings.get("phoneNumbers");
+  return res
+    .status(HttpStatus.OK)
+    .json({ contact: { ...contact, ...phoneNumbers } });
 };
 
 const sendEmail = async (req, res, next) => {
@@ -32,7 +35,12 @@ const sendEmail = async (req, res, next) => {
   return res.status(HttpStatus.OK).json({ success: true });
 };
 
-const update = async (req, res) => {
+const updatePhoneNumbers = async (req, res) => {
+  await settings.update("phoneNumbers", res.locals.body);
+  return res.status(HttpStatus.OK).json({ success: true });
+};
+
+const updateContact = async (req, res) => {
   await settings.update("contact", res.locals.body);
   return res.status(HttpStatus.OK).json({ success: true });
 };
@@ -46,6 +54,16 @@ router.post(
   asyncHandler(sendEmail)
 );
 
-router.post("/edit", validate(schemas.update, "body"), asyncHandler(update));
+router.post(
+  "/phone_numbers",
+  validate(schemas.updatePhoneNumbers, "body"),
+  asyncHandler(updatePhoneNumbers)
+);
+
+router.post(
+  "/contact",
+  validate(schemas.updateContact, "body"),
+  asyncHandler(updateContact)
+);
 
 export default router;

@@ -1,5 +1,6 @@
 import { HomePageSettings } from "./HomePageSettings";
 import { ContactPageSettings } from "./ContactPageSettings";
+import { ServicesSettings } from "./ServicesSettings";
 
 export const links = [
   {
@@ -20,7 +21,7 @@ export const links = [
   {
     displayName: "Services",
     url: "/dashboard/services",
-    Component: HomePageSettings
+    Component: ServicesSettings
   },
   {
     displayName: "Users",

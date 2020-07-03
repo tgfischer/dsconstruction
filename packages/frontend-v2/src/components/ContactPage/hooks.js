@@ -10,6 +10,7 @@ export const useContactPage = () => {
   useEffect(() => void fetchContact(), [fetchContact]);
   return {
     contact: data?.contact ?? {},
-    isLoaded
+    isLoaded,
+    fetchContact
   };
 };

@@ -1,19 +1,19 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useState } from "react";
 import { useToasts } from "react-toast-notifications";
 import { Button } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTrash, faPlus } from "@fortawesome/free-solid-svg-icons";
+import { faTrash } from "@fortawesome/free-solid-svg-icons";
 
 import { usePostRequest } from "hooks/useRequest";
 import { useContactPage } from "components/ContactPage";
 import { useModal } from "components/Modal";
-import { IconButton } from "components/IconButton";
 import { endpoints } from "constants/api";
 import { AddPhoneNumberForm } from "./AddPhoneNumberForm";
+import { reject } from "lodash";
 
 export const useContactPageSettings = () => {
   const { addToast } = useToasts();
-  const { contact, isLoaded } = useContactPage();
+  const { contact, isLoaded, fetchContact } = useContactPage();
   const [{ isLoading: isSubmitting }, handleSubmit] = usePostRequest(
     {
       url: `${endpoints.backend}/contact/contact`
@@ -43,6 +43,7 @@ export const useContactPageSettings = () => {
       ...contact.address,
       email: contact.email
     },
+    fetchContact,
     onSubmit: ({ street, city, province, postalCode, email }) => {
       handleSubmit({
         data: {
@@ -59,9 +60,42 @@ export const useContactPageSettings = () => {
   };
 };
 
-export const usePhoneNumbersTable = ({ phoneNumbers }) => {
+export const usePhoneNumbersTable = ({ phoneNumbers, fetchContact }) => {
   const { showModal } = useModal();
+  const { addToast } = useToasts();
+  const rows = phoneNumbers ?? [];
+  const [{ isLoading: isSubmitting }, handleUpdate] = usePostRequest(
+    {
+      url: `${endpoints.backend}/contact/phone_numbers`
+    },
+    {
+      onSuccess: useCallback(
+        () => (
+          addToast("Saved the updated phone numbers successfully", {
+            appearance: "success"
+          }),
+          fetchContact()
+        ),
+        [addToast, fetchContact]
+      ),
+      onError: useCallback(
+        err =>
+          addToast(`Failed to save the updated phone numbers: ${err.message}`, {
+            appearance: "error"
+          }),
+        [addToast]
+      )
+    }
+  );
+  const handleDelete = number => () =>
+    handleUpdate({
+      data: {
+        phoneNumbers: reject(rows, phoneNumber => phoneNumber.number === number)
+      }
+    });
+
   return {
+    isSubmitting,
     columns: {
       name: {
         Header: () => <span>Name</span>,
@@ -75,8 +109,9 @@ export const usePhoneNumbersTable = ({ phoneNumbers }) => {
       },
       remove: {
         Header: () => null,
-        Cell: () => (
-          <Button variant="danger">
+        // eslint-disable-next-line react/prop-types
+        Cell: ({ number }) => (
+          <Button variant="danger" onClick={handleDelete(number)}>
             <FontAwesomeIcon icon={faTrash} />
           </Button>
         ),
@@ -85,24 +120,37 @@ export const usePhoneNumbersTable = ({ phoneNumbers }) => {
         }
       }
     },
-    rows: phoneNumbers ?? [],
+    rows,
     handleAdd: () => {
       showModal({
         Title: () => "Add phone number",
-        // eslint-disable-next-line react/prop-types
-        Content: ({ onClose }) => <AddPhoneNumberForm onSubmit={onClose} />,
-        // eslint-disable-next-line react/prop-types
-        Footer: ({ onClose }) => (
-          <>
-            <Button variant="outline" onClick={onClose}>
-              Cancel
-            </Button>
-            <IconButton icon={faPlus} onClick={onClose}>
-              Add phone number
-            </IconButton>
-          </>
+        Content: props => (
+          <AddPhoneNumberForm
+            {...props}
+            phoneNumbers={phoneNumbers}
+            onUpdate={handleUpdate}
+          />
         )
       });
     }
+  };
+};
+
+export const useAddPhoneNumberForm = ({
+  phoneNumbers = [],
+  onUpdate,
+  onClose
+}) => {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  return {
+    isSubmitting,
+    onSubmit: ({ name, number }) => (
+      setIsSubmitting(true),
+      onUpdate({
+        data: { phoneNumbers: [...phoneNumbers, { name, number }] }
+      })
+        .then(() => (setIsSubmitting(false), onClose()))
+        .catch(() => (setIsSubmitting(false), onClose()))
+    )
   };
 };

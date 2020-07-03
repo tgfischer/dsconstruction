@@ -20,7 +20,7 @@ const DashboardPage = () => (
           </LoggedInRoute>
           {links.map(({ displayName, url, Component }) => (
             <LoggedInRoute key={url} path={url} exact>
-              <h3>{displayName} Settings</h3>
+              <h3 className="mb-3">{displayName} Settings</h3>
               <Component />
             </LoggedInRoute>
           ))}

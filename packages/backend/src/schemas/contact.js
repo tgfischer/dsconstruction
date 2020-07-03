@@ -12,18 +12,26 @@ export const sendEmail = Joi.object()
   })
   .required();
 
-export const update = Joi.object()
+export const updatePhoneNumbers = Joi.object()
   .keys({
     phoneNumbers: Joi.array()
       .items(
         Joi.object()
           .keys({
             name: Joi.string().required(),
-            number: Joi.string().required()
+            number: Joi.number()
+              .integer()
+              .positive()
+              .required()
           })
           .required()
       )
-      .required(),
+      .required()
+  })
+  .required();
+
+export const updateContact = Joi.object()
+  .keys({
     address: Joi.object()
       .keys({
         street: Joi.string().required(),

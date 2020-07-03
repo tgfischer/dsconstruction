@@ -16,9 +16,11 @@ export const Modal = ({ isVisible, Title, Content, Footer }) => {
       <BootstrapModal.Body>
         <Content onClose={hideModal} />
       </BootstrapModal.Body>
-      <BootstrapModal.Footer>
-        <Footer onClose={hideModal} />
-      </BootstrapModal.Footer>
+      {Footer && (
+        <BootstrapModal.Footer>
+          <Footer onClose={hideModal} />
+        </BootstrapModal.Footer>
+      )}
     </BootstrapModal>
   );
 };
@@ -32,6 +34,5 @@ Modal.propTypes = {
 
 Modal.defaultProps = {
   Title: () => null,
-  Content: () => null,
-  Footer: () => null
+  Content: () => null
 };

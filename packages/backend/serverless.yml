@@ -194,11 +194,22 @@ functions:
           path: /api/contact
           method: POST
           cors: true
+  editPhoneNumbers:
+    handler: src/index.handler
+    events:
+      - http:
+          path: /api/contact/phone_numbers
+          method: POST
+          cors: true
+          authorizer:
+            type: COGNITO_USER_POOLS
+            authorizerId:
+              Ref: ApiGatewayAuthorizer
   editContactInfo:
     handler: src/index.handler
     events:
       - http:
-          path: /api/contact/edit
+          path: /api/contact/contact
           method: POST
           cors: true
           authorizer:

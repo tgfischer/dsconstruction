@@ -19,8 +19,8 @@ export const Table = ({ columns, rows, ...props }) => (
       </tr>
     </thead>
     <tbody>
-      {rows.map(row => (
-        <tr>
+      {rows.map((row, i) => (
+        <tr key={i}>
           {Object.keys(columns).map(accessor => {
             const { Cell, cellProps = {} } = columns[accessor];
             return (
