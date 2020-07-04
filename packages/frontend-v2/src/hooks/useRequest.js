@@ -34,7 +34,10 @@ const useRequest = (
     setIsLoaded(true);
     onError(error);
   }, [error, onError]);
-  return [{ data, error, isLoading: loading, isLoaded }, execute];
+  return [
+    { data, error, isLoading: loading, isLoaded: isLoaded && !loading },
+    execute
+  ];
 };
 
 export const useGetRequest = (config, options) =>

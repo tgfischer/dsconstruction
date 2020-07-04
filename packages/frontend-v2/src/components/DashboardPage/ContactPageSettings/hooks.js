@@ -1,3 +1,5 @@
+/* eslint-disable react/prop-types */
+
 import React, { useCallback, useState } from "react";
 import { useToasts } from "react-toast-notifications";
 import { Button } from "react-bootstrap";
@@ -99,19 +101,16 @@ export const usePhoneNumbersTable = ({ phoneNumbers, fetchContact }) => {
     columns: {
       name: {
         Header: () => <span>Name</span>,
-        // eslint-disable-next-line react/prop-types
-        Cell: ({ name }) => <span>{name}</span>
+        Cell: ({ row }) => <span>{row.name}</span>
       },
       number: {
         Header: () => <span>Phone number</span>,
-        // eslint-disable-next-line react/prop-types
-        Cell: ({ number }) => <span>{number}</span>
+        Cell: ({ row }) => <span>{row.number}</span>
       },
       remove: {
         Header: () => null,
-        // eslint-disable-next-line react/prop-types
-        Cell: ({ number }) => (
-          <Button variant="danger" onClick={handleDelete(number)}>
+        Cell: ({ row }) => (
+          <Button variant="danger" onClick={handleDelete(row.number)}>
             <FontAwesomeIcon icon={faTrash} />
           </Button>
         ),

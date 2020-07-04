@@ -5,11 +5,16 @@ import { Button, Form } from "react-bootstrap";
 
 import { Spinner } from "components/Spinner";
 import { useAddServiceForm } from "./hooks";
+import { schema } from "./constants";
 
 export const AddServiceForm = props => {
   const { isSubmitting, onSubmit } = useAddServiceForm(props);
   return (
-    <Formik initialValues={{ name: "" }} onSubmit={onSubmit}>
+    <Formik
+      initialValues={{ name: "" }}
+      validationSchema={schema}
+      onSubmit={onSubmit}
+    >
       {({ values, handleSubmit, handleChange }) => (
         <Form onSubmit={handleSubmit}>
           <Form.Group controlId="name">

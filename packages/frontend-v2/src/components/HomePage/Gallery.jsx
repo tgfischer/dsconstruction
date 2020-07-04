@@ -9,7 +9,7 @@ import { Section } from "./Section";
 import { useGallery } from "./hooks";
 
 export const Gallery = () => {
-  const { photos } = useGallery();
+  const { photos, isLoaded } = useGallery();
   return (
     <Section
       title="Photo Gallery"
@@ -18,6 +18,7 @@ export const Gallery = () => {
           View Photos <FontAwesomeIcon className="ml-1" icon={faArrowRight} />
         </Button>
       )}
+      isLoading={!isLoaded}
     >
       <GalleryTable photos={photos} />
     </Section>

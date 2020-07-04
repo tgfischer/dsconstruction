@@ -1,6 +1,7 @@
 import { HomePageSettings } from "./HomePageSettings";
 import { ContactPageSettings } from "./ContactPageSettings";
 import { ServicesSettings } from "./ServicesSettings";
+import { UsersSettings } from "./UsersSettings";
 
 export const links = [
   {
@@ -26,6 +27,6 @@ export const links = [
   {
     displayName: "Users",
     url: "/dashboard/users",
-    Component: HomePageSettings
+    Component: UsersSettings
   }
 ];

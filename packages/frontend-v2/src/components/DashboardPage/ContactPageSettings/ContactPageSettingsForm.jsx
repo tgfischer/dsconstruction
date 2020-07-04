@@ -71,6 +71,10 @@ export const ContactPageSettingsForm = ({
                 rows={6}
                 required
               />
+              <Form.Text>
+                Note: Emails sent from the contact page will be sent to this
+                address
+              </Form.Text>
             </Form.Group>
           </Card.Body>
         </Card>

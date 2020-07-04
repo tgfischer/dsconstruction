@@ -5,11 +5,16 @@ import { Button, Form } from "react-bootstrap";
 
 import { Spinner } from "components/Spinner";
 import { useAddPhoneNumberForm } from "./hooks";
+import { schema } from "./constants";
 
 export const AddPhoneNumberForm = props => {
   const { isSubmitting, onSubmit } = useAddPhoneNumberForm(props);
   return (
-    <Formik initialValues={{ name: "", number: "" }} onSubmit={onSubmit}>
+    <Formik
+      initialValues={{ name: "", number: "" }}
+      validationSchema={schema}
+      onSubmit={onSubmit}
+    >
       {({ values, handleSubmit, handleChange }) => (
         <Form onSubmit={handleSubmit}>
           <Form.Group controlId="name">

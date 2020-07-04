@@ -33,7 +33,7 @@ export const useServices = () => {
 };
 
 export const useGallery = () => {
-  const [{ data, isLoading }, fetchGallery] = useGetRequest({
+  const [{ data, isLoaded }, fetchGallery] = useGetRequest({
     url: `${endpoints.backend}/gallery`,
     params: {
       size: 4,
@@ -41,5 +41,5 @@ export const useGallery = () => {
     }
   });
   useEffect(() => void fetchGallery(), [fetchGallery]);
-  return { photos: data?.photos ?? [], isLoading };
+  return { photos: data?.photos ?? [], isLoaded };
 };

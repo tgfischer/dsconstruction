@@ -25,7 +25,7 @@ export const Table = ({ columns, rows, ...props }) => (
             const { Cell, cellProps = {} } = columns[accessor];
             return (
               <td key={accessor} {...cellProps}>
-                <Cell {...row} />
+                <Cell row={row} rows={rows} />
               </td>
             );
           })}

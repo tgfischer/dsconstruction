@@ -1,3 +1,5 @@
+/* eslint-disable react/prop-types */
+
 import React, { useCallback, useState } from "react";
 import { Button } from "react-bootstrap";
 import { useToasts } from "react-toast-notifications";
@@ -65,16 +67,14 @@ export const useServicesSettings = () => {
     columns: {
       service: {
         Header: () => "Service name",
-        // eslint-disable-next-line react/prop-types
-        Cell: ({ name }) => <span>{name}</span>
+        Cell: ({ row }) => <span>{row.name}</span>
       },
       remove: {
         Header: () => null,
-        // eslint-disable-next-line react/prop-types
-        Cell: ({ id }) => (
+        Cell: ({ row }) => (
           <Button
             variant="danger"
-            onClick={() => handleDelete({ data: [id] })}
+            onClick={() => handleDelete({ data: [row.id] })}
             disabled={isDeleting}
           >
             <FontAwesomeIcon icon={faTrash} />
