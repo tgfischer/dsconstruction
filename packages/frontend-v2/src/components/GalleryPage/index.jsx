@@ -7,6 +7,8 @@ import { TagsDropdown } from "components/TagsDropdown";
 import { Pagination } from "components/Pagination";
 import { useGalleryPage } from "./hooks";
 
+export * from "./hooks";
+
 export const GalleryPage = () => {
   const {
     photos,
@@ -14,10 +16,10 @@ export const GalleryPage = () => {
     selectedTag,
     pagination,
     handleChangeTag,
-    isLoading
+    isLoaded
   } = useGalleryPage();
   return (
-    <Page title="Photo Gallery" isLoading={isLoading}>
+    <Page title="Photo Gallery" isLoading={!isLoaded}>
       <Row className="mb-3">
         {tags.length > 0 && (
           <>

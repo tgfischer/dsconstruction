@@ -11,7 +11,7 @@ export const useNavbar = () => {
   return {
     links: links.map(page => ({
       ...page,
-      isActive: pathname === page.url,
+      isActive: pathname === page.url.split("?")[0],
       isVisible: page.isVisible || isLoggedIn === page.isLoggedIn
     })),
     buttons: [

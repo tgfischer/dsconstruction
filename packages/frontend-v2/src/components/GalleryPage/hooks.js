@@ -10,21 +10,23 @@ export const useGalleryPage = () => {
   const { page = 0, size, tag } = useQuery();
   const { push } = useHistory();
   const [
-    { data: gallery, isLoading: isGalleryLoading },
+    { data: gallery, isLoaded: isGalleryLoaded },
     fetchGallery
   ] = useGetRequest({
     url: `${endpoints.backend}/gallery`
   });
-  const [{ data: tags, isLoading: isTagsLoading }, fetchTags] = useGetRequest({
+  const [{ data: tags, isLoaded: isTagsLoaded }, fetchTags] = useGetRequest({
     url: `${endpoints.backend}/gallery/tags`
   });
 
   useEffect(() => void fetchTags(), [fetchTags]);
-  useEffect(() => {
-    fetchGallery({
-      params: { page: 0, tag }
-    });
-  }, [tag, push, fetchGallery]);
+  useEffect(
+    () =>
+      void fetchGallery({
+        params: { page: 0, tag }
+      }),
+    [tag, push, fetchGallery]
+  );
 
   return {
     photos: gallery?.photos ?? [],
@@ -52,6 +54,7 @@ export const useGalleryPage = () => {
             pathname: "/gallery",
             search: qs.stringify({ page: 0, size, tag: e.target.value })
           }),
-    isLoading: isGalleryLoading || isTagsLoading
+    isLoaded: isGalleryLoaded && isTagsLoaded,
+    fetchGallery
   };
 };

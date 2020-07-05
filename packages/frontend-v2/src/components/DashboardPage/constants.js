@@ -1,4 +1,5 @@
 import { HomePageSettings } from "./HomePageSettings";
+import { GalleryPageSettings } from "./GalleryPageSettings";
 import { ContactPageSettings } from "./ContactPageSettings";
 import { ServicesSettings } from "./ServicesSettings";
 import { UsersSettings } from "./UsersSettings";
@@ -12,7 +13,11 @@ export const links = [
   {
     displayName: "Photo Gallery",
     url: "/dashboard/gallery",
-    Component: HomePageSettings
+    params: {
+      page: 0,
+      size: 9
+    },
+    Component: GalleryPageSettings
   },
   {
     displayName: "Contact",
