@@ -14,9 +14,10 @@ export const GalleryTable = ({
   tags,
   selectedTag,
   pagination,
-  onChangeTag
+  onChangeTag,
+  ...props
 }) => {
-  const { selectedPhotos, onClick, getPreviewProps } = useGalleryTable();
+  const { selectedPhotos, onClick, getPreviewProps } = useGalleryTable(props);
   return (
     <Row>
       {tags.length > 0 && (

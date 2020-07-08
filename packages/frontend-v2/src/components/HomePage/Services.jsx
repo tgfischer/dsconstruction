@@ -12,7 +12,7 @@ export const Services = () => {
         {services.map(({ id, name }, i) => (
           <Col key={i} lg={3} md={4} sm={6} xs={12}>
             <h5>
-              <Badge variant="dark">{name}</Badge>
+              <Badge variant="primary">{name}</Badge>
             </h5>
           </Col>
         ))}

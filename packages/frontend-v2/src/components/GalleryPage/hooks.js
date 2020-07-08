@@ -55,6 +55,7 @@ export const useGalleryPage = () => {
             search: qs.stringify({ page: 0, size, tag: e.target.value })
           }),
     isLoaded: isGalleryLoaded && isTagsLoaded,
-    fetchGallery
+    fetchGallery,
+    fetchTags
   };
 };
