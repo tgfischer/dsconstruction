@@ -11,6 +11,7 @@ import { useQuery } from "hooks/useQuery";
 import { usePostRequest, useDeleteRequest } from "hooks/useRequest";
 import { endpoints } from "constants/api";
 import { AddTagForm } from "./AddTagForm";
+import { ToggleTagsTable } from "./ToggleTagsTable";
 
 export const useGalleryPageSettings = () => {
   const [selectedPhotos, setSelectedPhotos] = useState([]);
@@ -76,6 +77,12 @@ export const useGalleryPageSettings = () => {
       showModal({
         Title: () => "Add tag",
         Content: props => <AddTagForm {...props} onAdd={handleAddTag} />
+      });
+    },
+    toggleTags: () => {
+      showModal({
+        Title: () => "Toggle tags",
+        Content: props => <ToggleTagsTable {...props} onSubmit={() => {}} />
       });
     }
   };
