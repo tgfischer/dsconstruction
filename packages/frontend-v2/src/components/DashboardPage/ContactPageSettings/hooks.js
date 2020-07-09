@@ -1,7 +1,6 @@
 /* eslint-disable react/prop-types */
 
-import React, { useCallback, useState } from "react";
-import { useToasts } from "react-toast-notifications";
+import React, { useState } from "react";
 import { Button } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
@@ -14,27 +13,14 @@ import { AddPhoneNumberForm } from "./AddPhoneNumberForm";
 import { reject } from "lodash";
 
 export const useContactPageSettings = () => {
-  const { addToast } = useToasts();
   const { contact, isLoaded, fetchContact } = useContactPage();
   const [{ isLoading: isSubmitting }, handleSubmit] = usePostRequest(
     {
       url: `${endpoints.backend}/contact/contact`
     },
     {
-      onSuccess: useCallback(
-        () =>
-          addToast("Saved the settings successfully", {
-            appearance: "success"
-          }),
-        [addToast]
-      ),
-      onError: useCallback(
-        err =>
-          addToast(`Failed to save the settings: ${err.message}`, {
-            appearance: "error"
-          }),
-        [addToast]
-      )
+      successMessage: "Saved the settings successfully",
+      errorMessage: "Failed to save the settings"
     }
   );
   return {
@@ -64,29 +50,15 @@ export const useContactPageSettings = () => {
 
 export const usePhoneNumbersTable = ({ phoneNumbers, fetchContact }) => {
   const { showModal } = useModal();
-  const { addToast } = useToasts();
   const rows = phoneNumbers ?? [];
   const [{ isLoading: isSubmitting }, handleUpdate] = usePostRequest(
     {
       url: `${endpoints.backend}/contact/phone_numbers`
     },
     {
-      onSuccess: useCallback(
-        () => (
-          addToast("Saved the updated phone numbers successfully", {
-            appearance: "success"
-          }),
-          fetchContact()
-        ),
-        [addToast, fetchContact]
-      ),
-      onError: useCallback(
-        err =>
-          addToast(`Failed to save the updated phone numbers: ${err.message}`, {
-            appearance: "error"
-          }),
-        [addToast]
-      )
+      successMessage: "Saved the phone numbers successfully",
+      errorMessage: "Failed to save the phone numbers",
+      onSuccess: fetchContact
     }
   );
   const handleDelete = number => () =>

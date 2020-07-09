@@ -1,8 +1,7 @@
 /* eslint-disable react/prop-types */
 
-import React, { useCallback, useState } from "react";
+import React, { useState } from "react";
 import { Button } from "react-bootstrap";
-import { useToasts } from "react-toast-notifications";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 
@@ -13,7 +12,6 @@ import { endpoints } from "constants/api";
 import { AddServiceForm } from "./AddServiceForm";
 
 export const useServicesSettings = () => {
-  const { addToast } = useToasts();
   const { showModal } = useModal();
   const { services, isLoaded, fetchServices } = useServices();
   const [, handleAdd] = usePostRequest(
@@ -21,22 +19,9 @@ export const useServicesSettings = () => {
       url: `${endpoints.backend}/services`
     },
     {
-      onSuccess: useCallback(
-        () => (
-          addToast("Added the service successfully", {
-            appearance: "success"
-          }),
-          fetchServices()
-        ),
-        [addToast, fetchServices]
-      ),
-      onError: useCallback(
-        err =>
-          addToast(`Failed to add the service: ${err.message}`, {
-            appearance: "error"
-          }),
-        [addToast]
-      )
+      successMessage: "Added the service successfully",
+      errorMessage: "Failed to add the service",
+      onSuccess: fetchServices
     }
   );
   const [{ isLoading: isDeleting }, handleDelete] = useDeleteRequest(
@@ -44,22 +29,9 @@ export const useServicesSettings = () => {
       url: `${endpoints.backend}/services`
     },
     {
-      onSuccess: useCallback(
-        () => (
-          addToast("Deleted the service successfully", {
-            appearance: "success"
-          }),
-          fetchServices()
-        ),
-        [addToast, fetchServices]
-      ),
-      onError: useCallback(
-        err =>
-          addToast(`Failed to delete the service: ${err.message}`, {
-            appearance: "error"
-          }),
-        [addToast]
-      )
+      successMessage: "Deleted the service successfully",
+      errorMessage: "Failed to delete the service",
+      onSuccess: fetchServices
     }
   );
   return {

@@ -1,8 +1,7 @@
 /* eslint-disable react/prop-types */
 
-import React, { useEffect, useCallback, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button } from "react-bootstrap";
-import { useToasts } from "react-toast-notifications";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 
@@ -18,20 +17,13 @@ import { AddUserForm } from "./AddUserForm";
 
 export const useUsersSettings = () => {
   const { user } = useUser();
-  const { addToast } = useToasts();
   const { showModal } = useModal();
   const [{ data, isLoaded }, fetchUsers] = useGetRequest(
     {
       url: `${endpoints.users}/users`
     },
     {
-      onError: useCallback(
-        err =>
-          addToast(`Failed to fetch the users: ${err.message}`, {
-            appearance: "error"
-          }),
-        [addToast]
-      )
+      errorMessage: "Failed to fetch the users"
     }
   );
   const [, handleAdd] = usePostRequest(
@@ -39,22 +31,9 @@ export const useUsersSettings = () => {
       url: `${endpoints.users}/users`
     },
     {
-      onSuccess: useCallback(
-        () => (
-          addToast("Added the user successfully", {
-            appearance: "success"
-          }),
-          fetchUsers()
-        ),
-        [addToast, fetchUsers]
-      ),
-      onError: useCallback(
-        err =>
-          addToast(`Failed to add the user: ${err.message}`, {
-            appearance: "error"
-          }),
-        [addToast]
-      )
+      successMessage: "Added the user successfully",
+      errorMessage: "Failed to add the user",
+      onSuccess: fetchUsers
     }
   );
   const [{ isLoading: isDeleting }, deleteUser] = useDeleteRequest(
@@ -62,22 +41,9 @@ export const useUsersSettings = () => {
       url: `${endpoints.users}/users`
     },
     {
-      onSuccess: useCallback(
-        () => (
-          addToast("Deleted the user successfully", {
-            appearance: "success"
-          }),
-          fetchUsers()
-        ),
-        [addToast, fetchUsers]
-      ),
-      onError: useCallback(
-        err =>
-          addToast(`Failed to delete the user: ${err.message}`, {
-            appearance: "error"
-          }),
-        [addToast]
-      )
+      successMessage: "Deleted the user successfully",
+      errorMessage: "Failed to delete the user",
+      onSuccess: fetchUsers
     }
   );
   useEffect(() => void fetchUsers(), [fetchUsers]);

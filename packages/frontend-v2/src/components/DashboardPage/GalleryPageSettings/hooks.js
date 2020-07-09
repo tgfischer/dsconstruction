@@ -1,9 +1,8 @@
 /* eslint-disable react/prop-types */
 
-import React, { useMemo, useState, useCallback } from "react";
+import React, { useMemo, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { isNil, take, drop, filter } from "lodash";
-import { useToasts } from "react-toast-notifications";
 import qs from "qs";
 
 import { useModal } from "components/Modal";
@@ -25,28 +24,14 @@ export const useGalleryPageSettings = () => {
   const { page = 0, size } = useQuery();
   const { push } = useHistory();
   const { showModal } = useModal();
-  const { addToast } = useToasts();
   const [{ isLoading: isAddingTag }, handleAddTag] = usePostRequest(
     {
       url: `${endpoints.backend}/gallery/tags`
     },
     {
-      onSuccess: useCallback(
-        () => (
-          addToast("Added the tag successfully", {
-            appearance: "success"
-          }),
-          fetchTags()
-        ),
-        [addToast, fetchTags]
-      ),
-      onError: useCallback(
-        err =>
-          addToast(`Failed to add the tag: ${err.message}`, {
-            appearance: "error"
-          }),
-        [addToast]
-      )
+      successMessage: "Added the tag successfully",
+      errorMessage: "Failed to add the tag",
+      onSuccess: fetchTags
     }
   );
   const [{ isLoading: isDeletingTag }, handleDeleteTag] = useDeleteRequest(
@@ -54,22 +39,9 @@ export const useGalleryPageSettings = () => {
       url: `${endpoints.backend}/gallery/tags`
     },
     {
-      onSuccess: useCallback(
-        () => (
-          addToast("Deleted the service successfully", {
-            appearance: "success"
-          }),
-          fetchTags()
-        ),
-        [addToast, fetchTags]
-      ),
-      onError: useCallback(
-        err =>
-          addToast(`Failed to delete the service: ${err.message}`, {
-            appearance: "error"
-          }),
-        [addToast]
-      )
+      successMessage: "Deleted the service successfully",
+      errorMessage: "Failed to delete the service",
+      onSuccess: fetchTags
     }
   );
   return {

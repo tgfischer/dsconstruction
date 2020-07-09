@@ -3,6 +3,7 @@ import axios from "axios";
 import { makeUseAxios } from "axios-hooks";
 import { identity } from "lodash";
 import qs from "qs";
+import { useToasts } from "react-toast-notifications";
 
 const useAxios = makeUseAxios({
   axios: axios.create({
@@ -14,26 +15,42 @@ const defaultOptions = { onSuccess: identity, onError: identity };
 
 const useRequest = (
   config,
-  { onSuccess = identity, onError = identity } = defaultOptions
+  {
+    onSuccess = identity,
+    onError = identity,
+    successMessage,
+    errorMessage
+  } = defaultOptions
 ) => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [{ data, loading, error }, execute] = useAxios(config, {
     manual: true
   });
+  const { addToast } = useToasts();
   useEffect(() => {
     if (!data) {
       return;
     }
     setIsLoaded(true);
     onSuccess(data);
-  }, [data, onSuccess]);
+    if (successMessage) {
+      addToast(successMessage, {
+        appearance: "success"
+      });
+    }
+  }, [addToast, data, onSuccess, successMessage]);
   useEffect(() => {
     if (!error) {
       return;
     }
     setIsLoaded(true);
     onError(error);
-  }, [error, onError]);
+    if (errorMessage) {
+      addToast(`${errorMessage}: ${error}`, {
+        appearance: "error"
+      });
+    }
+  }, [addToast, error, onError, errorMessage]);
   return [
     { data, error, isLoading: loading, isLoaded: isLoaded && !loading },
     execute
