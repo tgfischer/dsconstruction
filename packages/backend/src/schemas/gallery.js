@@ -29,10 +29,7 @@ export const toggle = Joi.object()
     photos: Joi.array()
       .items(Joi.string().required())
       .required(),
-    add: Joi.array()
-      .items(Joi.string())
-      .required(),
-    remove: Joi.array()
+    tags: Joi.array()
       .items(Joi.string())
       .required()
   })

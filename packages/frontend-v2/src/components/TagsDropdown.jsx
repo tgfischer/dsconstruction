@@ -4,7 +4,7 @@ import { Form } from "react-bootstrap";
 
 export const TagsDropdown = ({ value, tags, onChange }) => (
   <Form.Control
-    className="mb-3"
+    className="mb-3 cursor-pointer"
     as="select"
     value={value}
     onChange={onChange}

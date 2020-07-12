@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { Modal as BootstrapModal } from "react-bootstrap";
 
 import { useModal } from "./hooks";
+import { Actions } from "./Actions";
 
 export const Modal = ({ isVisible, Title, Content, Footer }) => {
   const { hideModal } = useModal();
@@ -24,6 +25,8 @@ export const Modal = ({ isVisible, Title, Content, Footer }) => {
     </BootstrapModal>
   );
 };
+
+Modal.Actions = Actions;
 
 Modal.propTypes = {
   isVisible: PropTypes.bool.isRequired,

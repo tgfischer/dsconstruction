@@ -45,22 +45,11 @@ export const add = async photos => {
 export const destroy = async photos =>
   Gallery.batchDelete(photos.map(id => ({ id })));
 
-export const toggleTags = async ({ photos: ids, add, remove }) => {
+export const toggleTags = async ({ photos: ids, tags }) => {
   const photos = await Gallery.batchGet(ids.map(id => ({ id })));
   await Promise.all(
     photos.map(photo =>
-      Gallery.update(
-        {
-          id: photo.id
-        },
-        {
-          tags: _.uniq([
-            ..._.remove(photo.tags, tag => !remove.includes(tag)),
-            ...add
-          ])
-        },
-        { allowEmptyArray: true }
-      )
+      Gallery.update({ id: photo.id }, { tags }, { allowEmptyArray: true })
     )
   );
 

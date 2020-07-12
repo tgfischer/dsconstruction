@@ -1,5 +1,5 @@
 import React from "react";
-import { Row, Col, Badge, Alert } from "react-bootstrap";
+import { Row, Col, Badge } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faPlus,
@@ -12,6 +12,7 @@ import {
 
 import { Spinner } from "components/Spinner";
 import { IconButton } from "components/IconButton";
+import { IconAlert } from "components/IconAlert";
 import { GalleryTable } from "./GalleryTable";
 import { useGalleryPageSettings } from "./hooks";
 
@@ -22,7 +23,7 @@ const GalleryPageSettings = () => {
     selectedPhotos,
     addTag,
     deleteTag,
-    toggleTags,
+    setTags,
     ...gallery
   } = useGalleryPageSettings();
   return isLoaded ? (
@@ -32,15 +33,15 @@ const GalleryPageSettings = () => {
           Add photos
         </IconButton>
         <IconButton className="mb-1 mr-1" icon={faTag} onClick={addTag}>
-          Add Category
+          Add category
         </IconButton>
         <IconButton
           className="mb-1 mr-1"
           icon={faToggleOn}
           disabled={selectedPhotos.length === 0}
-          onClick={toggleTags}
+          onClick={setTags}
         >
-          Toggle categories
+          Categorize photos
         </IconButton>
         <IconButton
           className="mb-1"
@@ -67,20 +68,10 @@ const GalleryPageSettings = () => {
         </p>
       </Col>
       <Col xs={12}>
-        <Alert variant="light">
-          <Row>
-            <div className="d-flex flex-row">
-              <div className="d-flex align-items-center justify-content-center ml-4 mr-4">
-                <FontAwesomeIcon className="h4 mb-0" icon={faInfo} />
-              </div>
-              <div>
-                Select photos by clicking on the thumbnails. This will allow you
-                to categorize or delete the selected photos using the actions
-                above
-              </div>
-            </div>
-          </Row>
-        </Alert>
+        <IconAlert icon={faInfo} variant="light">
+          Select photos by clicking on the thumbnails. This will allow you to
+          categorize or delete the selected photos using the actions above
+        </IconAlert>
       </Col>
       <Col xs={12}>
         <GalleryTable

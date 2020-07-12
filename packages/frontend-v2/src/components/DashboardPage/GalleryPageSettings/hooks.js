@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 
-import React, { useMemo, useState } from "react";
+import React, { useMemo, useState, useCallback } from "react";
 import { useHistory } from "react-router-dom";
 import { isNil, take, drop, filter } from "lodash";
 import qs from "qs";
@@ -11,46 +11,68 @@ import { useQuery } from "hooks/useQuery";
 import { usePostRequest, useDeleteRequest } from "hooks/useRequest";
 import { endpoints } from "constants/api";
 import { AddTagForm } from "./AddTagForm";
-import { ToggleTagsTable } from "./ToggleTagsTable";
+import { SetTagsForm } from "./SetTagsForm";
 
 export const useGalleryPageSettings = () => {
   const [selectedPhotos, setSelectedPhotos] = useState([]);
   const {
+    tags,
     isLoaded,
     photos,
     pagination,
     fetchTags,
+    fetchGallery,
     ...gallery
   } = useGalleryPage();
-  const { page = 0, size } = useQuery();
+  const { page = 0, size, tag } = useQuery();
   const { push } = useHistory();
   const { showModal } = useModal();
-  const [{ isLoading: isAddingTag }, handleAddTag] = usePostRequest(
+  const [{ isLoading: isAddingTag }, executeAddTag] = usePostRequest(
     {
       url: `${endpoints.backend}/gallery/tags`
     },
     {
-      successMessage: "Added the tag successfully",
-      errorMessage: "Failed to add the tag",
+      successMessage: "Added the category successfully",
+      errorMessage: "Failed to add the category",
       onSuccess: fetchTags
     }
   );
-  const [{ isLoading: isDeletingTag }, handleDeleteTag] = useDeleteRequest(
+  const [{ isLoading: isDeletingTag }, executeDeleteTag] = useDeleteRequest(
     {
       url: `${endpoints.backend}/gallery/tags`
     },
     {
-      successMessage: "Deleted the service successfully",
-      errorMessage: "Failed to delete the service",
+      successMessage: "Deleted the category successfully",
+      errorMessage: "Failed to delete the category",
       onSuccess: fetchTags
     }
   );
+  const [{ isLoading: isSettingTags }, executeSetTags] = usePostRequest(
+    {
+      url: `${endpoints.backend}/gallery/toggle`
+    },
+    {
+      successMessage: "Categorized the photos successfully",
+      errorMessage: "Failed to categorize the photos",
+      onSuccess: fetchTags
+    }
+  );
+  const handleSetTags = useCallback(
+    async req => {
+      await executeSetTags(req);
+      await fetchGallery({ params: { page: 0, tag } });
+      setSelectedPhotos([]);
+    },
+    [executeSetTags, fetchGallery, tag]
+  );
+
   return {
     ...gallery,
+    tags,
     selectedPhotos,
     setSelectedPhotos,
-    isLoaded: isLoaded && !isAddingTag && !isDeletingTag,
-    deleteTag: id => () => handleDeleteTag({ data: { id } }),
+    isLoaded: isLoaded && !isAddingTag && !isDeletingTag && !isSettingTags,
+    deleteTag: id => () => executeDeleteTag({ data: { id } }),
     photos: useMemo(
       () => (isNil(size) ? photos : take(drop(photos, page * size), size)),
       [page, photos, size]
@@ -64,25 +86,30 @@ export const useGalleryPageSettings = () => {
         })
     },
     onChangeTag: e =>
-      e.target.value === "-1"
-        ? push({
-            pathname: "/dashboard/gallery",
-            search: qs.stringify({ page: 0, size })
-          })
-        : push({
-            pathname: "/dashboard/gallery",
-            search: qs.stringify({ page: 0, size, tag: e.target.value })
-          }),
+      push({
+        pathname: "/dashboard/gallery",
+        search:
+          e.target.value === "-1"
+            ? qs.stringify({ page: 0, size })
+            : qs.stringify({ page: 0, size, tag: e.target.value })
+      }),
     addTag: () => {
       showModal({
-        Title: () => "Add tag",
-        Content: props => <AddTagForm {...props} onAdd={handleAddTag} />
+        Title: () => "Add category",
+        Content: props => <AddTagForm {...props} onSubmit={executeAddTag} />
       });
     },
-    toggleTags: () => {
+    setTags: () => {
       showModal({
-        Title: () => "Toggle tags",
-        Content: props => <ToggleTagsTable {...props} onSubmit={() => {}} />
+        Title: () => "Categorize photos",
+        Content: props => (
+          <SetTagsForm
+            {...props}
+            tags={tags}
+            photos={selectedPhotos}
+            onSubmit={handleSetTags}
+          />
+        )
       });
     }
   };
@@ -106,13 +133,38 @@ export const useGalleryTable = ({ selectedPhotos, setSelectedPhotos }) => {
   };
 };
 
-export const useAddTagForm = ({ onAdd, onClose }) => {
+export const useAddTagForm = ({ onSubmit, onClose }) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   return {
     isSubmitting,
     onSubmit: data => (
       setIsSubmitting(true),
-      onAdd({ data })
+      onSubmit({ data })
+        .then(() => (setIsSubmitting(false), onClose()))
+        .catch(() => (setIsSubmitting(false), onClose()))
+    )
+  };
+};
+
+export const useSetTagsForm = ({ tags, photos, onSubmit, onClose }) => {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  return {
+    tags,
+    initialValues: useMemo(
+      () =>
+        tags.reduce((values, { name }) => ({ ...values, [name]: false }), {}),
+      [tags]
+    ),
+    isSubmitting,
+    onClose,
+    onSubmit: data => (
+      setIsSubmitting(true),
+      onSubmit({
+        data: {
+          photos,
+          tags: Object.keys(data).filter(tag => data[tag])
+        }
+      })
         .then(() => (setIsSubmitting(false), onClose()))
         .catch(() => (setIsSubmitting(false), onClose()))
     )

@@ -1,9 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Formik } from "formik";
-import { Button, Form } from "react-bootstrap";
+import { Form } from "react-bootstrap";
 
-import { Spinner } from "components/Spinner";
+import { Modal } from "components/Modal";
 import { useAddUserForm } from "./hooks";
 import { schema } from "./constants";
 
@@ -59,15 +59,11 @@ export const AddUserForm = props => {
               required
             />
           </Form.Group>
-          <div className="d-flex justify-content-end">
-            {isSubmitting && (
-              <Spinner className="ml-3 align-items-center" size="sm" />
-            )}
-            <Button variant="outline" onClick={props.onClose}>
-              Cancel
-            </Button>
-            <Button type="submit">Add</Button>
-          </div>
+          <Modal.Actions
+            submitText="Add"
+            isSubmitting={isSubmitting}
+            onClose={props.onClose}
+          />
         </Form>
       )}
     </Formik>

@@ -61,19 +61,19 @@ export const useServicesSettings = () => {
     handleAdd: () => {
       showModal({
         Title: () => "Add service",
-        Content: props => <AddServiceForm {...props} onAdd={handleAdd} />
+        Content: props => <AddServiceForm {...props} onSubmit={handleAdd} />
       });
     }
   };
 };
 
-export const useAddServiceForm = ({ onAdd, onClose }) => {
+export const useAddServiceForm = ({ onSubmit, onClose }) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   return {
     isSubmitting,
     onSubmit: data => (
       setIsSubmitting(true),
-      onAdd({ data })
+      onSubmit({ data })
         .then(() => (setIsSubmitting(false), onClose()))
         .catch(() => (setIsSubmitting(false), onClose()))
     )

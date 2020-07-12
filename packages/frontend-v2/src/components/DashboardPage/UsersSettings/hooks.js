@@ -109,19 +109,19 @@ export const useUsersSettings = () => {
     handleAdd: () => {
       showModal({
         Title: () => "Add user",
-        Content: props => <AddUserForm {...props} onAdd={handleAdd} />
+        Content: props => <AddUserForm {...props} onSubmit={handleAdd} />
       });
     }
   };
 };
 
-export const useAddUserForm = ({ onAdd, onClose }) => {
+export const useAddUserForm = ({ onSubmit, onClose }) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   return {
     isSubmitting,
     onSubmit: data => (
       setIsSubmitting(true),
-      onAdd({ data })
+      onSubmit({ data })
         .then(() => (setIsSubmitting(false), onClose()))
         .catch(() => (setIsSubmitting(false), onClose()))
     )
