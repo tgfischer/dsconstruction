@@ -26,20 +26,22 @@ export const get = async ({ size, page, tag }) => {
   };
 };
 
-export const add = async photos => {
-  await Gallery.batchPut(
-    photos.map(({ original }) => {
-      const key = encodeS3URI(original.split(".")[0]);
-      return {
-        id: uuid(),
-        original: key,
-        thumbnail: "/thumbnails" + key,
-        tags: [],
-        createdAt: new Date()
-      };
-    })
-  );
-  return get({});
+export const add = async () => {
+  const id = encodeS3URI(uuid());
+  const key = "gallery/" + id;
+  await Gallery.create({
+    id,
+    original: "/" + key,
+    thumbnail: "/thumbnails/" + key,
+    tags: [],
+    createdAt: new Date()
+  });
+  return getS3Bucket().getSignedUrl("putObject", {
+    Bucket: process.env.DSC_BUCKET_NAME,
+    Key: key,
+    Expires: 60 * 5,
+    ACL: "public-read"
+  });
 };
 
 export const destroy = async photos =>
@@ -55,14 +57,3 @@ export const toggleTags = async ({ photos: ids, tags }) => {
 
   return get({});
 };
-
-export const getSignedUrl = files =>
-  files.map(file => ({
-    url: getS3Bucket().getSignedUrl("putObject", {
-      Bucket: process.env.DSC_BUCKET_NAME,
-      Key: encodeS3URI(file.split(".")[0]),
-      Expires: 60 * 5,
-      ACL: "public-read"
-    }),
-    file
-  }));

@@ -61,5 +61,7 @@ export const useGetRequest = (config, options) =>
   useRequest({ ...config, method: "GET" }, options);
 export const usePostRequest = (config, options) =>
   useRequest({ ...config, method: "POST" }, options);
+export const usePutRequest = (config, options) =>
+  useRequest({ ...config, method: "PUT" }, options);
 export const useDeleteRequest = (config, options) =>
   useRequest({ ...config, method: "DELETE" }, options);

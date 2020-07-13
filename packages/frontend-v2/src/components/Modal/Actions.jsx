@@ -7,10 +7,12 @@ import { Spinner } from "components/Spinner";
 export const Actions = ({ cancelText, submitText, isSubmitting, onClose }) => (
   <div className="d-flex justify-content-end">
     {isSubmitting && <Spinner className="ml-3 align-items-center" size="sm" />}
-    <Button variant="outline" onClick={onClose}>
+    <Button variant="outline" onClick={onClose} disabled={isSubmitting}>
       {cancelText}
     </Button>
-    <Button type="submit">{submitText}</Button>
+    <Button type="submit" disabled={isSubmitting}>
+      {submitText}
+    </Button>
   </div>
 );
 

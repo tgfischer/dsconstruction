@@ -3,15 +3,22 @@
 import React, { useMemo, useState, useCallback } from "react";
 import { useHistory } from "react-router-dom";
 import { isNil, take, drop, filter } from "lodash";
+import { useDropzone } from "react-dropzone";
+import { useToasts } from "react-toast-notifications";
 import qs from "qs";
 
-import { useModal } from "components/Modal";
+import { useModal, DeleteModal } from "components/Modal";
 import { useGalleryPage } from "components/GalleryPage";
 import { useQuery } from "hooks/useQuery";
-import { usePostRequest, useDeleteRequest } from "hooks/useRequest";
+import {
+  usePostRequest,
+  useDeleteRequest,
+  usePutRequest
+} from "hooks/useRequest";
 import { endpoints } from "constants/api";
 import { AddTagForm } from "./AddTagForm";
 import { SetTagsForm } from "./SetTagsForm";
+import { UploadPhotosForm } from "./UploadPhotosForm";
 
 export const useGalleryPageSettings = () => {
   const [selectedPhotos, setSelectedPhotos] = useState([]);
@@ -27,6 +34,14 @@ export const useGalleryPageSettings = () => {
   const { page = 0, size, tag } = useQuery();
   const { push } = useHistory();
   const { showModal } = useModal();
+  const { addToast } = useToasts();
+  const handleFetchGallery = useCallback(
+    () => fetchGallery({ params: { page: 0, tag } }),
+    [fetchGallery, tag]
+  );
+  const [{ isLoading: isUploadingPhoto }, executeUploadPhoto] = usePutRequest({
+    url: `${endpoints.backend}/gallery`
+  });
   const [{ isLoading: isAddingTag }, executeAddTag] = usePostRequest(
     {
       url: `${endpoints.backend}/gallery/tags`
@@ -54,16 +69,29 @@ export const useGalleryPageSettings = () => {
     {
       successMessage: "Categorized the photos successfully",
       errorMessage: "Failed to categorize the photos",
+      onSuccess: handleFetchGallery
+    }
+  );
+  const [
+    { isLoading: isDeletingPhotos },
+    executeDeletePhotos
+  ] = useDeleteRequest(
+    {
+      url: `${endpoints.backend}/gallery`
+    },
+    {
+      successMessage: "Deleted the photos successfully",
+      errorMessage: "Failed to delete the photos",
       onSuccess: fetchTags
     }
   );
   const handleSetTags = useCallback(
     async req => {
       await executeSetTags(req);
-      await fetchGallery({ params: { page: 0, tag } });
+      await handleFetchGallery();
       setSelectedPhotos([]);
     },
-    [executeSetTags, fetchGallery, tag]
+    [executeSetTags, handleFetchGallery]
   );
 
   return {
@@ -71,7 +99,13 @@ export const useGalleryPageSettings = () => {
     tags,
     selectedPhotos,
     setSelectedPhotos,
-    isLoaded: isLoaded && !isAddingTag && !isDeletingTag && !isSettingTags,
+    isLoaded:
+      isLoaded &&
+      !isAddingTag &&
+      !isDeletingTag &&
+      !isSettingTags &&
+      !isUploadingPhoto &&
+      !isDeletingPhotos,
     deleteTag: id => () => executeDeleteTag({ data: { id } }),
     photos: useMemo(
       () => (isNil(size) ? photos : take(drop(photos, page * size), size)),
@@ -93,6 +127,23 @@ export const useGalleryPageSettings = () => {
             ? qs.stringify({ page: 0, size })
             : qs.stringify({ page: 0, size, tag: e.target.value })
       }),
+    uploadPhotos: () => {
+      showModal({
+        Title: () => "Upload photos",
+        Content: ({ onClose, ...props }) => (
+          <UploadPhotosForm
+            {...props}
+            onUpload={executeUploadPhoto}
+            onClose={onClose}
+            onFinished={() => (handleFetchGallery(), onClose())}
+            onError={photo => err =>
+              addToast(`Failed to upload photo ${photo.name}: ${err}`, {
+                appearance: "error"
+              })}
+          />
+        )
+      });
+    },
     addTag: () => {
       showModal({
         Title: () => "Add category",
@@ -111,7 +162,27 @@ export const useGalleryPageSettings = () => {
           />
         )
       });
-    }
+    },
+    deletePhotos: useCallback(
+      ({ name }) => {
+        const message = `Are you sure you want to delete the photos you selected? You cannot undo this action`;
+        return showModal({
+          Title: () => `Delete selected photos`,
+          Content: props => (
+            <DeleteModal
+              {...props}
+              message={message}
+              onDelete={() =>
+                executeDeletePhotos({ data: selectedPhotos }).then(
+                  handleFetchGallery
+                )
+              }
+            />
+          )
+        });
+      },
+      [executeDeletePhotos, handleFetchGallery, selectedPhotos, showModal]
+    )
   };
 };
 
@@ -130,6 +201,40 @@ export const useGalleryTable = ({ selectedPhotos, setSelectedPhotos }) => {
         background: `url(${thumbnail}) no-repeat center center / cover`
       }
     })
+  };
+};
+
+export const useUploadPhotosForm = ({
+  onUpload,
+  onFinished,
+  onError,
+  ...props
+}) => {
+  const [photos, setPhotos] = useState([]);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const { acceptedFiles, ...dropzone } = useDropzone({
+    multiple: true,
+    accept: "image/*",
+    onDropAccepted: files => setPhotos(photos => [...photos, ...files])
+  });
+  return {
+    ...props,
+    ...dropzone,
+    photos,
+    isSubmitting,
+    onSubmit: () => (
+      setIsSubmitting(true),
+      Promise.all(
+        photos.map(data =>
+          onUpload({
+            data,
+            headers: { "Content-Type": data.type }
+          }).catch(onError(data))
+        )
+      )
+        .then(() => (setIsSubmitting(false), onFinished()))
+        .catch(() => (setIsSubmitting(false), onFinished()))
+    )
   };
 };
 

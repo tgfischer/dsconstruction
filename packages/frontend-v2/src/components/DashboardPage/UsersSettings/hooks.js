@@ -1,11 +1,11 @@
 /* eslint-disable react/prop-types */
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { Button } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 
-import { useModal } from "components/Modal";
+import { useModal, DeleteModal } from "components/Modal";
 import {
   useGetRequest,
   usePostRequest,
@@ -46,30 +46,25 @@ export const useUsersSettings = () => {
       onSuccess: fetchUsers
     }
   );
+  const handleDelete = useCallback(
+    ({ id, firstName, lastName }) => {
+      const message = `Are you sure you want to delete ${firstName} ${lastName}? You cannot undo this action`;
+      return showModal({
+        Title: () => `Delete ${firstName} ${lastName}`,
+        Content: props => (
+          <DeleteModal
+            {...props}
+            message={message}
+            onDelete={() => deleteUser({ data: [id] })}
+          />
+        )
+      });
+    },
+    [deleteUser, showModal]
+  );
+
   useEffect(() => void fetchUsers(), [fetchUsers]);
-  const handleDelete = ({ id, firstName, lastName }) =>
-    showModal({
-      Title: () => `Delete ${firstName} ${lastName}`,
-      Content: ({ onClose }) => (
-        <>
-          <p>
-            Are you sure you want to delete {firstName} {lastName}? You cannot
-            undo this action
-          </p>
-          <div className="d-flex justify-content-end">
-            <Button variant="outline" onClick={onClose}>
-              Cancel
-            </Button>
-            <Button
-              variant="danger"
-              onClick={() => (onClose(), deleteUser({ data: [id] }))}
-            >
-              Delete
-            </Button>
-          </div>
-        </>
-      )
-    });
+
   return {
     isLoaded,
     columns: {

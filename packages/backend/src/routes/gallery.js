@@ -14,8 +14,8 @@ const get = async (req, res) => {
 };
 
 const add = async (req, res) => {
-  const gallery = await client.add(res.locals.body);
-  return res.status(HttpStatus.OK).json({ gallery });
+  const url = await client.add();
+  return res.redirect(url);
 };
 
 const destroy = async (req, res) => {
@@ -29,23 +29,18 @@ const toggle = async (req, res) => {
 };
 
 const getSignedUrl = async (req, res) => {
-  const { files } = res.locals.body;
-  const data = await client.getSignedUrl(files);
-  res.status(HttpStatus.OK).json({ data });
+  const url = await client.getSignedUrl(res.locals.body);
+  return res.redirect(url);
 };
 
 router.get("/", validate(schemas.get, "query"), asyncHandler(get));
 
-router.post("/", validate(schemas.add, "body"), asyncHandler(add));
+router.put("/", asyncHandler(add));
 
 router.delete("/", validate(schemas.destroy, "body"), asyncHandler(destroy));
 
 router.post("/toggle", validate(schemas.toggle, "body"), asyncHandler(toggle));
 
-router.post(
-  "/url",
-  validate(schemas.urlSchema, "body"),
-  asyncHandler(getSignedUrl)
-);
+router.post("/url", asyncHandler(getSignedUrl));
 
 export default router;

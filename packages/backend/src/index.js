@@ -13,8 +13,13 @@ import contact from "./routes/contact";
 
 const app = express();
 
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
+app.use(
+  bodyParser.urlencoded({
+    limit: "6mb",
+    extended: true
+  })
+);
+app.use(bodyParser.json({ limit: "6mb" }));
 app.use(cookieParser());
 app.use(cors());
 

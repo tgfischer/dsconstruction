@@ -21,15 +21,17 @@ const GalleryPageSettings = () => {
     tags,
     isLoaded,
     selectedPhotos,
+    uploadPhotos,
     addTag,
     deleteTag,
     setTags,
+    deletePhotos,
     ...gallery
   } = useGalleryPageSettings();
   return isLoaded ? (
     <Row>
       <Col className="mb-2" xs={12}>
-        <IconButton className="mb-1 mr-1" icon={faPlus}>
+        <IconButton className="mb-1 mr-1" icon={faPlus} onClick={uploadPhotos}>
           Add photos
         </IconButton>
         <IconButton className="mb-1 mr-1" icon={faTag} onClick={addTag}>
@@ -48,6 +50,7 @@ const GalleryPageSettings = () => {
           icon={faTrash}
           variant="danger"
           disabled={selectedPhotos.length === 0}
+          onClick={deletePhotos}
         >
           Delete photos
         </IconButton>
