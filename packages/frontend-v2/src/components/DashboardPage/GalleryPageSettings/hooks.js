@@ -106,7 +106,24 @@ export const useGalleryPageSettings = () => {
       !isSettingTags &&
       !isUploadingPhoto &&
       !isDeletingPhotos,
-    deleteTag: id => () => executeDeleteTag({ data: { id } }),
+    deleteTag: useCallback(
+      ({ id, name }) => {
+        const message = `Are you sure you want to delete the category "${name}"? You cannot undo this action`;
+        return showModal({
+          Title: () => "Delete category",
+          Content: props => (
+            <DeleteModal
+              {...props}
+              message={message}
+              onDelete={() =>
+                executeDeleteTag({ data: { id } }).then(fetchTags)
+              }
+            />
+          )
+        });
+      },
+      [executeDeleteTag, fetchTags, showModal]
+    ),
     photos: useMemo(
       () => (isNil(size) ? photos : take(drop(photos, page * size), size)),
       [page, photos, size]
@@ -165,9 +182,10 @@ export const useGalleryPageSettings = () => {
     },
     deletePhotos: useCallback(
       ({ name }) => {
-        const message = `Are you sure you want to delete the photos you selected? You cannot undo this action`;
+        const message =
+          "Are you sure you want to delete the photos you selected? You cannot undo this action";
         return showModal({
-          Title: () => `Delete selected photos`,
+          Title: () => "Delete selected photos",
           Content: props => (
             <DeleteModal
               {...props}

@@ -10,7 +10,7 @@ export const useUser = () => {
   return {
     ...cookie,
     isLoggedIn: Boolean(cookie?.idToken && cookie?.refreshToken),
-    isChallenged: Boolean(cookie?.session),
+    isChallenged: Boolean(cookie?.challengeName),
     setUser: user => setCookie(cookieName, user, { path: "/" }),
     clearUser: () => removeCookie(cookieName, { path: "/" })
   };

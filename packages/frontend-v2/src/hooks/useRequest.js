@@ -46,7 +46,8 @@ const useRequest = (
     setIsLoaded(true);
     onError(error);
     if (errorMessage) {
-      addToast(`${errorMessage}: ${error}`, {
+      const message = error?.response?.data?.err?.message ?? error;
+      addToast(`${errorMessage}: ${message}`, {
         appearance: "error"
       });
     }

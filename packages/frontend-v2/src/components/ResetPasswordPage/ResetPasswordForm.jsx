@@ -1,10 +1,12 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Button, Form, Row, Col, Card } from "react-bootstrap";
+import { faInfo } from "@fortawesome/free-solid-svg-icons";
 
+import { IconAlert } from "components/IconAlert";
 import { Spinner } from "components/Spinner";
 
-export const LoginForm = ({
+export const ResetPasswordForm = ({
   values,
   isLoading,
   isValid,
@@ -14,20 +16,9 @@ export const LoginForm = ({
   <Form onSubmit={handleSubmit}>
     <Row>
       <Col md={{ span: 6, offset: 3 }} sm={12}>
-        <h2 className="mb-3">Login</h2>
+        <h2 className="mb-3">Reset Password</h2>
         <Card>
           <Card.Body>
-            <Form.Group controlId="email">
-              <Form.Label>Email</Form.Label>
-              <Form.Control
-                name="email"
-                type="email"
-                value={values.email}
-                disabled={isLoading}
-                onChange={handleChange}
-                required
-              />
-            </Form.Group>
             <Form.Group controlId="password">
               <Form.Label>Password</Form.Label>
               <Form.Control
@@ -39,9 +30,25 @@ export const LoginForm = ({
                 required
               />
             </Form.Group>
+            <Form.Group controlId="confirmPassword">
+              <Form.Label>Confirm Password</Form.Label>
+              <Form.Control
+                name="confirmPassword"
+                type="password"
+                value={values.confirmPassword}
+                disabled={isLoading}
+                onChange={handleChange}
+                required
+              />
+            </Form.Group>
+            <IconAlert icon={faInfo} variant="light">
+              The new password must be at least 8 characters long, and contain
+              at least one uppercase character, one lowercase character, one
+              number, and one special character
+            </IconAlert>
             <div className="d-flex justify-content-end align-items-center">
               <Button type="submit" disabled={isLoading || !isValid}>
-                Login
+                Reset password
               </Button>
               {isLoading && <Spinner className="ml-3" size="sm" />}
             </div>
@@ -52,12 +59,12 @@ export const LoginForm = ({
   </Form>
 );
 
-LoginForm.propTypes = {
+ResetPasswordForm.propTypes = {
   isLoading: PropTypes.bool.isRequired,
   isValid: PropTypes.bool.isRequired,
   values: PropTypes.shape({
-    email: PropTypes.string,
-    password: PropTypes.string
+    password: PropTypes.string,
+    confirmPassword: PropTypes.string
   }).isRequired,
   handleSubmit: PropTypes.func.isRequired,
   handleChange: PropTypes.func.isRequired

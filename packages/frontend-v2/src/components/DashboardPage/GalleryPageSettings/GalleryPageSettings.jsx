@@ -60,7 +60,7 @@ const GalleryPageSettings = () => {
           {tags.map(({ id, name }) => (
             <Badge
               key={id}
-              onClick={deleteTag(id)}
+              onClick={() => deleteTag({ id, name })}
               className="mr-1 cursor-pointer"
               variant="secondary"
             >

@@ -14,6 +14,7 @@ const Login = () => {
         onSubmit={handleLogin}
         initialValues={{ email: "", password: "" }}
         validationSchema={schema}
+        validateOnMount
       >
         {formik => <LoginForm {...formik} isLoading={isLoading} />}
       </Formik>

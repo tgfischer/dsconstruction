@@ -7,7 +7,7 @@ export const links = [
   },
   {
     displayName: "Photo Gallery",
-    url: "/gallery?page=0&size=12",
+    url: "/gallery?page=0&size=16",
     isVisible: true,
     variant: "link"
   },

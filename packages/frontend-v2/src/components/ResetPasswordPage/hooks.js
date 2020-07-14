@@ -5,21 +5,18 @@ import { usePostRequest } from "hooks/useRequest";
 import { endpoints } from "constants/api";
 import { useUser } from "hooks/useUser";
 
-export const useLogin = () => {
+export const useResetPassword = () => {
   const { addToast } = useToasts();
   const { push } = useHistory();
-  const { setUser } = useUser();
-  const [{ isLoading }, executeLogin] = usePostRequest(
+  const { user, session, setUser } = useUser();
+  const [{ isLoading }, executeResetPassword] = usePostRequest(
     {
-      url: `${endpoints.users}/login`
+      url: `${endpoints.users}/reset/temporary`
     },
     {
-      errorMessage: "Failed to login",
+      errorMessage: "Failed to reset the password",
       onSuccess: data => {
         setUser(data);
-        if (data.challengeName) {
-          return push("/login/reset");
-        }
         push("/");
         return addToast(
           `Welcome back ${data.user.firstName} ${data.user.lastName}`,
@@ -33,6 +30,7 @@ export const useLogin = () => {
 
   return {
     isLoading,
-    handleLogin: values => executeLogin({ data: values })
+    handleResetPassword: ({ password }) =>
+      executeResetPassword({ data: { ...user, password, session } })
   };
 };

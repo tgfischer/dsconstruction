@@ -8,6 +8,7 @@ import { HomePage } from "components/HomePage";
 import { GalleryPage } from "components/GalleryPage";
 import { ContactPage } from "components/ContactPage";
 import { LoginPage } from "components/LoginPage";
+import { ResetPasswordPage } from "components/ResetPasswordPage";
 import { DashboardPage } from "components/DashboardPage";
 import { ModalProvider } from "components/Modal";
 
@@ -28,6 +29,9 @@ export const App = () => (
             </Route>
             <LoggedOutRoute path="/login" exact>
               <LoginPage />
+            </LoggedOutRoute>
+            <LoggedOutRoute path="/login/reset" exact>
+              <ResetPasswordPage />
             </LoggedOutRoute>
             <LoggedInRoute path="/dashboard">
               <DashboardPage />
