@@ -6,6 +6,7 @@ export const schema = yup
     firstName: yup.string().required(),
     lastName: yup.string().required(),
     email: yup.string().email().required(),
-    message: yup.string().required()
+    message: yup.string().required(),
+    "g-recaptcha-response": yup.string().required()
   })
   .required();

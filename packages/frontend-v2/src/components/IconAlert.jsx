@@ -6,9 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 export const IconAlert = ({ icon, children, ...props }) => (
   <Alert as={Row} {...props}>
     <div className="d-flex flex-row">
-      <div className="d-flex align-items-center justify-content-center ml-1 mr-4">
-        <FontAwesomeIcon className="h4 mb-0" icon={icon} />
-      </div>
+      <FontAwesomeIcon className="h4 mb-0 ml-1 mr-4" icon={icon} />
       <div>{children}</div>
     </div>
   </Alert>

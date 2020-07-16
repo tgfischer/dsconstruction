@@ -1,9 +1,12 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo, useCallback } from "react";
 import axios from "axios";
 import { makeUseAxios } from "axios-hooks";
-import { identity } from "lodash";
-import qs from "qs";
+import { identity, merge } from "lodash";
 import { useToasts } from "react-toast-notifications";
+import { useHistory } from "react-router-dom";
+import qs from "qs";
+
+import { useUser } from "hooks/useUser";
 
 const useAxios = makeUseAxios({
   axios: axios.create({
@@ -11,7 +14,16 @@ const useAxios = makeUseAxios({
   })
 });
 
-const defaultOptions = { onSuccess: identity, onError: identity };
+const defaultOptions = {
+  onSuccess: identity,
+  onError: identity,
+  useAuthorization: false
+};
+
+const getRequest = (config = {}, { useAuthorization, token }) =>
+  useAuthorization
+    ? merge(config, { headers: { Authorization: token } })
+    : config;
 
 const useRequest = (
   config,
@@ -19,14 +31,21 @@ const useRequest = (
     onSuccess = identity,
     onError = identity,
     successMessage,
-    errorMessage
+    errorMessage,
+    useAuthorization = false
   } = defaultOptions
 ) => {
+  const { idToken: token, clearUser } = useUser();
   const [isLoaded, setIsLoaded] = useState(false);
-  const [{ data, loading, error }, execute] = useAxios(config, {
+  const request = useMemo(
+    () => getRequest(config, { useAuthorization, token }),
+    [config, token, useAuthorization]
+  );
+  const [{ data, loading, error }, execute] = useAxios(request, {
     manual: true
   });
   const { addToast } = useToasts();
+  const { push } = useHistory();
   useEffect(() => {
     if (!data) {
       return;
@@ -45,16 +64,25 @@ const useRequest = (
     }
     setIsLoaded(true);
     onError(error);
-    if (errorMessage) {
-      const message = error?.response?.data?.err?.message ?? error;
+    if (error.response?.status === 401) {
+      clearUser();
+      push("/login");
+      addToast("Your credentials have expired. Please log in again", {
+        appearance: "error"
+      });
+    } else if (errorMessage) {
+      const message = error.response?.data?.err?.message ?? error;
       addToast(`${errorMessage}: ${message}`, {
         appearance: "error"
       });
     }
-  }, [addToast, error, onError, errorMessage]);
+  }, [addToast, error, onError, errorMessage, clearUser, push]);
   return [
     { data, error, isLoading: loading, isLoaded: isLoaded && !loading },
-    execute
+    useCallback(
+      config => execute(getRequest(config, { useAuthorization, token })),
+      [execute, token, useAuthorization]
+    )
   ];
 };
 

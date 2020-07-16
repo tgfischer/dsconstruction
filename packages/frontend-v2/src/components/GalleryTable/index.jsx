@@ -1,47 +1,51 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Row, Col, Alert, Card } from "react-bootstrap";
-import Carousel, { Modal, ModalGateway } from "react-images";
+import Lightbox from "react-image-lightbox";
 
 import { useGalleryTable } from "./hooks";
-import { View } from "./View";
+
+import "react-image-lightbox/style.css";
 
 export const GalleryTable = props => {
   const {
-    url,
+    isOpen,
     currentIndex,
-    views,
-    paginatedViews,
+    photos,
+    paginatedPhotos,
     getGalleryPreviewProps,
-    handleCloseModal
+    handleMovePrev,
+    handleMoveNext,
+    handleClose
   } = useGalleryTable(props);
   return (
     <>
       <Row>
-        {paginatedViews.length === 0 && (
+        {paginatedPhotos.length === 0 && (
           <Col xs={12}>
             <Alert variant="info">
               There doesn't appear to be any photos in this category
             </Alert>
           </Col>
         )}
-        {paginatedViews.map(({ id, source }, i) => (
+        {paginatedPhotos.map(({ id, ...photo }, i) => (
           <Col key={id} className="mb-4" lg={3} md={4} sm={6} xs={12}>
-            <Card {...getGalleryPreviewProps(source, i)} />
+            <Card {...getGalleryPreviewProps(photo, i)} />
           </Col>
         ))}
       </Row>
-      <ModalGateway>
-        {url && (
-          <Modal onClose={handleCloseModal}>
-            <Carousel
-              views={views}
-              currentIndex={currentIndex}
-              components={{ View }}
-            />
-          </Modal>
-        )}
-      </ModalGateway>
+      {isOpen && (
+        <Lightbox
+          mainSrc={photos[currentIndex].original}
+          nextSrc={photos[(currentIndex + 1) % photos.length].original}
+          prevSrc={
+            photos[(currentIndex + photos.length - 1) % photos.length].original
+          }
+          onCloseRequest={handleClose}
+          onMovePrevRequest={handleMovePrev}
+          onMoveNextRequest={handleMoveNext}
+        />
+      )}
     </>
   );
 };

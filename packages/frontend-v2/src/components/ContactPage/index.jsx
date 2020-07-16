@@ -1,15 +1,17 @@
 import React from "react";
 import { Row, Col } from "react-bootstrap";
+import { Formik } from "formik";
 
 import { Page } from "components/Page";
 import { ContactForm } from "./ContactForm";
 import { Information } from "./Information";
 import { useContactPage } from "./hooks";
+import { schema } from "./constants";
 
 export * from "./hooks";
 
 export const ContactPage = () => {
-  const { contact, isLoaded } = useContactPage();
+  const { contact, isLoaded, isSubmitting, handleSendEmail } = useContactPage();
   return (
     <Page title="Contact" isLoading={!isLoaded}>
       <p className="lead">
@@ -17,7 +19,19 @@ export const ContactPage = () => {
       </p>
       <Row>
         <Col md={9} sm={12}>
-          <ContactForm />
+          <Formik
+            onSubmit={handleSendEmail}
+            validationSchema={schema}
+            initialValues={{
+              firstName: "",
+              lastName: "",
+              email: "",
+              message: ""
+            }}
+            validateOnMount
+          >
+            {formik => <ContactForm {...formik} isSubmitting={isSubmitting} />}
+          </Formik>
         </Col>
         <Col md={3} sm={12}>
           <Information {...contact} />

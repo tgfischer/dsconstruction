@@ -10,7 +10,7 @@ custom:
     port: 3001
   webpack:
     includeModules: true
-    packager: "yarn"
+    packager: "npm"
     individually: true
   s3:
     photosBucketName: ${cf:dsconstruction-photos-${self:provider.stage}.PublicBucketName}
@@ -118,23 +118,23 @@ functions:
             type: COGNITO_USER_POOLS
             authorizerId:
               Ref: ApiGatewayAuthorizer
+  getSignedUrl:
+    handler: src/index.handler
+    events:
+      - http:
+          path: /api/gallery/url
+          method: GET
+          cors: true
+          authorizer:
+            type: COGNITO_USER_POOLS
+            authorizerId:
+              Ref: ApiGatewayAuthorizer
   addGalleryPhoto:
     handler: src/index.handler
     events:
       - http:
           path: /api/gallery
           method: PUT
-          cors: true
-          authorizer:
-            type: COGNITO_USER_POOLS
-            authorizerId:
-              Ref: ApiGatewayAuthorizer
-  getSignedUrl:
-    handler: src/index.handler
-    events:
-      - http:
-          path: /api/gallery/url
-          method: POST
           cors: true
           authorizer:
             type: COGNITO_USER_POOLS

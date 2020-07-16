@@ -26,8 +26,20 @@ export const get = async ({ size, page, tag }) => {
   };
 };
 
-export const add = async () => {
+export const getSignedUrl = async () => {
   const id = encodeS3URI(uuid());
+  return {
+    id,
+    url: getS3Bucket().getSignedUrl("putObject", {
+      Bucket: process.env.DSC_BUCKET_NAME,
+      Key: "gallery/" + id,
+      Expires: 60 * 5,
+      ACL: "public-read"
+    })
+  };
+};
+
+export const add = async ({ id }) => {
   const key = "gallery/" + id;
   await Gallery.create({
     id,
@@ -35,12 +47,6 @@ export const add = async () => {
     thumbnail: "/thumbnails/" + key,
     tags: [],
     createdAt: new Date()
-  });
-  return getS3Bucket().getSignedUrl("putObject", {
-    Bucket: process.env.DSC_BUCKET_NAME,
-    Key: key,
-    Expires: 60 * 5,
-    ACL: "public-read"
   });
 };
 

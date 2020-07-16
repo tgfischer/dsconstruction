@@ -5,6 +5,7 @@ import {
   faPhoneAlt,
   faAddressCard
 } from "@fortawesome/free-solid-svg-icons";
+import PhoneNumber from "awesome-phonenumber";
 
 import { InformationSection } from "./InformationSection";
 import { InformationItem } from "./InformationItem";
@@ -15,7 +16,9 @@ export const Information = ({ phoneNumbers, email, address }) => (
       {phoneNumbers.map(({ name, number }) => (
         <InformationItem key={name} icon={faPhoneAlt}>
           <p className="m-0">{name}</p>
-          <p className="m-0">{number}</p>
+          <p className="m-0">
+            {new PhoneNumber(number.toString(), "CA").getNumber("national")}
+          </p>
         </InformationItem>
       ))}
     </InformationSection>
@@ -42,7 +45,7 @@ Information.propTypes = {
   phoneNumbers: PropTypes.arrayOf(
     PropTypes.shape({
       name: PropTypes.string.isRequired,
-      number: PropTypes.string.isRequired
+      number: PropTypes.number.isRequired
     }).isRequired
   ),
   email: PropTypes.string,

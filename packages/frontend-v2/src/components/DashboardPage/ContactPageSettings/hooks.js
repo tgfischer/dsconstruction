@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { Button } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
+import PhoneNumber from "awesome-phonenumber";
 
 import { usePostRequest } from "hooks/useRequest";
 import { useContactPage } from "components/ContactPage";
@@ -20,7 +21,8 @@ export const useContactPageSettings = () => {
     },
     {
       successMessage: "Saved the settings successfully",
-      errorMessage: "Failed to save the settings"
+      errorMessage: "Failed to save the settings",
+      useAuthorization: true
     }
   );
   return {
@@ -58,7 +60,8 @@ export const usePhoneNumbersTable = ({ phoneNumbers, fetchContact }) => {
     {
       successMessage: "Saved the phone numbers successfully",
       errorMessage: "Failed to save the phone numbers",
-      onSuccess: fetchContact
+      onSuccess: fetchContact,
+      useAuthorization: true
     }
   );
   const handleDelete = number => () =>
@@ -77,7 +80,11 @@ export const usePhoneNumbersTable = ({ phoneNumbers, fetchContact }) => {
       },
       number: {
         Header: () => <span>Phone number</span>,
-        Cell: ({ row }) => <span>{row.number}</span>
+        Cell: ({ row }) => (
+          <span>
+            {new PhoneNumber(row.number.toString(), "CA").getNumber("national")}
+          </span>
+        )
       },
       remove: {
         Header: () => null,

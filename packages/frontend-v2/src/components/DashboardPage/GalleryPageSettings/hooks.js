@@ -6,6 +6,7 @@ import { isNil, take, drop, filter } from "lodash";
 import { useDropzone } from "react-dropzone";
 import { useToasts } from "react-toast-notifications";
 import qs from "qs";
+import axios from "axios";
 
 import { useModal, DeleteModal } from "components/Modal";
 import { useGalleryPage } from "components/GalleryPage";
@@ -13,6 +14,7 @@ import { useQuery } from "hooks/useQuery";
 import {
   usePostRequest,
   useDeleteRequest,
+  useGetRequest,
   usePutRequest
 } from "hooks/useRequest";
 import { endpoints } from "constants/api";
@@ -39,9 +41,22 @@ export const useGalleryPageSettings = () => {
     () => fetchGallery({ params: { page: 0, tag } }),
     [fetchGallery, tag]
   );
-  const [{ isLoading: isUploadingPhoto }, executeUploadPhoto] = usePutRequest({
-    url: `${endpoints.backend}/gallery`
-  });
+  const [, executeGetSignedUrl] = useGetRequest(
+    {
+      url: `${endpoints.backend}/gallery/url`
+    },
+    {
+      useAuthorization: true
+    }
+  );
+  const [, executeUploadPhoto] = usePutRequest(
+    {
+      url: `${endpoints.backend}/gallery`
+    },
+    {
+      useAuthorization: true
+    }
+  );
   const [{ isLoading: isAddingTag }, executeAddTag] = usePostRequest(
     {
       url: `${endpoints.backend}/gallery/tags`
@@ -49,7 +64,8 @@ export const useGalleryPageSettings = () => {
     {
       successMessage: "Added the category successfully",
       errorMessage: "Failed to add the category",
-      onSuccess: fetchTags
+      onSuccess: fetchTags,
+      useAuthorization: true
     }
   );
   const [{ isLoading: isDeletingTag }, executeDeleteTag] = useDeleteRequest(
@@ -59,7 +75,8 @@ export const useGalleryPageSettings = () => {
     {
       successMessage: "Deleted the category successfully",
       errorMessage: "Failed to delete the category",
-      onSuccess: fetchTags
+      onSuccess: fetchTags,
+      useAuthorization: true
     }
   );
   const [{ isLoading: isSettingTags }, executeSetTags] = usePostRequest(
@@ -69,7 +86,8 @@ export const useGalleryPageSettings = () => {
     {
       successMessage: "Categorized the photos successfully",
       errorMessage: "Failed to categorize the photos",
-      onSuccess: handleFetchGallery
+      onSuccess: handleFetchGallery,
+      useAuthorization: true
     }
   );
   const [
@@ -82,7 +100,8 @@ export const useGalleryPageSettings = () => {
     {
       successMessage: "Deleted the photos successfully",
       errorMessage: "Failed to delete the photos",
-      onSuccess: fetchTags
+      onSuccess: fetchTags,
+      useAuthorization: true
     }
   );
   const handleSetTags = useCallback(
@@ -104,7 +123,6 @@ export const useGalleryPageSettings = () => {
       !isAddingTag &&
       !isDeletingTag &&
       !isSettingTags &&
-      !isUploadingPhoto &&
       !isDeletingPhotos,
     deleteTag: useCallback(
       ({ id, name }) => {
@@ -150,7 +168,8 @@ export const useGalleryPageSettings = () => {
         Content: ({ onClose, ...props }) => (
           <UploadPhotosForm
             {...props}
-            onUpload={executeUploadPhoto}
+            onGetSignedUrl={executeGetSignedUrl}
+            onUploadPhoto={executeUploadPhoto}
             onClose={onClose}
             onFinished={() => (handleFetchGallery(), onClose())}
             onError={photo => err =>
@@ -223,7 +242,8 @@ export const useGalleryTable = ({ selectedPhotos, setSelectedPhotos }) => {
 };
 
 export const useUploadPhotosForm = ({
-  onUpload,
+  onGetSignedUrl: executeGetSignedUrl,
+  onUploadPhoto: executeUploadPhoto,
   onFinished,
   onError,
   ...props
@@ -235,6 +255,22 @@ export const useUploadPhotosForm = ({
     accept: "image/*",
     onDropAccepted: files => setPhotos(photos => [...photos, ...files])
   });
+  const handleUploadPhoto = useCallback(
+    async data => {
+      try {
+        const {
+          data: { id, url }
+        } = await executeGetSignedUrl();
+        await axios.put(url, data, {
+          headers: { "Content-Type": data.type }
+        });
+        await executeUploadPhoto({ data: { id } });
+      } catch (err) {
+        onError(err);
+      }
+    },
+    [executeGetSignedUrl, executeUploadPhoto, onError]
+  );
   return {
     ...props,
     ...dropzone,
@@ -242,14 +278,7 @@ export const useUploadPhotosForm = ({
     isSubmitting,
     onSubmit: () => (
       setIsSubmitting(true),
-      Promise.all(
-        photos.map(data =>
-          onUpload({
-            data,
-            headers: { "Content-Type": data.type }
-          }).catch(onError(data))
-        )
-      )
+      Promise.all(photos.map(handleUploadPhoto))
         .then(() => (setIsSubmitting(false), onFinished()))
         .catch(() => (setIsSubmitting(false), onFinished()))
     )

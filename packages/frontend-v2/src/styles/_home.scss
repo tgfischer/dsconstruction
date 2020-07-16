@@ -9,5 +9,11 @@
 }
 
 .ds-section {
-  margin: 5em auto;
+  margin: 0 auto;
+  padding: 5em 0;
+
+  &.dark {
+    background-color: $gray-900;
+    color: white;
+  }
 }

@@ -21,7 +21,8 @@ export const useServicesSettings = () => {
     {
       successMessage: "Added the service successfully",
       errorMessage: "Failed to add the service",
-      onSuccess: fetchServices
+      onSuccess: fetchServices,
+      useAuthorization: true
     }
   );
   const [{ isLoading: isDeleting }, handleDelete] = useDeleteRequest(
@@ -31,7 +32,8 @@ export const useServicesSettings = () => {
     {
       successMessage: "Deleted the service successfully",
       errorMessage: "Failed to delete the service",
-      onSuccess: fetchServices
+      onSuccess: fetchServices,
+      useAuthorization: true
     }
   );
   return {

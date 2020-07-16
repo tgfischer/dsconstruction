@@ -5,8 +5,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export const IconButton = ({ icon, children, ...props }) => (
   <Button {...props}>
-    <FontAwesomeIcon className="mr-3" icon={icon} />
     {children}
+    <FontAwesomeIcon className="ml-3" icon={icon} />
   </Button>
 );
 

@@ -21,5 +21,6 @@
       "directory": "./packages/users",
       "changeProcessCWD": true
     }
-  ]
+  ],
+  "python.pythonPath": "C:\\Users\\tomfischer\\AppData\\Local\\Programs\\Python\\Python38-32\\python.exe"
 }

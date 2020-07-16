@@ -10,7 +10,7 @@ custom:
     port: 3002
   webpack:
     includeModules: true
-    packager: "yarn"
+    packager: "npm"
     individually: true
   cognito:
     userPool:

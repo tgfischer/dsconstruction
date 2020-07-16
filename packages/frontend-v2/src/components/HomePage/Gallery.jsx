@@ -15,7 +15,7 @@ export const Gallery = () => {
       title="Photo Gallery"
       action={() => (
         <Button as={Link} to="/gallery?page=0&size=16" variant="link">
-          View Photos <FontAwesomeIcon className="ml-1" icon={faArrowRight} />
+          View More <FontAwesomeIcon className="ml-1" icon={faArrowRight} />
         </Button>
       )}
       isLoading={!isLoaded}

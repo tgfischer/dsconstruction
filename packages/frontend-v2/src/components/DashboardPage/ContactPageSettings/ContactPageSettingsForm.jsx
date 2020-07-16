@@ -4,7 +4,7 @@ import { Formik } from "formik";
 import { Form, Card } from "react-bootstrap";
 import { faSave } from "@fortawesome/free-solid-svg-icons";
 
-import { IconButton } from "components/IconButton";
+import { FormSubmitButton } from "components/FormSubmitButton";
 
 export const ContactPageSettingsForm = ({
   isSubmitting,
@@ -78,9 +78,9 @@ export const ContactPageSettingsForm = ({
             </Form.Group>
           </Card.Body>
         </Card>
-        <IconButton type="submit" icon={faSave} disabled={isSubmitting}>
+        <FormSubmitButton icon={faSave} isSubmitting={isSubmitting}>
           Save changes
-        </IconButton>
+        </FormSubmitButton>
       </Form>
     )}
   </Formik>

@@ -10,7 +10,8 @@ export const useHomePageSettings = () => {
     },
     {
       successMessage: "Saved the settings successfully",
-      errorMessage: "Failed to save the settings"
+      errorMessage: "Failed to save the settings",
+      useAuthorization: true
     }
   );
   return {

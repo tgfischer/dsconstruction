@@ -7,35 +7,59 @@ import { Spinner } from "components/Spinner";
 
 export const Section = ({
   title,
+  subtitle,
   action: Action,
   isLoading,
+  isCentered,
+  variant,
   className,
   children,
   ...props
 }) => (
-  <Container className={classnames("ds-section", className)} {...props}>
-    {title && (
-      <div className="d-flex justify-content-between align-items-center mb-3">
-        <div className="d-flex flex-row align-items-center">
-          <h2 className="mb-0">{title}</h2>
-          {isLoading && <Spinner className="ml-3" />}
+  <div className={classnames("ds-section", variant)} {...props}>
+    <Container className={className}>
+      {title && (
+        <div
+          className={classnames("d-flex align-items-center mb-3", {
+            "justify-content-between": !isCentered,
+            "justify-content-center": isCentered
+          })}
+        >
+          <div className="d-flex flex-row align-items-center">
+            <span className="h2 mb-0">{title}</span>
+            {isLoading && <Spinner className="ml-3" />}
+          </div>
+          <Action />
         </div>
-        <Action />
-      </div>
-    )}
-    {!isLoading && <>{children}</>}
-  </Container>
+      )}
+      {subtitle && (
+        <div
+          className={classnames("d-flex align-items-center mb-5", {
+            "justify-content-center": isCentered
+          })}
+        >
+          <p className="lead">{subtitle}</p>
+        </div>
+      )}
+      {!isLoading && <>{children}</>}
+    </Container>
+  </div>
 );
 
 Section.propTypes = {
   title: PropTypes.string,
+  subtitle: PropTypes.string,
   action: PropTypes.func,
   isLoading: PropTypes.bool,
+  isCentered: PropTypes.bool,
   className: PropTypes.string,
+  variant: PropTypes.oneOf(["light", "dark"]),
   children: PropTypes.node.isRequired
 };
 
 Section.defaultProps = {
   action: () => null,
-  isLoading: false
+  variant: "light",
+  isLoading: false,
+  isCentered: false
 };

@@ -7,7 +7,7 @@ shell.exec("npx lerna bootstrap");
 
 ["frontend", "backend", "users"].forEach(service => {
   let result = shell.exec(
-    `npx lerna --scope=@dsconstruction/${service} exec "yarn destroy --stage ${stage}"`
+    `npx lerna --scope=@dsconstruction/${service} exec "npm run destroy -- --stage ${stage}"`
   );
   if (result.code !== 0) {
     throw 1;

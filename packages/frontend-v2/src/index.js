@@ -5,6 +5,7 @@ import { App } from "components/App";
 import * as serviceWorker from "./serviceWorker";
 
 import "styles/app.scss";
+import "./seo";
 
 ReactDOM.render(
   <React.StrictMode>

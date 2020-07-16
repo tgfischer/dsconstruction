@@ -23,7 +23,8 @@ export const useUsersSettings = () => {
       url: `${endpoints.users}/users`
     },
     {
-      errorMessage: "Failed to fetch the users"
+      errorMessage: "Failed to fetch the users",
+      useAuthorization: true
     }
   );
   const [, handleAdd] = usePostRequest(
@@ -33,7 +34,8 @@ export const useUsersSettings = () => {
     {
       successMessage: "Added the user successfully",
       errorMessage: "Failed to add the user",
-      onSuccess: fetchUsers
+      onSuccess: fetchUsers,
+      useAuthorization: true
     }
   );
   const [{ isLoading: isDeleting }, deleteUser] = useDeleteRequest(
@@ -43,7 +45,8 @@ export const useUsersSettings = () => {
     {
       successMessage: "Deleted the user successfully",
       errorMessage: "Failed to delete the user",
-      onSuccess: fetchUsers
+      onSuccess: fetchUsers,
+      useAuthorization: true
     }
   );
   const handleDelete = useCallback(

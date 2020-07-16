@@ -10,14 +10,8 @@ export const get = Joi.object()
   })
   .required();
 
-export const add = Joi.array()
-  .items(
-    Joi.object()
-      .keys({
-        original: Joi.string().required()
-      })
-      .required()
-  )
+export const add = Joi.object()
+  .keys({ id: Joi.string().required() })
   .required();
 
 export const destroy = Joi.array()
