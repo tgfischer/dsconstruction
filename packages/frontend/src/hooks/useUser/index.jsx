@@ -1,3 +1,4 @@
+import { useCallback } from "react";
 import { useCookies } from "react-cookie";
 
 import { cookieName } from "./constants";
@@ -11,7 +12,11 @@ export const useUser = () => {
     ...cookie,
     isLoggedIn: Boolean(cookie?.idToken && cookie?.refreshToken),
     isChallenged: Boolean(cookie?.challengeName),
-    setUser: user => setCookie(cookieName, user, { path: "/" }),
-    clearUser: () => removeCookie(cookieName, { path: "/" })
+    setUser: useCallback(user => setCookie(cookieName, user, { path: "/" }), [
+      setCookie
+    ]),
+    clearUser: useCallback(() => removeCookie(cookieName, { path: "/" }), [
+      removeCookie
+    ])
   };
 };

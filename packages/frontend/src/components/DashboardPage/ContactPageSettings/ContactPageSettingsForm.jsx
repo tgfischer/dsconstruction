@@ -15,6 +15,7 @@ export const ContactPageSettingsForm = ({
     {({ values, handleSubmit, handleChange }) => (
       <Form className="mb-4" onSubmit={handleSubmit}>
         <Card className="mb-4">
+          <Card.Header>Company address</Card.Header>
           <Card.Body>
             <Form.Group controlId="street">
               <Form.Label>Street</Form.Label>
@@ -59,6 +60,7 @@ export const ContactPageSettingsForm = ({
           </Card.Body>
         </Card>
         <Card className="mb-4">
+          <Card.Header>Company email</Card.Header>
           <Card.Body>
             <Form.Group controlId="email">
               <Form.Label>Email</Form.Label>

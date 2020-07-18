@@ -2,6 +2,7 @@ import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { CookiesProvider } from "react-cookie";
 import { ToastProvider } from "react-toast-notifications";
+import SimpleReactLightbox from "simple-react-lightbox";
 
 import { LoggedInRoute, LoggedOutRoute } from "components/Routes";
 import { HomePage } from "components/HomePage";
@@ -18,34 +19,36 @@ export const App = () => (
   <ModalProvider>
     <CookiesProvider>
       <ToastProvider placement="bottom-left" autoDismiss>
-        <Router>
-          <Switch>
-            <Route path="/" exact>
-              <HomePage />
-            </Route>
-            <Route path="/gallery" exact>
-              <GalleryPage />
-            </Route>
-            <Route path="/contact" exact>
-              <ContactPage />
-            </Route>
-            <Route path="/contact/success" exact>
-              <EmailLandingPage />
-            </Route>
-            <LoggedOutRoute path="/login" exact>
-              <LoginPage />
-            </LoggedOutRoute>
-            <LoggedOutRoute path="/login/reset" exact>
-              <ResetPasswordPage />
-            </LoggedOutRoute>
-            <LoggedInRoute path="/dashboard">
-              <DashboardPage />
-            </LoggedInRoute>
-            <Route path="*">
-              <ErrorPage />
-            </Route>
-          </Switch>
-        </Router>
+        <SimpleReactLightbox>
+          <Router>
+            <Switch>
+              <Route path="/" exact>
+                <HomePage />
+              </Route>
+              <Route path="/gallery" exact>
+                <GalleryPage />
+              </Route>
+              <Route path="/contact" exact>
+                <ContactPage />
+              </Route>
+              <Route path="/contact/success" exact>
+                <EmailLandingPage />
+              </Route>
+              <LoggedOutRoute path="/login" exact>
+                <LoginPage />
+              </LoggedOutRoute>
+              <LoggedOutRoute path="/login/reset" exact>
+                <ResetPasswordPage />
+              </LoggedOutRoute>
+              <LoggedInRoute path="/dashboard">
+                <DashboardPage />
+              </LoggedInRoute>
+              <Route path="*">
+                <ErrorPage />
+              </Route>
+            </Switch>
+          </Router>
+        </SimpleReactLightbox>
       </ToastProvider>
     </CookiesProvider>
   </ModalProvider>

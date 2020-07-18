@@ -18,6 +18,6 @@ export const Masthead = ({ header, subHeader, ...props }) => {
 };
 
 Masthead.propTypes = {
-  header: PropTypes.string,
-  subHeader: PropTypes.string
+  header: PropTypes.string.isRequired,
+  subHeader: PropTypes.string.isRequired
 };

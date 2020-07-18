@@ -6,6 +6,12 @@
   h1 {
     font-size: 4rem;
   }
+
+  @media screen and (max-width: 640px) {
+    h1 {
+      font-size: 2rem;
+    }
+  }
 }
 
 .ds-section {

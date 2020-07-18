@@ -9,6 +9,12 @@ export const update = Joi.object()
         subHeader: Joi.string().required()
       })
       .required(),
-    about: Joi.string().required()
+    about: Joi.string().required(),
+    services: Joi.object()
+      .keys({
+        header: Joi.string().required(),
+        subHeader: Joi.string().required()
+      })
+      .required()
   })
   .required();

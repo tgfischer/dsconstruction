@@ -15,6 +15,7 @@ export const HomePageSettingsForm = ({
     {({ values, handleSubmit, handleChange }) => (
       <Form onSubmit={handleSubmit}>
         <Card className="mb-4">
+          <Card.Header>Masthead</Card.Header>
           <Card.Body>
             <Form.Group controlId="header">
               <Form.Label>Header</Form.Label>
@@ -39,6 +40,7 @@ export const HomePageSettingsForm = ({
           </Card.Body>
         </Card>
         <Card className="mb-4">
+          <Card.Header>About section</Card.Header>
           <Card.Body>
             <Form.Group controlId="about">
               <Form.Label>About</Form.Label>
@@ -49,6 +51,31 @@ export const HomePageSettingsForm = ({
                 onChange={handleChange}
                 disabled={isSubmitting}
                 rows={6}
+                required
+              />
+            </Form.Group>
+          </Card.Body>
+        </Card>
+        <Card className="mb-4">
+          <Card.Header>Services section</Card.Header>
+          <Card.Body>
+            <Form.Group controlId="servicesHeader">
+              <Form.Label>Header</Form.Label>
+              <Form.Control
+                name="servicesHeader"
+                value={values.servicesHeader}
+                onChange={handleChange}
+                disabled={isSubmitting}
+                required
+              />
+            </Form.Group>
+            <Form.Group controlId="servicesSubHeader">
+              <Form.Label>Subheader</Form.Label>
+              <Form.Control
+                name="servicesSubHeader"
+                value={values.servicesSubHeader}
+                onChange={handleChange}
+                disabled={isSubmitting}
                 required
               />
             </Form.Group>

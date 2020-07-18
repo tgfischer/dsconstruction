@@ -1,23 +1,15 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Row, Col, Alert, Card } from "react-bootstrap";
-import Lightbox from "react-image-lightbox";
+import { SRLWrapper } from "simple-react-lightbox";
 
 import { useGalleryTable } from "./hooks";
-
-import "react-image-lightbox/style.css";
+import { options } from "./constants";
 
 export const GalleryTable = props => {
-  const {
-    isOpen,
-    currentIndex,
-    photos,
-    paginatedPhotos,
-    getGalleryPreviewProps,
-    handleMovePrev,
-    handleMoveNext,
-    handleClose
-  } = useGalleryTable(props);
+  const { photos, paginatedPhotos, getGalleryPreviewProps } = useGalleryTable(
+    props
+  );
   return (
     <>
       <Row>
@@ -34,18 +26,7 @@ export const GalleryTable = props => {
           </Col>
         ))}
       </Row>
-      {isOpen && (
-        <Lightbox
-          mainSrc={photos[currentIndex].original}
-          nextSrc={photos[(currentIndex + 1) % photos.length].original}
-          prevSrc={
-            photos[(currentIndex + photos.length - 1) % photos.length].original
-          }
-          onCloseRequest={handleClose}
-          onMovePrevRequest={handleMovePrev}
-          onMoveNextRequest={handleMoveNext}
-        />
-      )}
+      <SRLWrapper options={options} images={photos} />
     </>
   );
 };
@@ -55,10 +36,5 @@ GalleryTable.propTypes = {
     PropTypes.shape({
       id: PropTypes.string.isRequired
     }).isRequired
-  ).isRequired,
-  currentPage: PropTypes.number
-};
-
-GalleryTable.defaultProps = {
-  currentPage: 0
+  ).isRequired
 };

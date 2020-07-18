@@ -3,7 +3,7 @@ import { useHomePage } from "components/HomePage";
 import { endpoints } from "constants/api";
 
 export const useHomePageSettings = () => {
-  const { masthead, about, isLoaded } = useHomePage();
+  const { masthead, about, services, isLoaded } = useHomePage();
   const [{ isLoading: isSubmitting }, handleSubmit] = usePostRequest(
     {
       url: `${endpoints.backend}/home`
@@ -20,9 +20,17 @@ export const useHomePageSettings = () => {
     initialValues: {
       header: masthead?.header,
       subHeader: masthead?.subHeader,
-      about
+      about,
+      servicesHeader: services?.header,
+      servicesSubHeader: services?.subHeader
     },
-    onSubmit: ({ header, subHeader, about }) => {
+    onSubmit: ({
+      header,
+      subHeader,
+      about,
+      servicesHeader,
+      servicesSubHeader
+    }) => {
       handleSubmit({
         data: {
           masthead: {
@@ -30,7 +38,11 @@ export const useHomePageSettings = () => {
             header,
             subHeader
           },
-          about
+          about,
+          services: {
+            header: servicesHeader,
+            subHeader: servicesSubHeader
+          }
         }
       });
     }

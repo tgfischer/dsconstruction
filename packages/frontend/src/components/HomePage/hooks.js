@@ -11,7 +11,8 @@ export const useHomePage = () => {
   return {
     ...request,
     masthead: data?.masthead,
-    about: data?.about ?? ""
+    about: data?.about ?? "",
+    services: data?.services ?? {}
   };
 };
 

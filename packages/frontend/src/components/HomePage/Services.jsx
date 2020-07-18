@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { Row, Col } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheckCircle } from "@fortawesome/free-solid-svg-icons";
@@ -6,12 +7,12 @@ import { faCheckCircle } from "@fortawesome/free-solid-svg-icons";
 import { Section } from "./Section";
 import { useServices } from "./hooks";
 
-export const Services = () => {
+export const Services = ({ header, subHeader }) => {
   const { services, isLoaded } = useServices();
   return (
     <Section
-      title="Services"
-      subtitle="D's Construction provides a wide variety of professional services. Contact our team today to get a quote!"
+      title={header}
+      subtitle={subHeader}
       variant="dark"
       isLoading={!isLoaded}
       isCentered
@@ -36,4 +37,9 @@ export const Services = () => {
       </Row>
     </Section>
   );
+};
+
+Services.propTypes = {
+  header: PropTypes.string.isRequired,
+  subHeader: PropTypes.string.isRequired
 };

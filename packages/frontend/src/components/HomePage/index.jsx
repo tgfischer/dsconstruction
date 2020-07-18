@@ -10,14 +10,14 @@ import { useHomePage } from "./hooks";
 export * from "./hooks";
 
 export const HomePage = () => {
-  const { masthead, about, isLoading } = useHomePage();
+  const { masthead, about, services, isLoaded } = useHomePage();
   return (
-    <Layout isLoading={isLoading}>
-      {!isLoading && (
+    <Layout isLoading={!isLoaded}>
+      {isLoaded && (
         <>
           <Masthead {...masthead} />
           <About>{about}</About>
-          <Services />
+          <Services {...services} />
           <Gallery />
         </>
       )}
