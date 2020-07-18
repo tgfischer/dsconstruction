@@ -1,11 +1,18 @@
 import React from "react";
 import ReactDOM from "react-dom";
 
-import App from "./v1/components/App";
+import { App } from "components/App";
 import * as serviceWorker from "./serviceWorker";
-import "./seoPolyfill";
 
-ReactDOM.render(<App />, document.getElementById("root"));
+import "styles/app.scss";
+import "./seo";
+
+ReactDOM.render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>,
+  document.getElementById("root")
+);
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.

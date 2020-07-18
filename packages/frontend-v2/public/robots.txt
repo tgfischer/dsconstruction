@@ -1,7 +1,0 @@
-User-agent: *
-Allow: /
-Disallow: /login
-Disallow: /login/*
-Disallow: /dashboard/*
-
-Sitemap: https://ds.construction/sitemap.xml

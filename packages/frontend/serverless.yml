@@ -5,6 +5,8 @@ plugins:
   - serverless-build-client
 
 custom:
+  buildClient:
+    packager: npm
   client:
     bucketName: dsconstruction-frontend-${self:provider.stage}
     distributionFolder: build
@@ -19,7 +21,6 @@ provider:
   environment:
     REACT_APP_BACKEND_ENDPOINT: ${cf:dsconstruction-backend-${self:provider.stage}.ServiceEndpoint}
     REACT_APP_USERS_ENDPOINT: ${cf:dsconstruction-users-${self:provider.stage}.ServiceEndpoint}
-    REACT_APP_PHOTO_BUCKET_NAME: ${cf:dsconstruction-photos-${self:provider.stage}.PublicBucketName}
     REACT_APP_RECAPTCHA_KEY: ${cf:dsconstruction-backend-${self:provider.stage}.RecaptchaClientKey}
 
 resources:
