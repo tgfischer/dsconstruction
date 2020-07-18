@@ -101,7 +101,13 @@ export const useGalleryPageSettings = () => {
     {
       successMessage: "Deleted the photos successfully",
       errorMessage: "Failed to delete the photos",
-      onSuccess: fetchTags,
+      onSuccess: useCallback(
+        () => (
+          Promise.all([fetchTags(), handleFetchGallery()]),
+          setSelectedPhotos([])
+        ),
+        [fetchTags, handleFetchGallery]
+      ),
       useAuthorization: true
     }
   );
@@ -134,14 +140,12 @@ export const useGalleryPageSettings = () => {
             <DeleteModal
               {...props}
               message={message}
-              onDelete={() =>
-                executeDeleteTag({ data: { id } }).then(fetchTags)
-              }
+              onDelete={() => executeDeleteTag({ data: { id } })}
             />
           )
         });
       },
-      [executeDeleteTag, fetchTags, showModal]
+      [executeDeleteTag, showModal]
     ),
     photos: useMemo(
       () => (isNil(size) ? photos : take(drop(photos, page * size), size)),
