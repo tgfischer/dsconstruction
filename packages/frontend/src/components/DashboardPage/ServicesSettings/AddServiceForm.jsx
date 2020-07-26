@@ -1,7 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Formik } from "formik";
-import { Form } from "react-bootstrap";
+import { Form } from "react-bootstrap-formik";
 
 import { Modal } from "components/Modal";
 import { useAddServiceForm } from "./hooks";
@@ -10,31 +9,18 @@ import { schema } from "./constants";
 export const AddServiceForm = props => {
   const [isSubmitting, handleSubmit] = useAddServiceForm(props);
   return (
-    <Formik
+    <Form
       initialValues={{ name: "" }}
       validationSchema={schema}
       onSubmit={handleSubmit}
     >
-      {({ values, handleSubmit, handleChange }) => (
-        <Form onSubmit={handleSubmit}>
-          <Form.Group controlId="name">
-            <Form.Label>Service name</Form.Label>
-            <Form.Control
-              name="name"
-              value={values.name}
-              onChange={handleChange}
-              disabled={isSubmitting}
-              required
-            />
-          </Form.Group>
-          <Modal.Actions
-            submitText="Add"
-            isSubmitting={isSubmitting}
-            onClose={props.onClose}
-          />
-        </Form>
-      )}
-    </Formik>
+      <Form.Input name="name" label="Service name" disabled={isSubmitting} />
+      <Modal.Actions
+        submitText="Add"
+        isSubmitting={isSubmitting}
+        onClose={props.onClose}
+      />
+    </Form>
   );
 };
 

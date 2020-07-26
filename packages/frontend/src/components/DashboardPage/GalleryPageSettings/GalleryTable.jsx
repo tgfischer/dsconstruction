@@ -55,7 +55,7 @@ export const GalleryTable = ({
               </span>
             </Card.Body>
             {tags.length > 0 && (
-              <Card.Footer>
+              <Card.Footer className="p-2">
                 {tags.map(name => (
                   <Badge key={name} className="mr-1" variant="secondary">
                     {name}

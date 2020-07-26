@@ -7,7 +7,7 @@ import { Section } from "./Section";
 export const About = ({ children }) => (
   <Section className="text-justify">
     <Row>
-      <Col sm={{ span: 8, offset: 2 }} xs={12}>
+      <Col sm={{ span: 10, offset: 1 }} xs={12}>
         <p className="lead">{children}</p>
       </Col>
     </Row>

@@ -1,51 +1,32 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Formik } from "formik";
-import { Form } from "react-bootstrap";
+import { Form } from "react-bootstrap-formik";
 
 import { Modal } from "components/Modal";
 import { useAddPhoneNumberForm } from "./hooks";
-import { schema } from "./constants";
+import { addNumberSchema } from "./constants";
 
 export const AddPhoneNumberForm = props => {
   const [isSubmitting, handleSubmit] = useAddPhoneNumberForm(props);
   return (
-    <Formik
+    <Form
       initialValues={{ name: "", number: "" }}
-      validationSchema={schema}
+      validationSchema={addNumberSchema}
       onSubmit={handleSubmit}
     >
-      {({ values, handleSubmit, handleChange }) => (
-        <Form onSubmit={handleSubmit}>
-          <Form.Group controlId="name">
-            <Form.Label>Name</Form.Label>
-            <Form.Control
-              name="name"
-              value={values.name}
-              onChange={handleChange}
-              disabled={isSubmitting}
-              required
-            />
-          </Form.Group>
-          <Form.Group controlId="number">
-            <Form.Label>Phone number</Form.Label>
-            <Form.Control
-              name="number"
-              type="number"
-              value={values.number}
-              onChange={handleChange}
-              disabled={isSubmitting}
-              required
-            />
-          </Form.Group>
-          <Modal.Actions
-            submitText="Add"
-            isSubmitting={isSubmitting}
-            onClose={props.onClose}
-          />
-        </Form>
-      )}
-    </Formik>
+      <Form.Input name="name" label="Full name" disabled={isSubmitting} />
+      <Form.Input
+        type="number"
+        name="number"
+        label="Phone number"
+        disabled={isSubmitting}
+      />
+      <Modal.Actions
+        submitText="Add"
+        isSubmitting={isSubmitting}
+        onClose={props.onClose}
+      />
+    </Form>
   );
 };
 

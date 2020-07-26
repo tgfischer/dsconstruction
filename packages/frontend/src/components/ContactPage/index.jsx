@@ -1,6 +1,6 @@
 import React from "react";
 import { Row, Col } from "react-bootstrap";
-import { Formik } from "formik";
+import { Form } from "react-bootstrap-formik";
 
 import { Page } from "components/Page";
 import { ContactForm } from "./ContactForm";
@@ -19,19 +19,22 @@ export const ContactPage = () => {
       </p>
       <Row>
         <Col md={9} sm={12}>
-          <Formik
+          <Form
+            className="mb-3"
             onSubmit={handleSendEmail}
-            validationSchema={schema}
             initialValues={{
               firstName: "",
               lastName: "",
               email: "",
-              message: ""
+              message: "",
+              "g-recaptcha-response": ""
             }}
-            validateOnMount
+            validationSchema={schema}
+            validateOnChange={false}
+            validateOnBlur={false}
           >
-            {formik => <ContactForm {...formik} isSubmitting={isSubmitting} />}
-          </Formik>
+            <ContactForm isSubmitting={isSubmitting} />
+          </Form>
         </Col>
         <Col md={3} sm={12}>
           <Information {...contact} />

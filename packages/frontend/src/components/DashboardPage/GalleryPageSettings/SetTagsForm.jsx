@@ -1,7 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Row, Col, Form } from "react-bootstrap";
-import { Formik } from "formik";
+import { Form } from "react-bootstrap-formik";
 import { faInfo } from "@fortawesome/free-solid-svg-icons";
 
 import { Modal } from "components/Modal";
@@ -9,43 +8,32 @@ import { IconAlert } from "components/IconAlert";
 import { useSetTagsForm } from "./hooks";
 
 export const SetTagsForm = props => {
-  const {
-    tags,
-    initialValues,
-    isSubmitting,
-    handleClose,
-    handleSubmit
-  } = useSetTagsForm(props);
+  const { tags, isSubmitting, handleClose, handleSubmit } = useSetTagsForm(
+    props
+  );
   return (
-    <Formik initialValues={initialValues} onSubmit={handleSubmit}>
-      {({ values, handleSubmit, handleChange }) => (
-        <Form onSubmit={handleSubmit}>
-          <IconAlert icon={faInfo} variant="light">
-            Each category that is chosen below will be applied to the photos
-            that were selected
-          </IconAlert>
-          {tags.map(({ id, name }) => (
-            <Form.Group key={id} as={Row} controlId={name}>
-              <Col xs={12}>
-                <Form.Check
-                  name={name}
-                  label={name}
-                  checked={values[name]}
-                  onChange={handleChange}
-                  disabled={isSubmitting}
-                  custom
-                />
-              </Col>
-            </Form.Group>
-          ))}
-          <Modal.Actions
-            submitText="Set categories"
-            isSubmitting={isSubmitting}
-            onClose={handleClose}
+    <Form initialValues={{ tags: [] }} onSubmit={handleSubmit}>
+      <IconAlert icon={faInfo} variant="light">
+        Each category that is chosen below will be applied to the photos that
+        were selected
+      </IconAlert>
+      <Form.Group name="tags">
+        {tags.map(({ id, name }) => (
+          <Form.Checkbox
+            key={id}
+            name={name}
+            label={name}
+            disabled={isSubmitting}
+            custom
           />
-        </Form>
-      )}
-    </Formik>
+        ))}
+      </Form.Group>
+      <Modal.Actions
+        submitText="Set categories"
+        isSubmitting={isSubmitting}
+        onClose={handleClose}
+      />
+    </Form>
   );
 };
 

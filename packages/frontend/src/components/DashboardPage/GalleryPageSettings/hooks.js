@@ -300,24 +300,8 @@ export const useAddTagForm = ({ onSubmit, onClose }) =>
 
 export const useSetTagsForm = ({ tags, photos, onSubmit, onClose }) => {
   const [isSubmitting, handleSubmit] = useSubmit({
-    handleSubmit: data =>
-      onSubmit({
-        data: {
-          photos,
-          tags: Object.keys(data).filter(tag => data[tag])
-        }
-      }),
+    handleSubmit: ({ tags }) => onSubmit({ data: { photos, tags } }),
     handleFinish: onClose
   });
-  return {
-    tags,
-    initialValues: useMemo(
-      () =>
-        tags.reduce((values, { name }) => ({ ...values, [name]: false }), {}),
-      [tags]
-    ),
-    isSubmitting,
-    handleSubmit,
-    handleClose: onClose
-  };
+  return { tags, isSubmitting, handleSubmit, handleClose: onClose };
 };
