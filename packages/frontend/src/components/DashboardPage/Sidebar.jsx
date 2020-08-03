@@ -8,7 +8,7 @@ import { useSidebar } from "./hooks";
 export const Sidebar = props => {
   const { links } = useSidebar(props);
   return (
-    <ListGroup>
+    <ListGroup className="mb-4">
       {links.map(({ displayName, url, params = {}, isActive }) => (
         <ListGroup.Item
           key={url}

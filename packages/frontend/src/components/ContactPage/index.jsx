@@ -20,7 +20,7 @@ export const ContactPage = () => {
       <Row>
         <Col md={9} sm={12}>
           <Form
-            className="mb-3"
+            className="mb-4"
             onSubmit={handleSendEmail}
             initialValues={{
               firstName: "",
