@@ -8,11 +8,14 @@ import {
 } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import classnames from "classnames";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import { useNavbar } from "./hooks";
 
+export * from "./constants";
+
 export const Navbar = ({ variant, className }) => {
-  const { links, buttons } = useNavbar();
+  const { social, links, buttons } = useNavbar();
   return (
     <BootstrapNavbar
       className={classnames(
@@ -51,6 +54,19 @@ export const Navbar = ({ variant, className }) => {
                   </Button>
                 )
             )}
+            {social.map(({ icon, url }) => (
+              <Button
+                key={url}
+                as="a"
+                href={url}
+                className="mr-2"
+                variant="link"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <FontAwesomeIcon icon={icon} size="lg" />
+              </Button>
+            ))}
             {buttons.map(
               ({ displayName, action, isVisible }) =>
                 isVisible && (

@@ -1,3 +1,5 @@
+import { faFacebookSquare } from "@fortawesome/free-brands-svg-icons";
+
 export const links = [
   {
     displayName: "Home",
@@ -22,11 +24,12 @@ export const links = [
     url: "/dashboard",
     isLoggedIn: true,
     variant: "link"
-  },
+  }
+];
+
+export const social = [
   {
-    displayName: "Login",
-    url: "/login",
-    isLoggedIn: false,
-    variant: "outline-light"
+    icon: faFacebookSquare,
+    url: "https://www.facebook.com/Ds-Construction-1400202433581118"
   }
 ];

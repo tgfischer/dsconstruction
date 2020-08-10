@@ -11,12 +11,16 @@ export const Section = ({
   action: Action,
   isLoading,
   isCentered,
+  isBordered,
   variant,
   className,
   children,
   ...props
 }) => (
-  <div className={classnames("ds-section", variant)} {...props}>
+  <div
+    className={classnames("ds-section", variant, { "border-top": isBordered })}
+    {...props}
+  >
     <Container className={className}>
       {title && (
         <div
@@ -52,6 +56,7 @@ Section.propTypes = {
   action: PropTypes.func,
   isLoading: PropTypes.bool,
   isCentered: PropTypes.bool,
+  isBordered: PropTypes.bool,
   className: PropTypes.string,
   variant: PropTypes.oneOf(["light", "dark"]),
   children: PropTypes.node.isRequired
@@ -61,5 +66,6 @@ Section.defaultProps = {
   action: () => null,
   variant: "light",
   isLoading: false,
-  isCentered: false
+  isCentered: false,
+  isBordered: false
 };

@@ -2,12 +2,14 @@ import React from "react";
 import PropTypes from "prop-types";
 
 import { Spinner } from "components/Spinner";
+import { Footer } from "components/Footer";
 
 export const Layout = ({ isLoading, children }) => (
-  <div className="pb-5">
+  <>
     {isLoading && <Spinner className="vh-100" isCentered />}
     {children}
-  </div>
+    <Footer />
+  </>
 );
 
 Layout.propTypes = {

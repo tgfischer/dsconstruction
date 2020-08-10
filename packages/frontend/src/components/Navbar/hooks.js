@@ -1,10 +1,11 @@
-import { useLocation } from "react-router-dom";
+import { useLocation, useHistory } from "react-router-dom";
 import { useToasts } from "react-toast-notifications";
 
 import { useUser } from "hooks/useUser";
-import { links } from "./constants";
+import { links, social } from "./constants";
 
 export const useNavbar = () => {
+  const { push } = useHistory();
   const { addToast } = useToasts();
   const { isLoggedIn, clearUser } = useUser();
   const { pathname } = useLocation();
@@ -14,7 +15,13 @@ export const useNavbar = () => {
       isActive: pathname === page.url.split("?")[0],
       isVisible: page.isVisible || isLoggedIn === page.isLoggedIn
     })),
+    social,
     buttons: [
+      {
+        displayName: "Log in",
+        action: () => push("/login"),
+        isVisible: !isLoggedIn
+      },
       {
         displayName: "Log out",
         action: () => (
