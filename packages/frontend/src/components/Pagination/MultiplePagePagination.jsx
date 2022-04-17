@@ -21,7 +21,6 @@ export const MultiplePagePagination = ({
       <Pagination.Item
         key={pageNumber}
         active={currentPage === pageNumber}
-        disabled={currentPage === pageNumber}
         onClick={onChange(pageNumber)}
       >
         {pageNumber + 1}
