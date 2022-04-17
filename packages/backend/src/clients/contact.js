@@ -4,8 +4,7 @@ import * as settings from "../clients/settings";
 
 export const sendEmail = async ({ firstName, lastName, email, message }) => {
   const { email: to } = await settings.get("contact");
-  AWS.config.update({ region: "us-east-1" });
-  const ses = new AWS.SES({ apiVersion: "2010-12-01" });
+  const ses = new AWS.SES({ apiVersion: "2010-12-01", region: "us-east-1" });
   await ses
     .sendEmail({
       Destination: {

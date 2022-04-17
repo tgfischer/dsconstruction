@@ -1,6 +1,7 @@
 service: dsconstruction-backend
 
 plugins:
+  - serverless-iam-roles-per-function
   - serverless-webpack
   - serverless-dotenv-plugin
   - serverless-offline
@@ -194,6 +195,12 @@ functions:
           path: /api/contact
           method: POST
           cors: true
+    iamRoleStatements:
+      - Effect: Allow
+        Action:
+          - ses:SendEmail
+          - ses:SendRawEmail
+        Resource: "*"
   editPhoneNumbers:
     handler: src/index.handler
     events:
