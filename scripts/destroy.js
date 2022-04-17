@@ -15,7 +15,7 @@ shell.exec("npx lerna bootstrap");
 });
 
 shell.cd("packages/photos");
-const result = shell.exec(`npx serverless remove --stage ${stage} --verbose`);
+const result = shell.exec(`npx --no-install serverless remove --stage ${stage} --verbose`);
 if (result.code !== 0) {
   throw 1;
 }

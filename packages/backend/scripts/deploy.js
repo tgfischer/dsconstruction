@@ -18,4 +18,6 @@ const getEnv = () => {
   }
 };
 
-shell.exec(`npx serverless deploy --stage ${stage} --verbose ${getEnv()}`);
+shell.exec(
+  `npx --no-install serverless deploy --stage ${stage} --verbose ${getEnv()}`
+);
