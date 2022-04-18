@@ -5,7 +5,9 @@ import * as settings from "../clients/settings";
 export const sendEmail = async ({ firstName, lastName, email, message }) => {
   const { email: to } = await settings.get("contact");
   const ses = new AWS.SES({ apiVersion: "2010-12-01", region: "us-east-1" });
-  await ses
+  const {
+    $response: { data, error }
+  } = await ses
     .sendEmail({
       Destination: {
         ToAddresses: [to]
@@ -25,4 +27,11 @@ export const sendEmail = async ({ firstName, lastName, email, message }) => {
       Source: process.env.DSC_CONTACT_EMAIL
     })
     .promise();
+
+  if (error) {
+    console.error(error.message);
+    throw error;
+  }
+
+  console.info(`Successfully sent email to ${to}: ${JSON.stringify(data)}`);
 };
